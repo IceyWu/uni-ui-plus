@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
-const process = require("node:process");
+const process = require('node:process');
 
 function _interopNamespaceCompat(e) {
-  if (e && typeof e === "object" && "default" in e) return e;
+  if (e && typeof e === 'object' && 'default' in e) return e;
   const n = Object.create(null);
   if (e) {
     for (const k in e) {
@@ -14,7 +14,7 @@ function _interopNamespaceCompat(e) {
   return n;
 }
 
-const process__namespace = /*#__PURE__*/ _interopNamespaceCompat(process);
+const process__namespace = /*#__PURE__*/_interopNamespaceCompat(process);
 
 const processShim = process__namespace === void 0 ? {} : process__namespace;
 const envShim = processShim.env || {};
@@ -25,19 +25,16 @@ function UpResolver() {
     type: "component",
     resolve: (name) => {
       if (/^(Up[A-Z]|up-[a-z])/.test(name)) {
-        const cName = name
-          .slice(3)
-          .replace(/([a-z])/, "$1")
-          .toLowerCase();
+        const cName = name.slice(3).replace(/([a-z])/, "$1").toLowerCase();
         const component = `up-uniapp/components/${cName}/${cName}.vue`;
         const style = `up-uniapp/components/${cName}/index.scss`;
         return {
           name,
           from: component,
-          sideEffects: isH5 ? style : "",
+          sideEffects: isH5 ? style : ""
         };
       }
-    },
+    }
   };
 }
 
