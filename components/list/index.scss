@@ -1,0 +1,15 @@
+.up-list {
+}
+.loading-box {
+  display: inline-block;
+  position: absolute;
+  width: 100%;
+}
+.center-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  box-sizing: border-box;
+  padding-bottom: 100rpx;
+}
