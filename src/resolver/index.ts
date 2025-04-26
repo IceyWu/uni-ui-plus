@@ -30,11 +30,11 @@ export function UpResolver(): ComponentResolver {
     resolve: (name: string) => {
       if (/^(Up[A-Z]|up-[a-z])/.test(name)) {
         const cName = name
-          .slice(3)
+          .slice(2)
           .replace(/([a-z])/, "$1")
           .toLowerCase();
-        const component = `up-uniapp/components/${cName}/${cName}.vue`;
-        const style = `up-uniapp/components/${cName}/index.scss`;
+        const component = `uni-ui-plus/components/${cName}/${cName}.vue`;
+        const style = `uni-ui-plus/components/${cName}/index.scss`;
 
         return {
           name,

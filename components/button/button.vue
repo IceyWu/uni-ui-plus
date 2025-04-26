@@ -25,4 +25,6 @@ export default defineComponent({
   </button>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import "./index";
+</style>
