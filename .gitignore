@@ -3,4 +3,4 @@ web-types.json
 tags.json
 attributes.json
 node_modules/
-# dist/
+dist/
