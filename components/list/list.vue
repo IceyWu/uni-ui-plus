@@ -1,14 +1,15 @@
 <script lang="ts" setup>
 import type { CSSProperties } from "vue";
 import { computed, defineComponent, onMounted, ref } from "vue";
-import { PREFIX } from "../_constants";
 import type {
   ScrollViewOnRefresherrefresh,
   ScrollViewOnScrolltolower,
   ScrollViewProps,
+  ScrollViewOnRefresherpulling,
 } from "@uni-helper/uni-app-types";
-import { listProps, ListEmits } from "./list";
+import { listProps, type ListEmits } from "./list";
 import type { ListInst } from "./type";
+import UpSkeleton from "../skeleton/skeleton.vue";
 
 const props = defineProps(listProps);
 const emit = defineEmits<ListEmits>();
@@ -100,7 +101,9 @@ export default {
     <template v-if="listObj?.loading">
       <view :class="scrollViewProps.scrollX ? 'loading-box' : ''">
         <!-- 骨架屏 -->
-        <slot name="loading"> loading... </slot>
+        <slot name="loading">
+          <UpSkeleton />
+        </slot>
       </view>
     </template>
   </scroll-view>
