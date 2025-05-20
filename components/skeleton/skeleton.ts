@@ -1,7 +1,6 @@
 import type { ExtractPropTypes, PropType } from "vue";
-import type { SkeletonType,AvatarShapeType } from "./type";
+import type { SkeletonType, AvatarShapeType } from "./type";
 import { makeStringProp } from "../_utils";
-
 
 // 定义 props
 export const skeletonProps = {
@@ -62,9 +61,6 @@ export const skeletonProps = {
     type: Number,
     default: 3,
   },
-
- 
-  
 } as const;
 
 export type SkeletonProps = ExtractPropTypes<typeof skeletonProps>;

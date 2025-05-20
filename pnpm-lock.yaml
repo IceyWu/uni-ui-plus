@@ -10,12 +10,21 @@ importers:
       "@dcloudio/uni-ui":
         specifier: ">=1.5.7"
         version: 1.5.7
+      "@iceywu/utils":
+        specifier: ^0.0.50
+        version: 0.0.50
+      "@life-palette/utils":
+        specifier: ^0.0.3
+        version: 0.0.3
       "@uni-helper/uni-app-types":
         specifier: ^1.0.0-alpha.6
         version: 1.0.0-alpha.6(typescript@5.8.3)(vue@3.5.13(typescript@5.8.3))
       "@uni-helper/vite-plugin-uni-components":
         specifier: ^0.2.0
         version: 0.2.0(rollup@4.40.0)
+      blurhash:
+        specifier: ^2.0.5
+        version: 2.0.5
       vue:
         specifier: ">=3.2.0"
         version: 3.5.13(typescript@5.8.3)
@@ -525,6 +534,18 @@ packages:
       }
     engines: { node: ">=18.18" }
 
+  "@iceywu/utils@0.0.49":
+    resolution:
+      {
+        integrity: sha512-MpJhX/F4+/zPwc6VPi9HF1PLCH4A7aoFYihKaxGVwRLZpcWBb5FRH6OPQJbaII+xzszbGosQ+K7uxPFipPAMfA==,
+      }
+
+  "@iceywu/utils@0.0.50":
+    resolution:
+      {
+        integrity: sha512-nR4n3VZlM34qr2iz7nDsGuQnDHhFgMHfqBB2Lb/8mXilvdPr2/WdfpaZURsbRLCeGtklZm31lSOxYubzybL4XA==,
+      }
+
   "@isaacs/cliui@8.0.2":
     resolution:
       {
@@ -570,6 +591,12 @@ packages:
     resolution:
       {
         integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==,
+      }
+
+  "@life-palette/utils@0.0.3":
+    resolution:
+      {
+        integrity: sha512-pX8qnNO9qWWf+KKN+f2tsSa3T34ZlXigVyOAp9CrE0rt+ozk7oLGSr2UjCwL22pZHoq0VXEle4TIHEN+omFI6A==,
       }
 
   "@nodelib/fs.scandir@2.1.5":
@@ -1348,6 +1375,12 @@ packages:
       }
     engines: { node: ">=8" }
 
+  blurhash@2.0.5:
+    resolution:
+      {
+        integrity: sha512-cRygWd7kGBQO3VEhPiTgq4Wc43ctsM+o46urrmPOiuAe+07fzlSB9OJVdpgDL0jPqXUVQ9ht7aq7kxOeJHRK+w==,
+      }
+
   boolbase@1.0.0:
     resolution:
       {
@@ -1701,6 +1734,13 @@ packages:
       {
         integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==,
       }
+
+  debounce@2.2.0:
+    resolution:
+      {
+        integrity: sha512-Xks6RUDLZFdz8LIdR6q0MTH44k7FikOmnh5xkSjMig6ch45afc8sjTjRQf3P6ax8dMgcQrYO/AR2RGWURrruqw==,
+      }
+    engines: { node: ">=18" }
 
   debug@4.4.0:
     resolution:
@@ -2576,6 +2616,12 @@ packages:
     resolution:
       {
         integrity: sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==,
+      }
+
+  lodash@4.17.21:
+    resolution:
+      {
+        integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==,
       }
 
   loupe@3.1.3:
@@ -4225,6 +4271,16 @@ snapshots:
 
   "@humanwhocodes/retry@0.4.2": {}
 
+  "@iceywu/utils@0.0.49":
+    dependencies:
+      debounce: 2.2.0
+      lodash: 4.17.21
+
+  "@iceywu/utils@0.0.50":
+    dependencies:
+      debounce: 2.2.0
+      lodash: 4.17.21
+
   "@isaacs/cliui@8.0.2":
     dependencies:
       string-width: 5.1.2
@@ -4252,6 +4308,10 @@ snapshots:
     dependencies:
       "@jridgewell/resolve-uri": 3.1.2
       "@jridgewell/sourcemap-codec": 1.5.0
+
+  "@life-palette/utils@0.0.3":
+    dependencies:
+      "@iceywu/utils": 0.0.49
 
   "@nodelib/fs.scandir@2.1.5":
     dependencies:
@@ -4740,6 +4800,8 @@ snapshots:
 
   binary-extensions@2.3.0: {}
 
+  blurhash@2.0.5: {}
+
   boolbase@1.0.0: {}
 
   brace-expansion@1.1.11:
@@ -4994,6 +5056,8 @@ snapshots:
       css-tree: 2.2.1
 
   csstype@3.1.3: {}
+
+  debounce@2.2.0: {}
 
   debug@4.4.0:
     dependencies:
@@ -5492,6 +5556,8 @@ snapshots:
   lodash.merge@4.6.2: {}
 
   lodash.uniq@4.5.0: {}
+
+  lodash@4.17.21: {}
 
   loupe@3.1.3: {}
 
