@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.0.5
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.4...v0.0.5)
+
+### 🚀 Enhancements
+
+- 添加图像组件及相关样式，更新依赖项 ([c1ad286](https://github.com/iceywu/uni-ui-plus/commit/c1ad286))
+- 添加 utils 函数，更新 image 组件的 props 和样式 ([815972b](https://github.com/iceywu/uni-ui-plus/commit/815972b))
+
+### 🏡 Chore
+
+- Refactor code structure for improved readability and maintainability ([d419088](https://github.com/iceywu/uni-ui-plus/commit/d419088))
+
+### ❤️ Contributors
+
+- IceyWu ([@Life-Palette](https://github.com/Life-Palette))
+
 ## v0.0.4
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.3...v0.0.4)
