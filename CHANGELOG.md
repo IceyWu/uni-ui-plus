@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.52
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.5...v0.0.52)
+
+### 🚀 Enhancements
+
+- 添加 minHeight 属性支持到图像组件的样式计算 ([9668a00](https://github.com/iceywu/uni-ui-plus/commit/9668a00))
+
+### ❤️ Contributors
+
+- IceyWu ([@Life-Palette](https://github.com/Life-Palette))
+
 ## v0.0.5
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.4...v0.0.5)
