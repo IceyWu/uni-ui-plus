@@ -31,6 +31,9 @@ const rootStyle = computed(() => {
   if (isDef(props.width)) {
     style.width = addUnit(props.width);
   }
+  if (isDef(props.minHeight)) {
+    style.minHeight = addUnit(props.minHeight);
+  }
   if (isDef(props.radius)) {
     style["border-radius"] = addUnit(props.radius);
     style.overflow = "hidden";
