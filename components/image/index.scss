@@ -1,6 +1,6 @@
 .up-img {
   position: relative;
-   display: inline-block;
+  display: inline-block;
   &--placeholder {
     // filter: blur(40px);
     position: absolute;
@@ -16,7 +16,7 @@
     box-sizing: border-box;
   }
   &--error {
-     height: 100%;
+    height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;

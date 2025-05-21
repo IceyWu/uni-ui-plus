@@ -98,5 +98,8 @@ export function isUrl(path: string): boolean {
  * @return {boolean}
  */
 export function isObj(value: any): value is object {
-  return Object.prototype.toString.call(value) === '[object Object]' || typeof value === 'object'
+  return (
+    Object.prototype.toString.call(value) === "[object Object]" ||
+    typeof value === "object"
+  );
 }

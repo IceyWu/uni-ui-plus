@@ -152,6 +152,36 @@ npm install uni-ui-plus
 
 ## 组件列表
 
+---
+
+### Image
+
+```html
+<template>
+  <up-image
+    src="http://nest-js.oss-accelerate.aliyuncs.com/nestTest/1/1746282136181.JPG"
+    placeholder-src="http://nest-js.oss-accelerate.aliyuncs.com/nestTest/1/1746282136181.JPG?x-oss-process=image/resize,l_100"
+    width="120"
+    height="120"
+    radius="8"
+    :lazy-load="true"
+  />
+</template>
+```
+
+---
+
+### Skeleton
+
+```html
+<template>
+  <up-skeleton :loading="true" type="title" />
+  <up-skeleton :loading="true" type="avatar" avatar-shape="circle" />
+</template>
+```
+
+---
+
 ### List
 
 ```html
