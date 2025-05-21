@@ -60,22 +60,19 @@
   "peerDependencies": {
     "@dcloudio/uni-ui": ">=1.5.7",
     "@uni-helper/uni-app-types": "^1.0.0-alpha.6",
-    "@iceywu/utils": "^0.0.50",
-    "@life-palette/utils": "^0.0.3",
-    "blurhash": "^2.0.5",
     "vue": ">=3.2.0"
   },
   "devDependencies": {
     "@types/node": "^22.13.4",
     "@vitest/coverage-v8": "^3.0.5",
-    "@vue/tsconfig": "^0.7.0",
     "automd": "^0.3.12",
     "changelogen": "^0.5.7",
     "eslint": "^9.20.1",
     "eslint-config-unjs": "^0.4.2",
     "prettier": "^3.5.1",
+    "unbuild": "^3.5.0",
     "typescript": "^5.7.3",
-    "unbuild": "^3.5.0"
+    "@vue/tsconfig": "^0.7.0"
   },
   "dependencies": {
     "@uni-helper/vite-plugin-uni-components": "^0.2.0"

@@ -91,3 +91,12 @@ export function isUrl(path: string): boolean {
   const reg = /^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- ./?%&=]*)?/;
   return reg.test(path);
 }
+
+/**
+ * @description 判断target是否对象
+ * @param value
+ * @return {boolean}
+ */
+export function isObj(value: any): value is object {
+  return Object.prototype.toString.call(value) === '[object Object]' || typeof value === 'object'
+}

@@ -7,3 +7,4 @@ export * from "./props";
 export * from "./px-check";
 export * from "./raf";
 export * from "./style";
+export * from "./utils";
