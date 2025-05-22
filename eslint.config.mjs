@@ -3,6 +3,7 @@ import unjs from "eslint-config-unjs";
 export default unjs({
   ignores: [
     // ignore paths
+    "playground/**",
   ],
   rules: {
     // rule overrides
