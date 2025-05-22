@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.0.53
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.52...v0.0.53)
+
+### 🚀 Enhancements
+
+- 添加虚拟列表支持，优化列表组件性能和样式 ([66c6c50](https://github.com/iceywu/uni-ui-plus/commit/66c6c50))
+- 更新 .gitignore 和 eslint 配置以忽略 playground 目录 ([afb9088](https://github.com/iceywu/uni-ui-plus/commit/afb9088))
+
+### ❤️ Contributors
+
+- IceyWu ([@Life-Palette](https://github.com/Life-Palette))
+
 ## v0.0.52
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.5...v0.0.52)
