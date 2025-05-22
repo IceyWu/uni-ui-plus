@@ -71,5 +71,5 @@ export default {
 </template>
 
 <style lang="scss">
-@import "./index";
+@use "./index" as *;
 </style>

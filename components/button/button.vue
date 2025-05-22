@@ -21,10 +21,12 @@ export default defineComponent({
 
 <template>
   <button>
-    <view class="up-button__wrap"> 11 </view>
+    <view class="up-button__wrap">
+      <slot> 按钮 </slot>
+    </view>
   </button>
 </template>
 
 <style lang="scss">
-@import "./index";
+@use "./index" as *;
 </style>

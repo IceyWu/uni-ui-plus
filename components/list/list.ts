@@ -2,6 +2,7 @@ import type {
   ScrollViewOnRefresherrefresh,
   ScrollViewOnScrolltolower,
   ScrollViewOnRefresherpulling,
+  ScrollViewOnScrollEvent,
   ScrollViewProps,
 } from "@uni-helper/uni-app-types";
 import type { ExtractPropTypes, PropType } from "vue";
@@ -43,7 +44,7 @@ export const listProps = {
    */
   isNeedHFull: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   /**
    * @description 是否需要显示空状态
@@ -121,14 +122,42 @@ export const listProps = {
       refresherBackground: "transparent",
     }),
   },
+  /**
+   * @description 虚拟列表配置对象，包含是否启用虚拟列表、项高度、容器高度、底部 loading 骨架高度等
+   * @default { enabled: false, itemHeight: 50, containerHeight: undefined, loadingHeight: 100 }
+   */
+  virtualListProps: {
+    type: Object as PropType<{
+      enabled?: boolean;
+      itemHeight?: number;
+      containerHeight?: number;
+      loadingHeight?: number;
+    }>,
+    default: () => ({
+      enabled: false,
+      itemHeight: 50,
+      containerHeight: undefined,
+      loadingHeight: 100,
+    }),
+  },
+  /**
+   * @description 是否启默认列表模式（只针对非虚拟列表）
+   * @default false
+   */
+  isListMode: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type ListProps = ExtractPropTypes<typeof listProps>;
 
 // 定义 emits
+// ...existing code...
 export type ListEmits = {
   (e: "update:listObj", data: ListObj<any>): void;
-  (e: "onRefresh"): ScrollViewOnRefresherrefresh;
-  (e: "onLoad"): ScrollViewOnScrolltolower;
-  (e: "onPulling"): ScrollViewOnRefresherpulling;
+  (e: "onRefresh"): void;
+  (e: "onLoad"): void;
+  (e: "onPulling", data: ScrollViewOnRefresherpulling): void;
+  (e: "onScroll", data: ScrollViewOnScrollEvent): void;
 };
