@@ -28,5 +28,5 @@ export default defineComponent({
 </template>
 
 <style lang="scss">
-@import './index';
+@use './index' as *;
 </style>
