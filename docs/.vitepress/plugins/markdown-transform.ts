@@ -12,7 +12,7 @@ export function MarkdownTransform(): Plugin {
       if (!id.includes('/component')) return
       if (id.includes('/use-')) return
 
-      const GITHUB_URL = 'https://github.com/Moonofweisheng/uni-ui-plus/tree/master'
+      const GITHUB_URL = 'https://github.com/IceyWu/uni-ui-plus/tree/master'
       const componentId = path.basename(id, '.md')
       const componentName = `wd-${componentId}`
       const camelComponentId = camelCase(componentId)

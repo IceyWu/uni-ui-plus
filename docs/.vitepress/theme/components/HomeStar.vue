@@ -3,7 +3,7 @@
 <template>
   <p class="home-star">
     <a href="https://github.com/IceyWu/uni-ui-plus">
-  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/IceyWu/uni-ui-plus?logo=github&color=%234d80f0&link=https%3A%2F%2Fgithub.com%2FMoonofweisheng%2Funi-ui-plus&style=flat-square">
+  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/IceyWu/uni-ui-plus?logo=github&color=%234d80f0&link=https%3A%2F%2Fgithub.com%2FIceyWu%2Funi-ui-plus&style=flat-square">
  </a>
 
 
