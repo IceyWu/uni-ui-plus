@@ -1,0 +1,7 @@
+{
+    "i18n-ally.localesPaths": [
+        "src/locale",
+        "src/uni_modules/uni-ui-plus/locale",
+        "src/uni_modules/uni-ui-plus/locale/lang"
+    ]
+}

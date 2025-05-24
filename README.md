@@ -21,7 +21,10 @@ height="100" style="max-width: 100%;" alt="logo" />
 
 ## 介绍
 
-uni-ui-plus 是对@dcloudio/uni-ui的二次封装，提供了更好的使用体验和更多的功能。
+uni-ui-plus 是对@dcloudio/uni-ui的二次封装，旨在提供更好的使用体验和更多的功能。
+
+# 文档
+[docs](https://uni-ui-plus-docs.netlify.app/)
 
 # 快速上手
 
@@ -142,129 +145,12 @@ npm install uni-ui-plus
 > 配置完成，现在所有的组件都可以直接使用，它将自动完成按需导入
 
 ```html
-<template>
-  <up-button type="primary">主要按钮</up-button>
-
-  <!-- 或者（仅限unplugin方式） -->
-  <UpButton type="primary">主要按钮</UpButton>
-</template>
-```
-
-## 组件列表
-
----
-
-### Image
-
-```html
-<template>
-  <up-image
-    src="http://nest-js.oss-accelerate.aliyuncs.com/nestTest/1/1746282136181.JPG"
-    placeholder-src="http://nest-js.oss-accelerate.aliyuncs.com/nestTest/1/1746282136181.JPG?x-oss-process=image/resize,l_100"
-    width="120"
-    height="120"
-    radius="8"
-    :lazy-load="true"
-  />
-</template>
-```
-
----
-
-### Skeleton
-
-```html
-<template>
-  <up-skeleton :loading="true" type="title" />
-  <up-skeleton :loading="true" type="avatar" avatar-shape="circle" />
-</template>
-```
-
----
-
-### List
-
-```html
-<script setup>
-  import { getObjVal, list, sleep } from "@iceywu/utils";
-  import { useRequest } from "vue-hooks-pure";
-
-  const scrollListRef = ref();
-  // 模拟api
-  async function getTestApi(params) {
-    await sleep(500);
-    const { page = 0, size = 10, maxPage = 3 } = params;
-    const baseSize = page * size;
-    const data = list(0, size - 1, (index) => {
-      const element = baseSize + index;
-      return {
-        id: element,
-        cover: `https://picsum.photos/id/${element}/200/300`,
-        title: `title ${element}`,
-        desc: `desc ${element}`,
-      };
-    });
-    return {
-      code: 200,
-      msg: "查询成功",
-      result: {
-        content: data,
-        last: page + 1 === maxPage,
-        total: 100,
-      },
-    };
-  }
-
-  const {
-    onRefresh,
-    onLoad: onLoadMore,
-    result,
-  } = useRequest(getTestApi, {
-    target: "list",
-    loadingDelay: 300,
-    getVal: (res) => {
-      const list = getObjVal(res, "result.content", []);
-      return list;
-    },
-    listOptions: {
-      defaultPageKey: "page",
-      defaultSizeKey: "size",
-      defaultDataKey: "list",
-      defaultPage: -1,
-      getTotal: (data) => {
-        const total = getObjVal(data, "result.total", 0);
-        return total;
-      },
-    },
-    onRequestEnd: (res) => {
-      if (scrollListRef.value) {
-        scrollListRef.value.stopRefresh();
-      }
-    },
-  });
-  onMounted(() => {
-    onRefresh();
-  });
-</script>
-
-<template>
-  <view class="h-50vh">
-    <up-list
-      ref="scrollListRef"
-      v-model:list-obj="result"
-      style="height: 100%;"
-      :is-need-h-full="true"
-      :scroll-y="true"
-      @on-load="onLoadMore"
-      @on-refresh="onRefresh"
-    >
-      <template #default="{ data: { list } }">
-        <view v-for="(item, index) in list" :key="index" class="mb-4 flex">
-          <image :src="item.cover" class="h-20 w-20" mode="widthFix" />
-          <view>{{ item.title }}</view>
-        </view>
-      </template>
-    </up-list>
-  </view>
-</template>
+<up-image :width="100" :height="100" src="https://www.123.com/a.jpg">
+    <template #error>
+      加载失败
+    </template>
+    <template #loading>
+      loading
+    </template>
+  </up-image>
 ```
