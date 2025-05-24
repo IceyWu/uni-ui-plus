@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.0.55
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.54...v0.0.55)
+
+### 🩹 Fixes
+
+- 将样式导入方式从 @import 更改为 @use ([c2ce9a7](https://github.com/iceywu/uni-ui-plus/commit/c2ce9a7))
+
+### 🏡 Chore
+
+- 结构重构 ([9f798c6](https://github.com/iceywu/uni-ui-plus/commit/9f798c6))
+
+### ❤️ Contributors
+
+- IceyWu ([@Life-Palette](https://github.com/Life-Palette))
+
 ## v0.0.54
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.53...v0.0.54)
