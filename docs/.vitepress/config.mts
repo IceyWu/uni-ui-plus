@@ -123,7 +123,7 @@ export default defineConfig({
         text: '组件', activeMatch: '/component/', items: [
           {
             text: '基础组件',
-            link: "/component/button",
+            link: "/component/list",
           },
          
 

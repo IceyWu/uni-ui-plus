@@ -7,9 +7,9 @@
  </a>
 
 
-<a href="https://github.com/IceyWu/uni-ui-plus">
+<!-- <a href="https://github.com/IceyWu/uni-ui-plus">
   <img alt="GitHub" src="https://img.shields.io/codecov/c/github/IceyWu/uni-ui-plus?style=flat-square">
- </a>
+ </a> -->
 
 <a href="https://www.npmjs.com/package/uni-ui-plus">
   <img alt="npm" src="https://img.shields.io/npm/dm/uni-ui-plus?logo=npm&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Funi-ui-plus&style=flat-square">

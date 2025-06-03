@@ -27,18 +27,6 @@ interface SkeletonObj {
 // 定义 props
 export const listProps = {
   /**
-   * @description 表单类型，可选值为 `ListType` 类型中定义的值，默认值为 'default'
-   */
-  formType: makeStringProp<ListType>('default'),
-  /**
-   * @description 是否禁用刷新功能
-   * @default false
-   */
-  isDisabledRefresh: {
-    type: Boolean,
-    default: false
-  },
-  /**
    * @description 是否需要设置高度为全屏
    * @default false
    */
@@ -115,7 +103,6 @@ export const listProps = {
     default: () => ({
       scrollY: true,
       scrollX: false,
-      refresherEnabled: true,
       refresherThreshold: 100,
       refresherBackground: 'transparent'
     })

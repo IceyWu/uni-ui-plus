@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.0.56
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.55...v0.0.56)
+
+### 🩹 Fixes
+
+- Update info ([b23c7db](https://github.com/iceywu/uni-ui-plus/commit/b23c7db))
+- Update info ([e9bc010](https://github.com/iceywu/uni-ui-plus/commit/e9bc010))
+
+### 🏡 Chore
+
+- 更新变更日志，添加 v0.0.55 版本信息 ([f182844](https://github.com/iceywu/uni-ui-plus/commit/f182844))
+- 更新版本号至 0.0.55 ([a725cf0](https://github.com/iceywu/uni-ui-plus/commit/a725cf0))
+
+### ❤️ Contributors
+
+- IceyWu ([@Life-Palette](https://github.com/Life-Palette))
+
 ## v0.0.55
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.54...v0.0.55)

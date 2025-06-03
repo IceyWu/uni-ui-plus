@@ -5,9 +5,10 @@
         <up-list
           ref="scrollListRef"
           v-model:list-obj="result"
-          style="height: 100%"
-          :is-need-h-full="true"
-          :scroll-y="true"
+          :scroll-view-props="{
+            refresherEnabled: true,
+            scrollY: true
+          }"
           @on-load="onLoadMore"
           @on-refresh="onRefresh"
         >

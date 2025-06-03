@@ -17,7 +17,7 @@ hero:
       link: /guide/introduction
     - theme: alt
       text: 组件列表
-      link: /component/button
+      link: /component/list
 
 features:
   - icon: 🎯

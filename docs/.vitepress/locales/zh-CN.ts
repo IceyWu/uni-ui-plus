@@ -37,7 +37,7 @@ export default defineConfig({
         items: [
           {
             text: '基础组件',
-            link: '/component/button',
+            link: '/component/list',
           },
         
         ]
