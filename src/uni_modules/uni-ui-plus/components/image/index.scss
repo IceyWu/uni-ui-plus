@@ -29,6 +29,11 @@
     justify-content: center;
     align-items: center;
   }
+
+}
+.is-round {
+  border-radius: 50% !important;
+  overflow: hidden;
 }
 
 #myCanvast {

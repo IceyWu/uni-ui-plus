@@ -1,94 +1,149 @@
 # Img 图片
 
-增强版的 img 标签，提供多种图片填充模式，支持图片懒加载、加载完成、加载失败。
+增强版的 img 标签，支持多种图片填充模式、懒加载、加载占位、自定义加载/失败内容、圆角/圆形、滤镜、图片预览等功能。
 
 ## 基本用法
 
 基础用法与原生 image 标签一致，可以设置 `src` 、 `width` 、`height` 等原生属性。
 
-原生属性，参考[uni-app image 官方文档](https://uniapp.dcloud.net.cn/component/image.html#image)。
-
-## 插槽
-
-使用`loading` `error`插槽设置在图片加载时、加载失败后的展示内容
-
 ```vue
-<template>
-  <up-image :width="100" :height="100" src="https://www.123.com/a.jpg">
-    <template #error>
-      <view class="error-wrap">加载失败</view>
-    </template>
-    <template #loading>
-      <view class="loading-wrap">
-        <wd-loading />
-      </view>
-    </template>
-  </up-image>
-</template>
-
-<style>
-.error-wrap {
-  width: 100%;
-  height: 100%;
-  background-color: red;
-  color: white;
-  line-height: 100px;
-  text-align: center;
-}
-
-.loading-wrap {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-</style>
-```
-
-## 填充模式
-
-通过 `mode` 属性可以设置图片填充模式，可选值见下方表格。
-
-mode 为小程序原生属性，参考[微信小程序 image 官方文档](https://developers.weixin.qq.com/miniprogram/dev/component/image.html)。
-
-```html
-<up-image :width="100" :height="100" mode="center" :src="joy" />
-```
-
-## 圆形设置
-
-通过 `round` 属性可以设置以圆形展示。
-
-```html
-<up-image :width="100" :height="100" round :src="joy" />
-```
-
-## 预加载占位图
-
-通过 `placeholder-src` 属性可以设置以圆形展示。
-
-```html
 <up-image
-  src="http://nest-js.oss-accelerate.aliyuncs.com/nestTest/1/1746282136181.JPG"
-  placeholder-src="http://nest-js.oss-accelerate.aliyuncs.com/nestTest/1/1746282136181.JPG?x-oss-process=image/resize,l_100"
+  src="https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example1.jpg"
   width="120"
   height="120"
 />
 ```
 
-## 可预览
+## 延时加载
 
-通过设置`enable-preview`属性可以支持点击预览，底层调用 uni.previewImage 来实现预览效果
+通过 `delay` 属性设置图片加载延迟（单位 ms）。
 
-```html
-<up-image :width="100" :height="100" :src="joy" :enable-preview="true" />
+```vue
+<up-image
+  src="https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example1.jpg"
+  width="120"
+  height="120"
+  :delay="2000"
+/>
 ```
 
-也可以传入 `preview-src` 属性来预览另外的图片
+## 预加载占位图
 
-```html
-<up-image :width="100" :height="100" :src="joy" :preview-src="img" :enable-preview="true" />
+通过 `placeholder-src` 属性设置加载中的占位图片。
+
+```vue
+<up-image
+  src="https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example1.jpg"
+  placeholder-src="https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example1.jpg?x-oss-process=image/resize,p_50"
+  width="120"
+  height="120"
+  :delay="2000"
+/>
+```
+
+## 图片加载滤镜
+
+通过 `filter` 属性设置加载过程中的图片模糊效果。
+
+```vue
+<up-image
+  src="https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example1.jpg"
+  placeholder-src="https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example1.jpg?x-oss-process=image/resize,p_50"
+  width="120"
+  height="120"
+  :delay="40000"
+  :filter="30"
+/>
+```
+
+## 自定义圆角
+
+通过 `radius` 属性自定义圆角大小，或通过 `round` 属性设置为圆形。
+
+```vue
+<up-image
+  src="https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example1.jpg"
+  width="120"
+  height="120"
+  :radius="8"
+/>
+<up-image
+  src="https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example1.jpg"
+  width="100"
+  height="100"
+  round
+/>
+```
+
+## 填充模式
+
+通过 `mode` 属性设置图片填充方式，支持多种小程序原生模式。
+
+```vue
+<up-image
+  src="https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example1.jpg"
+  width="120"
+  height="120"
+  mode="center"
+/>
+```
+
+可选值：`scaleToFill`、`aspectFit`、`aspectFill`、`heightFix`、`widthFix`、`top left`、`top right`、`bottom left`、`bottom right`、`right`、`left`、`center`、`bottom`、`top`。
+
+## 懒加载
+
+通过 `lazy-load` 属性开启图片懒加载（默认开启）。
+
+```vue
+<up-image
+  src="https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example1.jpg"
+  width="120"
+  height="120"
+  :lazy-load="true"
+/>
+```
+
+## 图片预览
+
+通过 `enable-preview` 属性支持点击图片预览，底层调用 `uni.previewImage`。
+
+```vue
+<up-image
+  src="https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example1.jpg"
+  width="100"
+  height="100"
+  :enable-preview="true"
+/>
+```
+
+可通过 `preview-src` 指定预览的图片地址。
+
+```vue
+<up-image
+  src="https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example1.jpg"
+  preview-src="https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example2.jpg"
+  width="100"
+  height="100"
+  :enable-preview="true"
+/>
+```
+
+## 自定义插槽
+
+可通过 `loading` 和 `error` 插槽自定义加载中和加载失败时的内容。
+
+```vue
+<up-image :src="src" width="120" height="120" :delay="40000">
+  <template #loading>
+    <view class="custom-loading">加载中自定义</view>
+  </template>
+</up-image>
+
+<up-image src="1" width="120" height="120" radius="8">
+  <template #error>
+    <view class="custom-error">加载异常自定义</view>
+  </template>
+</up-image>
 ```
 
 ## Attributes
@@ -101,9 +156,16 @@ mode 为小程序原生属性，参考[微信小程序 image 官方文档](https
 | mode                   | 填充模式                                           | ImageMode       | 'top left' / 'top right' / 'bottom left' / 'bottom right' / 'right' / 'left' / 'center' / 'bottom' / 'top' / 'heightFix' / 'widthFix' / 'aspectFill' / 'aspectFit' / 'scaleToFill' | 'scaleToFill' | -        |
 | round                  | 是否显示为圆形                                     | boolean         | -                                                                                                                                                                                  | false         | -        |
 | radius                 | 圆角大小，默认单位为 px                            | number / string | -                                                                                                                                                                                  | -             | -        |
+| delay                  | 图片加载延迟，单位 ms                              | number          | -                                                                                                                                                                                  | 0             | -        |
+| placeholder-src        | 加载中占位图片                                     | string          | -                                                                                                                                                                                  | -             | -        |
+| filter                 | 加载中滤镜模糊值，单位 px                          | number / string | -                                                                                                                                                                                  | -             | -        |
+| min-height             | 最小高度，默认 200rpx                              | number / string | -                                                                                                                                                                                  | 200rpx        | -        |
+| lazy-load              | 是否开启懒加载                                     | boolean         | -                                                                                                                                                                                  | true          | -        |
+| custom-style           | 自定义样式                                         | string          | -                                                                                                                                                                                  | ''            | -        |
+| custom-class           | 根节点自定义类名                                   | string          | -                                                                                                                                                                                  | ''            | -        |
 | enable-preview         | 是否支持点击预览                                   | boolean         | -                                                                                                                                                                                  | false         | 1.2.11   |
-| show-menu-by-longpress | 开启长按图片显示识别小程序码菜单，仅微信小程序支持 | boolean         | -                                                                                                                                                                                  | false         | 1.3.11   |
 | preview-src            | 预览图片链接                                       | string          | -                                                                                                                                                                                  | -             | 1.8.0    |
+
 
 ## Events
 

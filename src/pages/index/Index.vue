@@ -69,6 +69,10 @@ const list = computed(() => [
       {
         id: 'list',
         name: t('lie-biao')
+      },
+      {
+        id: 'skeleton',
+        name: t('skeleton')
       }
     ]
   },

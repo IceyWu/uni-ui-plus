@@ -156,13 +156,17 @@ export default defineConfig({
           collapsed: false,
           items: [
             {
-              link: "/component/button",
-              text: "Button 按钮"
+              link: '/component/list',
+              text: 'List 列表'
             },
             {
-              link: "/component/list",
-              text: "List 列表"
+              link: '/component/img',
+              text: 'Img 图片'
             },
+            {
+              link: '/component/skeleton',
+              text: 'Skeleton 骨架屏'
+            }
           ]
         },
        

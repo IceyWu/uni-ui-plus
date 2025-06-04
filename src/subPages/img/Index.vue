@@ -2,26 +2,97 @@
   <page-wraper>
     <demo-block :title="$t('jiBenYongFa')">
       <up-image
-        src="http://nest-js.oss-accelerate.aliyuncs.com/nestTest/1/1746282136181.JPG"
-        placeholder-src="http://nest-js.oss-accelerate.aliyuncs.com/nestTest/1/1746282136181.JPG?x-oss-process=image/resize,l_100"
+        :src="demoSource.src"
+        :placeholder-src="demoSource.placeholderSrc"
+        mode="scaleToFill"
         width="120"
         height="120"
         radius="8"
         :lazy-load="true"
+        :enable-preview="true"
       />
-      <wd-img :width="100" :height="100" :src="joy" />
-      <!-- 以组件位置为定位原点 -->
-      <wd-img :width="100" :height="100" :src="img" custom-class="border" />
+    </demo-block>
+    <!-- 延时 -->
+    <demo-block :title="$t('image-delay')">
+      <up-image :src="demoSource.src" width="120" height="120" :delay="2000" />
+    </demo-block>
+    <!-- 预加载占位图 -->
+    <demo-block :title="$t('image-placeholder')">
+      <up-image :src="demoSource.src" :placeholder-src="demoSource.placeholderSrc" mode="scaleToFill" width="120" height="120" :delay="2000" />
+    </demo-block>
+    <!-- 图片加载过程中的滤镜 -->
+    <demo-block :title="$t('image-filter')">
+      <up-image :src="demoSource.src" :placeholder-src="demoSource.placeholderSrc" :delay="40000" :filter="30" width="120" height="120" radius="8" />
+    </demo-block>
+    <!-- 自定义圆角 -->
+    <demo-block :title="$t('image-raduis')">
+      <view class="demo-item">
+        <text>圆角：{{ choosedRadius }} px</text>
+        <slider @change="sliderChange" :min="0" :max="60" :step="1" show-value style="width: 200px; margin-left: 20rpx" />
+      </view>
+      <view class="demo-item">
+        <up-image :src="demoSource.src" :placeholder-src="demoSource.placeholderSrc" width="120" height="120" :radius="choosedRadius" />
+      </view>
+      <view class="demo-item">
+        <text>圆角 round</text>
+      </view>
+      <view class="demo-item">
+        <up-image :src="demoSource.src" :placeholder-src="demoSource.placeholderSrc" width="120" height="120" round />
+      </view>
+    </demo-block>
+    <!-- 图片填充方式 -->
+    <demo-block :title="$t('image-mode')">
+      <view class="demo-item">
+        <view v-for="mode in modes" :key="mode" class="mode-btn" :class="{ active: choosedModel === mode }" @click="choosedModel = mode">
+          {{ mode }}
+        </view>
+      </view>
+      <view class="demo-item">
+        <up-image
+          :src="demoSource.src"
+          :placeholder-src="demoSource.placeholderSrc"
+          width="120"
+          height="120"
+          :mode="choosedModel"
+          :lazy-load="true"
+        />
+      </view>
+    </demo-block>
+    <!-- 自定义图片加载插槽-加载中 -->
+    <demo-block :title="$t('image-slot')">
+      <up-image :src="demoSource.src" :placeholder-src="demoSource.placeholderSrc" :delay="40000" width="120" height="120">
+        <template #loading>
+          <view class="custom-loading">加载中自定义</view>
+        </template>
+      </up-image>
+    </demo-block>
+    <!-- 自定义图片加载插槽-异常 -->
+    <demo-block :title="$t('image-slot-error')">
+      <up-image src="1" width="120" height="120" radius="8">
+        <template #error>
+          <view class="custom-error">加载异常自定义</view>
+        </template>
+      </up-image>
     </demo-block>
   </page-wraper>
 </template>
 <script lang="ts" setup>
-import { joy } from '../../pages/images/joy'
-import img from '../../pages/images/jd.png'
-import type { ImageMode } from '@/uni_modules/uni-ui-plus/components/wd-img/types'
 import UpImage from '@/uni_modules/uni-ui-plus/components/image/image.vue'
-
-const modes: ImageMode[] = [
+import { ref } from 'vue'
+const demoSource = {
+  src: 'https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example1.jpg',
+  placeholderSrc: 'https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example1.jpg?x-oss-process=image/resize,p_50'
+}
+const choosedRadius = ref(8)
+function sliderChange(e: any) {
+  choosedRadius.value = e.detail.value
+}
+const modes: any = [
+  'scaleToFill',
+  'aspectFit',
+  'aspectFill',
+  'heightFix',
+  'widthFix',
   'top left',
   'top right',
   'bottom left',
@@ -30,47 +101,47 @@ const modes: ImageMode[] = [
   'left',
   'center',
   'bottom',
-  'top',
-  'heightFix',
-  'widthFix',
-  'scaleToFill',
-  'aspectFit',
-  'aspectFill'
+  'top'
 ]
+const choosedModel = ref(modes[0])
 </script>
 
 <style lang="scss" scoped>
-.col {
-  display: inline-block;
-  width: 33.333%;
-  box-sizing: border-box;
-  min-height: 1px;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-bottom: 20px;
+.demo-item {
+  margin-bottom: 20rpx;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
-.center {
-  text-align: center;
-}
-:deep(.border) {
-  border: 1px solid red;
-  margin: 0 10px;
-}
-
-.error-wrap {
-  width: 100%;
-  height: 100%;
-  background-color: red;
-  color: white;
-  line-height: 100px;
-  text-align: center;
-}
-
-.loading-wrap {
-  width: 100%;
-  height: 100%;
+.custom-loading {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: #f5f5f5;
+}
+.custom-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: #f5f5f5;
+}
+.mode-btn {
+  display: inline-block;
+  padding: 8rpx 16rpx;
+  margin: 0 8rpx 8rpx 0;
+  border: 1px solid #ccc;
+  border-radius: 6rpx;
+  background: #fafafa;
+  cursor: pointer;
+  font-size: 24rpx;
+  &.active {
+    border-color: #007aff;
+    background: #e6f7ff;
+    color: #007aff;
+  }
 }
 </style>

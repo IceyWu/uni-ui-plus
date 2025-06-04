@@ -79,6 +79,21 @@
             "navigationBarTitleText": "%lie-biao%"
             // #endif
           }
+        },
+         {
+          "path": "skeleton/Index",
+          "name": "skeleton",
+          "style": {
+            "mp-alipay": {
+              "allowsBounceVertical": "NO"
+            },
+            // #ifdef MP
+            "navigationBarTitleText": "Skeleton 骨架屏",
+            // #endif
+            // #ifndef MP
+            "navigationBarTitleText": "%skeleton%"
+            // #endif
+          }
         }
       ]
     }

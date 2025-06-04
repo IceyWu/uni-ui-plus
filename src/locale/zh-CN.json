@@ -1089,7 +1089,6 @@
   "signature-qian-ming": "Signature 签名",
   "signature-title": "Signature 签名",
   "skeleton-gu-jia-ping": "Skeleton 骨架屏",
-  "skeleton-title": "Skeleton 骨架屏",
   "slide-dong-hua": "Slide 动画",
   "slider-hua-kuai": "Slider 滑块",
   "slider-title": "Slider 滑块",
@@ -1607,5 +1606,19 @@
   "zuo-shang": "左上",
   "zuo-xia": "左下",
   "zuo-you-hua-dong": "左右滑动",
-  "zuo-zhong": "左中"
+  "zuo-zhong": "左中",
+  "skeleton": "骨架屏",
+  "skeleton-animate": "关闭骨架屏动画",
+  "skeleton-title": "标题",
+  "skeleton-title-rows": "自定义段落行数",
+  "skeleton-title-width": "设置段落宽度",
+  "skeleton-avatar": "头像类型",
+  "image-shape": "自定义形状",
+  "image-raduis": "自定义圆角",
+  "image-mode": "图片填充方式",
+  "image-placeholder": "预加载占位图",
+  "image-slot": "自定义图片加载插槽-加载中",
+  "image-slot-error": "自定义图片加载插槽-加载失败",
+  "image-delay": "图片加载延时（2000ms）",
+  "image-filter": "图片加载过程中的滤镜"
 }

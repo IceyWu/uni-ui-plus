@@ -18,17 +18,16 @@ export default defineConfig({
         items: [
           {
             text: '介绍',
-            link: '/guide/introduction',
+            link: '/guide/introduction'
           },
           {
             text: '快速上手',
-            link: '/guide/quick-use',
+            link: '/guide/quick-use'
           },
           {
             text: '更新日志',
-            link: '/guide/changelog',
-          },
-         
+            link: '/guide/changelog'
+          }
         ]
       },
       {
@@ -37,52 +36,47 @@ export default defineConfig({
         items: [
           {
             text: '基础组件',
-            link: '/component/list',
-          },
-        
+            link: '/component/list'
+          }
         ]
-      },
-     
+      }
     ],
     sidebar: {
       '/guide/': [
         {
           text: '介绍',
-          link: '/guide/introduction',
+          link: '/guide/introduction'
         },
         {
           text: '快速上手',
-          link: '/guide/quick-use',
+          link: '/guide/quick-use'
         },
         {
           text: '更新日志',
-          link: '/guide/changelog',
-        },
-      
+          link: '/guide/changelog'
+        }
       ],
-    
+
       '/component/': [
         {
           text: '基础',
           collapsed: false,
           items: [
-             {
+            {
               link: '/component/list',
               text: 'List 列表'
             },
+
             {
-              link: '/component/button',
-              text: 'Button 按钮'
-            },
-           {
               link: '/component/img',
               text: 'Img 图片'
             },
-          
-          
+            {
+              link: '/component/skeleton',
+              text: 'Skeleton 骨架屏'
+            }
           ]
-        },
-       
+        }
       ]
     }
   }

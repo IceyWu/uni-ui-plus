@@ -1089,7 +1089,6 @@
   "signature-qian-ming": "Signature",
   "signature-title": "Signature",
   "skeleton-gu-jia-ping": "Skeleton",
-  "skeleton-title": "Skeleton",
   "slide-dong-hua": "Slide animation",
   "slider-hua-kuai": "Slider",
   "slider-title": "Slider",
@@ -1607,5 +1606,19 @@
   "zuo-shang": "Top Left",
   "zuo-xia": "lower left",
   "zuo-you-hua-dong": "Slide left and right",
-  "zuo-zhong": "Middle Left"
+  "zuo-zhong": "Middle Left",
+  "skeleton": "Skeleton",
+  "skeleton-animate": "Disable skeleton animation",
+  "skeleton-title": "Title",
+  "skeleton-title-rows": "Custom paragraph rows",
+  "skeleton-title-width": "Set paragraph width",
+  "skeleton-avatar": "Avatar type",
+  "image-shape": "Custom Shape",
+  "image-raduis": "Custom Radius",
+  "image-mode": "Image Fill Mode",
+  "image-placeholder": "Preload Placeholder",
+  "image-slot": "Custom Image Loading Slot - Loading",
+  "image-slot-error": "Custom Image Loading Slot - Error",
+  "image-delay": "Image Load Delay (2000ms)",
+  "image-filter": "Image Loading Filter"
 }

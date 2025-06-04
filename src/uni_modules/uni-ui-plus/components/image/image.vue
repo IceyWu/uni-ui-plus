@@ -4,7 +4,7 @@ import { addUnit, isDef, objToStyle } from '../_utils'
 import { imageProps } from './image'
 
 const props = defineProps(imageProps)
-const emit = defineEmits(['load', 'error'])
+const emit = defineEmits(['load', 'error', 'click'])
 
 const status = ref<'loading' | 'error' | 'success'>('loading')
 
@@ -50,6 +50,14 @@ const filterStyle = computed(() => {
   }
   return objToStyle(style)
 })
+function handleClick(event: MouseEvent) {
+  if (props.enablePreview && props.src && status.value == 'success') {
+    uni.previewImage({
+      urls: [props.previewSrc || props.src]
+    })
+  }
+  emit('click', event)
+}
 </script>
 
 <script lang="ts">
@@ -69,7 +77,7 @@ export default {
 </script>
 
 <template>
-  <view :class="rootClass" :style="rootStyle">
+  <view :class="rootClass" :style="rootStyle" @click="handleClick">
     <!-- 主图片 -->
     <image
       class="up-img--success"
@@ -84,8 +92,8 @@ export default {
     <!-- loading 占位插槽 -->
     <slot v-if="status === 'loading'" name="loading">
       <view class="up-img--loading">
-        加载中...
-        <image class="up-img--placeholder" :src="placeholderSrc" :style="filterStyle" mode="aspectFill" />
+        <template v-if="!placeholderSrc">加载中...</template>
+        <image class="up-img--placeholder" :src="placeholderSrc" :style="filterStyle" :mode="mode" />
       </view>
     </slot>
 

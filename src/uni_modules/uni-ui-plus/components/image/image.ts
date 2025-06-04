@@ -9,17 +9,17 @@ export const imageProps = {
     default: 'scaleToFill'
   } as const,
   width: {
-    type: [String, Number]
+    type: [Number, String] as PropType<number | string>
   },
   height: {
-    type: [String, Number]
+    type: [Number, String] as PropType<number | string>
   },
   delay: {
     type: Number,
     default: 0
   },
   radius: {
-    type: Number,
+    type: [Number, String] as PropType<number | string>,
     default: 0
   },
   minHeight: makeNumericProp('200rpx'),
@@ -35,6 +35,10 @@ export const imageProps = {
     type: Boolean,
     default: false
   },
+  enablePreview: {
+    type: Boolean,
+    default: false
+  },
   customClass: {
     type: String,
     default: ''
@@ -44,12 +48,16 @@ export const imageProps = {
     type: String,
     default: ''
   },
+  previewSrc: {
+    type: String,
+    default: ''
+  },
   placeholderSrc: {
     type: String,
     default: ''
   },
   filter: {
-    type: String,
+    type: [Number, String] as PropType<number | string>,
     default: ''
   }
 } as const
