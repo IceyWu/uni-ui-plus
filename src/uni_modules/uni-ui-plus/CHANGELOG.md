@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.57
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.56...v0.0.57)
+
+### 🚀 Enhancements
+
+- 添加骨架屏组件及相关文档，更新图片组件功能 ([5c3ce36](https://github.com/iceywu/uni-ui-plus/commit/5c3ce36))
+
+### ❤️ Contributors
+
+- IceyWu ([@Life-Palette](https://github.com/Life-Palette))
+
 ## v0.0.56
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.55...v0.0.56)
