@@ -74,6 +74,10 @@ export default defineConfig({
             {
               link: '/component/skeleton',
               text: 'Skeleton 骨架屏'
+            },
+            {
+              link: '/component/empty',
+              text: 'Empty 空状态'
             }
           ]
         }

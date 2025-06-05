@@ -94,6 +94,21 @@
             "navigationBarTitleText": "%skeleton%"
             // #endif
           }
+        },
+         {
+          "path": "empty/Index",
+          "name": "empty",
+          "style": {
+            "mp-alipay": {
+              "allowsBounceVertical": "NO"
+            },
+            // #ifdef MP
+            "navigationBarTitleText": "Empty 空状态",
+            // #endif
+            // #ifndef MP
+            "navigationBarTitleText": "%empty%"
+            // #endif
+          }
         }
       ]
     }

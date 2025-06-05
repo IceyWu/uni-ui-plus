@@ -22,7 +22,7 @@ const removeHtmlTagsAndNonEnglish = (str: string) => {
 
 // 重新定义组件名称的函数
 const reComponentName: ReComponentName = (title: string) => {
-  return `wd-${hyphenate(removeHtmlTagsAndNonEnglish(title)).replace(/[ ]+/g, '-')}`
+  return `up-${hyphenate(removeHtmlTagsAndNonEnglish(title)).replace(/[ ]+/g, '-')}`
 }
 
 // 重新定义文档 URL 的函数

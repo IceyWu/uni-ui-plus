@@ -14,7 +14,7 @@ export function MarkdownTransform(): Plugin {
 
       const GITHUB_URL = 'https://github.com/IceyWu/uni-ui-plus/tree/master'
       const componentId = path.basename(id, '.md')
-      const componentName = `wd-${componentId}`
+      const componentName = `${componentId}`
       const camelComponentId = camelCase(componentId)
       const demoUrl = `${GITHUB_URL}/src/subPages/${camelComponentId}`
       const componentUrl = `${GITHUB_URL}/src/uni_modules/uni-ui-plus/components/${componentName}`

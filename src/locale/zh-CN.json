@@ -1620,5 +1620,9 @@
   "image-slot": "自定义图片加载插槽-加载中",
   "image-slot-error": "自定义图片加载插槽-加载失败",
   "image-delay": "图片加载延时（2000ms）",
-  "image-filter": "图片加载过程中的滤镜"
+  "image-filter": "图片加载过程中的滤镜",
+  "empty": "Empty 空状态",
+  "empty-image": "图片类型",
+  "empty-image-custom": "自定义图片",
+  "empty-slot": "底部内容",
 }
