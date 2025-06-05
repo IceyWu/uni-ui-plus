@@ -94,24 +94,62 @@ onMounted(() => {
 
 ## 虚拟列表
 
-通过 `virtual-list-props.enabled` 开启虚拟列表，适合大数据量渲染，提升性能。
+通过 `virtual-list-props.enabled` 开启虚拟列表，适合大数据量渲染，提升性能。你可以通过 `v-model:list-obj` 绑定虚拟列表的数据对象，并设置 `virtual-list-props` 的高度和每项高度。
 
 ```vue
-<up-list
-  v-model:list-obj="result"
-  :scroll-view-props="{
-    refresherEnabled: true,
-    scrollY: true
-  }"
-  :virtual-list-props="{ enabled: true, itemHeight: 80 }"
->
-  <template v-slot="{ item, index }">
-          <div class="list-item">
-            {{ index }}
-          </div>
-  </template>
-</up-list>
+<script setup>
+import { ref, onMounted } from 'vue'
+import { list } from '@iceywu/utils'
+
+const virtualListObj = ref({
+  loading: false,
+  finished: false,
+  refreshing: false,
+  list: []
+})
+
+onMounted(() => {
+  // 生成虚拟列表数据
+  virtualListObj.value.list = list(0, 10000, (index) => ({
+    id: index,
+    cover: `https://picsum.photos/id/${index}/200/300`,
+    title: `title ${index}`,
+    desc: `desc ${index}`
+  }))
+})
+</script>
+
+<template>
+  <up-list
+    v-model:list-obj="virtualListObj"
+    :scroll-view-props="{
+      refresherEnabled: false,
+      scrollY: true
+    }"
+    :virtual-list-props="{
+      enabled: true,
+      itemHeight: 120,
+      containerHeight: 500
+    }"
+  >
+    <template #default="{ item, index }">
+      <view class="list-item-box" :key="item.id">
+        <image :src="item.cover" class="cover" mode="aspectFill" />
+        <view class="content">
+          <view class="title">{{ item.title }}</view>
+          <view class="desc">{{ item.desc }}</view>
+        </view>
+      </view>
+    </template>
+  </up-list>
+</template>
 ```
+
+- `virtual-list-props.itemHeight`：每项的高度（单位 px），需与实际渲染项高度一致。
+- `virtual-list-props.containerHeight`：虚拟列表容器高度（单位 px），建议根据页面实际布局设置。
+- 虚拟列表插槽参数为 `{ item, index }`，直接渲染每一项内容。
+
+你可以参考 `src/subPages/list/Index.vue` 获取更多虚拟列表的完整用法和样式。
 
 ## 下拉刷新与上拉加载
 

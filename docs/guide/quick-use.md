@@ -166,6 +166,6 @@ cli 项目使用 `uni_modules` 安装无需配置，对 `Volar` 的支持自动�
 `uni-ui-plus` 安装、配置完成之后，支持组件自动引入，故可以直接在 SFC 中使用，无需在页面内 import，也不需要在 components 内声明，即可在任意页面使用。值得注意的是，`uni-app` 平台不支持全局挂载组件，所以 `Message`、`Toast` 等组件仍需在 SFC 中显式使用，例如：
 
 ``` html
-<up-button>test</up-button>
+<up-empty image="empty" description="无内容" />
 ```
 
