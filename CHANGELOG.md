@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.0.58
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.57...v0.0.58)
+
+### 🚀 Enhancements
+
+- Add empty state component and integrate into the application ([9faab16](https://github.com/iceywu/uni-ui-plus/commit/9faab16))
+- 更新列表组件，添加虚拟列表功能及美化自定义分段器 ([f930646](https://github.com/iceywu/uni-ui-plus/commit/f930646))
+
+### 🏡 Chore
+
+- 更新版本号至 0.0.57 ([1e0f419](https://github.com/iceywu/uni-ui-plus/commit/1e0f419))
+
+### ❤️ Contributors
+
+- IceyWu ([@Life-Palette](https://github.com/Life-Palette))
+
 ## v0.0.57
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.56...v0.0.57)
