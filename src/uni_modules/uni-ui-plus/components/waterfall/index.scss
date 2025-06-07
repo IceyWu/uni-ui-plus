@@ -1,0 +1,25 @@
+
+.up-waterfall {
+  
+  &__column {
+    float: left;
+  }
+
+  &__item {
+    width: 100%;
+    margin-bottom: 30rpx;
+    border-radius: 12rpx;
+    box-shadow: 0rpx 3rpx 6rpx rgba(0, 46, 37, 0.08);
+    overflow: hidden;
+    transition: transform 0.2s ease;
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  &__image {
+    width: 100%;
+    display: block;
+  }
+}

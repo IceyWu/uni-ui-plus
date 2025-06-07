@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.59
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.58...v0.0.59)
+
+### 🏡 Chore
+
+- 更新版本号至 0.0.58，并更新变更日志 ([1bcc154](https://github.com/iceywu/uni-ui-plus/commit/1bcc154))
+
+### ❤️ Contributors
+
+- IceyWu ([@Life-Palette](https://github.com/Life-Palette))
+
 ## v0.0.58
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.57...v0.0.58)

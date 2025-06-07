@@ -168,6 +168,7 @@
   "buRuMoYuQu": "不如摸鱼去",
   "button-an-niu": "Button 按钮",
   "button-title": "Button 按钮",
+  "waterfall": "Waterfall 瀑布流",
   "cai-dan-dan-chu-fang-xiang": "菜单弹出方向",
   "cai-jian-hou-shang-chuan": "裁剪后上传",
   "calendar-ri-li-xuan-ze-qi": "Calendar 日历选择器",
@@ -1624,5 +1625,5 @@
   "empty": "Empty 空状态",
   "empty-image": "图片类型",
   "empty-image-custom": "自定义图片",
-  "empty-slot": "底部内容",
+  "empty-slot": "底部内容"
 }

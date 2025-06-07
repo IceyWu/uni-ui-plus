@@ -85,6 +85,10 @@ const list = computed(() => [
       {
         id: 'img',
         name: t('img-tu-pian')
+      },
+      {
+        id: 'waterfall',
+        name: t('waterfall')
       }
     ]
   }

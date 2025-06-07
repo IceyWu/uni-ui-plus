@@ -78,6 +78,10 @@ export default defineConfig({
             {
               link: '/component/empty',
               text: 'Empty 空状态'
+            },
+            {
+              link: '/component/waterfall',
+              text: 'Waterfall 瀑布流'
             }
           ]
         }

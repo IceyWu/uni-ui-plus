@@ -50,7 +50,7 @@
             // #endif
           }
         },
-         {
+        {
           "path": "img/Index",
           "name": "img",
           "style": {
@@ -65,7 +65,7 @@
             // #endif
           }
         },
-         {
+        {
           "path": "list/Index",
           "name": "list",
           "style": {
@@ -80,7 +80,7 @@
             // #endif
           }
         },
-         {
+        {
           "path": "skeleton/Index",
           "name": "skeleton",
           "style": {
@@ -95,7 +95,7 @@
             // #endif
           }
         },
-         {
+        {
           "path": "empty/Index",
           "name": "empty",
           "style": {
@@ -107,6 +107,21 @@
             // #endif
             // #ifndef MP
             "navigationBarTitleText": "%empty%"
+            // #endif
+          }
+        },
+        {
+          "path": "waterfall/Index",
+          "name": "waterfall",
+          "style": {
+            "mp-alipay": {
+              "allowsBounceVertical": "NO"
+            },
+            // #ifdef MP
+            "navigationBarTitleText": "Waterfall 瀑布流",
+            // #endif
+            // #ifndef MP
+            "navigationBarTitleText": "%waterfall%"
             // #endif
           }
         }

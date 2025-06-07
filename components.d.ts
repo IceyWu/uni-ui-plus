@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     DemoBlock: typeof import('./src/components/demo-block/demo-block.vue')['default']
     PageWraper: typeof import('./src/components/page-wraper/page-wraper.vue')['default']
+    SegmentedControl: typeof import('./src/components/segmented-control/segmented-control.vue')['default']
     WdPrivacyPopup: typeof import('./src/components/wd-privacy-popup/wd-privacy-popup.vue')['default']
   }
 }
