@@ -6,44 +6,36 @@
     <!-- 基础用法 -->
     <demo-block v-if="activeTab === 0" title="基础用法">
       <view class="demo-box">
-        <up-waterfall :list="basicList" :column="2" @item-click="handleItemClick" @load-complete="handleLoadComplete">
-          <template #item-content="{ item }">
-            <view class="item-content">
-              <text class="item-title">{{ item.title }}</text>
-              <text class="item-desc">{{ item.desc }}</text>
-            </view>
-          </template>
-        </up-waterfall>
+        <up-waterfall :list="basicList" :column="2" @item-click="handleItemClick" @load-complete="handleLoadComplete"></up-waterfall>
       </view>
     </demo-block>
 
     <!-- 三列布局 -->
     <demo-block v-else-if="activeTab === 1" title="三列布局-配合sortByImgInfo使用">
       <view class="demo-box">
-        <up-waterfall :list="threeColumnList" :column="3" :column-space="1" :sortByImgInfo="false" @item-click="handleItemClick">
-          <template #item-content="{ item }">
-            <view class="item-content">
-              <text class="item-title">{{ item.title }}</text>
-            </view>
-          </template>
-        </up-waterfall>
+        <up-waterfall :list="threeColumnList" :column="3" :column-space="1" :sortByImgInfo="false" @item-click="handleItemClick"></up-waterfall>
       </view>
     </demo-block>
 
     <!-- 自定义图片 -->
-    <demo-block v-else title="自定义图片">
+    <demo-block v-else-if="activeTab === 2" title="自定义图片与内容">
       <view class="demo-box">
         <up-waterfall :list="customImageList" :column="2" @item-click="handleItemClick">
-          <template #item-image="{ item, onLoad, onError }">
+          <template #default="{ item, onLoad, onError }">
             <image :src="item.imgUrl" mode="aspectFill" class="custom-image" @load="onLoad" @error="onError" />
-          </template>
-          <template #item-content="{ item }">
             <view class="item-content">
               <text class="item-title">{{ item.title }}</text>
               <text class="item-price">¥{{ item.price }}</text>
             </view>
           </template>
         </up-waterfall>
+      </view>
+    </demo-block>
+
+    <!-- 自定义获取图片方法 -->
+    <demo-block v-else title="自定义获取图片方法">
+      <view class="demo-box">
+        <up-waterfall :list="customFuncList" :column="2" :get-image-src="getCustomImageSrc" @item-click="handleItemClick"></up-waterfall>
       </view>
     </demo-block>
   </page-wraper>
@@ -56,7 +48,7 @@ import { ref } from 'vue'
 
 // 分段器相关
 const activeTab = ref(0)
-const tabList = ['基础用法', '三列布局', '自定义图片']
+const tabList = ['基础用法', '多列', '自定义', '自定义图片获取']
 
 const onTabChange = (index: number) => {
   console.log('切换到：', tabList[index])
@@ -163,6 +155,58 @@ const customImageList = ref([
     price: 399.9
   }
 ])
+
+// 自定义获取图片方法的数据
+const customFuncList = ref([
+  {
+    id: 1,
+    images: ['https://picsum.photos/300/400?random=31', 'https://picsum.photos/300/500?random=32'],
+    title: '多图商品 1',
+    desc: '使用images数组的第一张图片'
+  },
+  {
+    id: 2,
+    thumbnail: 'https://picsum.photos/300/350?random=33',
+    title: '缩略图商品 2',
+    desc: '使用thumbnail字段'
+  },
+  {
+    id: 3,
+    cover: 'https://picsum.photos/300/450?random=34',
+    title: '封面图商品 3',
+    desc: '使用cover字段'
+  },
+  {
+    id: 4,
+    images: ['https://picsum.photos/300/300?random=35'],
+    title: '单图商品 4',
+    desc: '使用images数组的唯一图片'
+  },
+  {
+    id: 5,
+    pic: 'https://picsum.photos/300/520?random=36',
+    title: '图片商品 5',
+    desc: '使用pic字段'
+  }
+])
+
+// 自定义图片源获取方法
+function getCustomImageSrc(item: any): string {
+  // 优先级：images数组 > thumbnail > cover > pic
+  if (item.images && item.images.length > 0) {
+    return item.images[0]
+  }
+  if (item.thumbnail) {
+    return item.thumbnail
+  }
+  if (item.cover) {
+    return item.cover
+  }
+  if (item.pic) {
+    return item.pic
+  }
+  return ''
+}
 
 function handleItemClick(item: any, index: number) {
   console.log('点击了项目：', item, index)

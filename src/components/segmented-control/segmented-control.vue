@@ -40,16 +40,18 @@ const onClickItem = (index: number) => {
   height: 48px;
   align-items: center;
   position: relative;
+  justify-content: space-around;
 }
 
 .seg-item {
-  flex: 1;
+  // flex: 1;
   text-align: center;
   position: relative;
   padding: 0;
+  flex-shrink: 0;
   background: transparent;
   color: #666;
-  font-size: 17px;
+  font-size: 30rpx;
   font-weight: 500;
   cursor: pointer;
   transition: color 0.2s;
@@ -59,10 +61,10 @@ const onClickItem = (index: number) => {
   align-items: center;
 
   .seg-label {
-    padding: 0 8px;
+    // padding: 0 8px;
     height: 48px;
     line-height: 48px;
-    display: inline-block;
+    // display: inline-block;
     letter-spacing: 1px;
     z-index: 1;
     position: relative;

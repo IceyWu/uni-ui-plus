@@ -163,8 +163,8 @@
 | lazy-load              | 是否开启懒加载                                     | boolean         | -                                                                                                                                                                                  | true          | -        |
 | custom-style           | 自定义样式                                         | string          | -                                                                                                                                                                                  | ''            | -        |
 | custom-class           | 根节点自定义类名                                   | string          | -                                                                                                                                                                                  | ''            | -        |
-| enable-preview         | 是否支持点击预览                                   | boolean         | -                                                                                                                                                                                  | false         | 1.2.11   |
-| preview-src            | 预览图片链接                                       | string          | -                                                                                                                                                                                  | -             | 1.8.0    |
+| enable-preview         | 是否支持点击预览                                   | boolean         | -                                                                                                                                                                                  | false         | -        |
+| preview-src            | 预览图片链接                                       | string          | -                                                                                                                                                                                  | -             | -        |
 
 
 ## Events
@@ -179,8 +179,8 @@
 
 | 名称    | 说明               | 最低版本 |
 | ------- | ------------------ | -------- |
-| loading | 图片加载时展示     | 1.2.21   |
-| error   | 图片加载失败后展示 | 1.2.21   |
+| loading | 图片加载时展示     | -         |
+| error   | 图片加载失败后展示 | -         |
 
 ## 外部样式类
 

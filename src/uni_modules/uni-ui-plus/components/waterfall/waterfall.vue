@@ -13,20 +13,18 @@
         class="up-waterfall__item"
         @click="handleItemClick(item, j)"
       >
-        <template v-if="item[imageField]">
-          <slot name="item-image" :item="item" :index="j" :on-load="() => handleImageLoad(item)" :on-error="() => handleImageError(item)">
+        <slot :item="item" :index="j" :on-load="() => handleImageLoad(item)" :on-error="() => handleImageError(item)">
+          <template v-if="getImageSrcForItem(item)">
             <image
               class="up-waterfall__image"
-              :src="item[imageField]"
+              :src="getImageSrcForItem(item)"
               mode="widthFix"
               lazy-load
               @load="handleImageLoad(item)"
               @error="handleImageError(item)"
             />
-          </slot>
-        </template>
-
-        <slot name="item-content" :item="item" :index="j" />
+          </template>
+        </slot>
       </view>
     </view>
   </view>
@@ -281,8 +279,13 @@ function handleItemClick(item: WaterfallItem, index: number): void {
 
 const hasImageField = computed(() => {
   if (!props.list.length) return false
-  return props.list.some((item) => item[props.imageField])
+  return props.list.some((item) => getImageSrcForItem(item))
 })
+
+// 获取图片源的统一方法
+function getImageSrcForItem(item: WaterfallItem): string {
+  return props.getImageSrc ? props.getImageSrc(item) : item[props.imageField]
+}
 
 defineExpose({
   resetWaterfall,

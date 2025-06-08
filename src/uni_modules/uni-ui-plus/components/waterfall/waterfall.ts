@@ -51,12 +51,20 @@ export const waterfallProps = {
     default: 'imgUrl'
   },
   /**
+   * @description 获取图片源的方法
+   * @default undefined
+   */
+  getImageSrc: {
+    type: Function as PropType<(item: WaterfallItem) => string>,
+    default: undefined
+  },
+  /**
    * @description 是否根据图片信息排序
-   * @default true
+   * @default false
    */
   sortByImgInfo: {
     type: Boolean,
-    default: true
+    default: false
   }
 }
 
