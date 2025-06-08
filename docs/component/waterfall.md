@@ -42,7 +42,7 @@ function handleLoadComplete() {
 ```
 
 <script setup>
-  import { ref } from 'vue'
+import { ref } from 'vue'
 const waterfallList = ref([
   {
     id: 1,
@@ -60,25 +60,7 @@ function handleItemClick(item, index) {
   console.log('点击了项目：', item, index)
 }
 </script>
-```
 
-## 自定义内容渲染
-
-```vue
-<template>
-  <up-waterfall
-    :list="waterfallList"
-    :column="2"
-  >
-    <template #default="{ item }">
-      <view class="item-content">
-        <text class="item-title">{{ item.title }}</text>
-        <text class="item-desc">{{ item.desc }}</text>
-      </view>
-    </template>
-  </up-waterfall>
-</template>
-```
 
 ## 自定义列数
 
@@ -252,7 +234,7 @@ interface WaterfallItem {
 | resetWaterfall | 重置瀑布流 | `(list: WaterfallItem[])` |
 | appendNewData | 追加新数据 | `(newItems: WaterfallItem[])` |
 
-## 样式变量
+<!-- ## 样式变量
 
 组件提供了下列 CSS 变量，可用于自定义样式。
 
@@ -260,4 +242,4 @@ interface WaterfallItem {
 |------|--------|------|
 | --up-waterfall-item-margin | `30rpx` | 项目间距 |
 | --up-waterfall-item-radius | `12rpx` | 项目圆角 |
-| --up-waterfall-item-shadow | `0rpx 3rpx 6rpx rgba(0, 46, 37, 0.08)` | 项目阴影 |
+| --up-waterfall-item-shadow | `0rpx 3rpx 6rpx rgba(0, 46, 37, 0.08)` | 项目阴影 | -->
