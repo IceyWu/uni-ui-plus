@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.0.61
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.60...v0.0.61)
+
+### 🚀 Enhancements
+
+- 添加 LivePhoto 组件及其文档，支持视频和图片的长按播放功能 ([ddc62ed](https://github.com/iceywu/uni-ui-plus/commit/ddc62ed))
+- Add LivePhoto component and enhance documentation ([cbfacd0](https://github.com/iceywu/uni-ui-plus/commit/cbfacd0))
+- 更新 LivePhoto 组件的指示器样式，添加纯 CSS 图标支持 ([7379731](https://github.com/iceywu/uni-ui-plus/commit/7379731))
+
+### 🏡 Chore
+
+- 更新版本号至 0.0.60，并更新变更日志 ([3ef1842](https://github.com/iceywu/uni-ui-plus/commit/3ef1842))
+- 更新文档，添加自定义图片源获取方法的说明 ([d08df1b](https://github.com/iceywu/uni-ui-plus/commit/d08df1b))
+
+### ❤️ Contributors
+
+- IceyWu ([@Life-Palette](https://github.com/Life-Palette))
+
 ## v0.0.60
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.58...v0.0.60)
