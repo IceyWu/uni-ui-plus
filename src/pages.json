@@ -124,6 +124,21 @@
             "navigationBarTitleText": "%waterfall%"
             // #endif
           }
+        },
+        {
+          "path": "livephoto/Index",
+          "name": "livephoto",
+          "style": {
+            "mp-alipay": {
+              "allowsBounceVertical": "NO"
+            },
+            // #ifdef MP
+            "navigationBarTitleText": "LivePhoto 实况照片",
+            // #endif
+            // #ifndef MP
+            "navigationBarTitleText": "%livephoto%"
+            // #endif
+          }
         }
       ]
     }

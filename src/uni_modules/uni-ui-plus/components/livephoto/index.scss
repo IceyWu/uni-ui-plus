@@ -1,0 +1,157 @@
+.up-live-photo {
+  position: relative;
+  overflow: hidden;
+  border-radius: inherit;
+
+  &--round {
+    border-radius: 50%;
+  }
+
+  &__image-layer,
+  &__video-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transform-origin: center center;
+    will-change: transform, opacity, filter;
+  }
+
+  &__image-layer {
+    z-index: 1;
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px) brightness(1);
+
+    &--transitioning {
+      transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+
+    &--hidden {
+      opacity: 0;
+      transform: scale(1.05);
+      filter: blur(2px) brightness(0.9);
+    }
+  }
+
+  &__video-layer {
+    z-index: 2;
+    opacity: 0;
+    transform: scale(0.95);
+    filter: blur(3px) brightness(1.1);
+
+    &--transitioning {
+      transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+
+    &--visible {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0px) brightness(1);
+    }
+  }
+
+  &__image,
+  &__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__fallback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__loading-bg {
+    width: 100%;
+    height: 100%;
+    background-color: #f5f7fa;
+  }
+
+  &__interaction {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    transition: all 0.2s ease-out;
+
+    &--pressing {
+      transform: scale(0.98);
+    }
+  }
+
+  &__indicator {
+    position: absolute;
+    top: 20rpx;
+    left: 20rpx;
+    transition: all 0.3s ease-out;
+
+    &--active {
+      transform: scale(1.1);
+    }
+  }
+
+  &__indicator-icon {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 8rpx;
+    padding: 8rpx 16rpx;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease-out;
+  }
+
+  &__indicator-text {
+    font-size: 24rpx;
+    font-weight: 500;
+    color: #ffffff;
+  }
+
+  &__indicator--active &__indicator-icon {
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  &__indicator--active &__indicator-text {
+    color: #007AFF;
+  }
+
+  &__hint {
+    position: absolute;
+    bottom: 30rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 20rpx;
+    padding: 12rpx 24rpx;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease-out;
+
+    &--hiding {
+      opacity: 0;
+      transform: translateX(-50%) translateY(10rpx);
+    }
+  }
+
+  &__hint-text {
+    font-size: 28rpx;
+    font-weight: 400;
+    color: #ffffff;
+  }
+}

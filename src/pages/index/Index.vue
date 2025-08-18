@@ -89,6 +89,10 @@ const list = computed(() => [
       {
         id: 'waterfall',
         name: t('waterfall')
+      },
+      {
+        id: 'livephoto',
+        name: t('livephoto')
       }
     ]
   }
