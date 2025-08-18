@@ -14,42 +14,39 @@
     left: 0;
     width: 100%;
     height: 100%;
-    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: center center;
-    will-change: transform, opacity, filter;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
   }
 
   &__image-layer {
     z-index: 1;
     opacity: 1;
     transform: scale(1);
-    filter: blur(0px) brightness(1);
 
     &--transitioning {
-      transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     &--hidden {
       opacity: 0;
-      transform: scale(1.05);
-      filter: blur(2px) brightness(0.9);
+      transform: scale(0.98);
     }
   }
 
   &__video-layer {
     z-index: 2;
     opacity: 0;
-    transform: scale(0.95);
-    filter: blur(3px) brightness(1.1);
+    transform: scale(1.02);
 
     &--transitioning {
-      transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     &--visible {
       opacity: 1;
-      transform: scale(1);
-      filter: blur(0px) brightness(1);
+      transform: scale(1.05);
     }
   }
 
@@ -100,36 +97,59 @@
   }
 
   &__indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
-    top: 20rpx;
-    left: 20rpx;
-    transition: all 0.3s ease-out;
+    left: 24rpx;
+    top: 32rpx;
+    z-index: 20; /* 提高层级，确保在交互层之上 */
+    background: rgba(64, 64, 64, 0.5);
+    border-radius: 24rpx;
+    color: #fff;
+    height: 48rpx;
+    padding: 0 16rpx;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease-out;
+    transform: none !important; /* 防止被父元素的动画影响 */
+    pointer-events: none; /* 让指示器不阻止下层的触摸事件 */
 
     &--active {
-      transform: scale(1.1);
+      background: rgba(64, 64, 64, 0.7);
     }
   }
 
   &__indicator-icon {
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 8rpx;
-    padding: 8rpx 16rpx;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__indicator-svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0 2rpx;
+    
+    :global(svg) {
+      width: 32rpx;
+      height: 32rpx;
+      color: #ffffff;
+    }
+    
+    :global(.live-icon) {
+      color: #ffffff;
+    }
   }
 
   &__indicator-text {
     font-size: 24rpx;
     font-weight: 500;
     color: #ffffff;
-  }
-
-  &__indicator--active &__indicator-icon {
-    background: rgba(255, 255, 255, 0.9);
-  }
-
-  &__indicator--active &__indicator-text {
-    color: #007AFF;
+    line-height: 1;
+    margin-left: 8rpx;
+    margin-right: 6rpx;
   }
 
   &__hint {

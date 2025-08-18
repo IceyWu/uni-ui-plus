@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, nextTick, onUnmounted, ref } from 'vue'
+import { computed, getCurrentInstance, nextTick, onUnmounted, ref, watch } from 'vue'
 import { addUnit, isDef, objToStyle } from '../_utils'
 import UpImage from '../image/image.vue'
 import type { LivePhotoEmits, LivePhotoProps } from './livephoto'
 import { livePhotoProps } from './livephoto'
+import { liveIcon, createProgressLiveIcon } from './icons'
 
 // Props 定义
 const props = defineProps(livePhotoProps)
@@ -18,6 +19,9 @@ const componentId = ref(Math.random().toString(36).substring(2, 15))
 const isPressed = ref(false)
 const isVideoPlaying = ref(false)
 const isTransitioning = ref(false)
+const videoLoadProgress = ref(0)
+const isVideoLoaded = ref(false)
+const isVideoLoading = ref(false)
 
 const instance = getCurrentInstance()
 
@@ -26,22 +30,30 @@ const imageProps = computed(() => {
   const {
     videoSrc,
     showIndicator,
-    showHint,
-    hintText,
+    autoplay,
     enableVibration,
     muted,
+    // 排除样式相关的 props，这些由 LivePhoto 组件自己控制
+    width,
+    height,
+    radius,
+    customStyle,
+    customClass,
     ...restProps
   } = props
-  
+
   return {
     ...restProps,
-    // 覆盖一些默认值以适应 LivePhoto 的需求
-    src: props.src, // 使用 src 而不是 imageSrc
-    enablePreview: false // LivePhoto 不应该启用预览
+    // 强制图片填充容器
+    width: '100%',
+    height: '100%',
+    radius: 0, // 圆角由容器控制
+    customStyle: '',
+    customClass: ''
   }
 })
 
-// 计算样式
+// 计算容器样式
 const containerStyle = computed(() => {
   const styles: Record<string, any> = {}
 
@@ -66,13 +78,110 @@ const rootClass = computed(() => {
   return `up-live-photo ${props.customClass}`
 })
 
+// 计算指示器图标
+const indicatorIcon = computed(() => {
+  if (isVideoLoading.value) {
+    return createProgressLiveIcon(videoLoadProgress.value)
+  }
+  return liveIcon
+})
+
+// 监听视频源变化，重置加载状态
+watch(
+  () => props.videoSrc,
+  () => {
+    isVideoLoaded.value = false
+    isVideoLoading.value = false
+    videoLoadProgress.value = 0
+  }
+)
+
+// 监听自动播放属性 - 只在组件初始化时触发
+watch(
+  () => props.autoplay,
+  (newAutoplay) => {
+    if (newAutoplay && !isVideoLoaded.value && !isVideoLoading.value && !isPressed.value) {
+      // 只在没有用户交互的情况下自动播放
+      startVideoLoad()
+      nextTick(() => {
+        const videoCtx = getVideoContext()
+        if (videoCtx) {
+          videoCtx.play()
+          isVideoPlaying.value = true
+        }
+      })
+    } else if (!newAutoplay && isVideoPlaying.value && !isPressed.value) {
+      // 只在没有用户长按的情况下停止自动播放
+      const videoCtx = getVideoContext()
+      if (videoCtx) {
+        videoCtx.pause()
+        videoCtx.seek(0)
+        isVideoPlaying.value = false
+      }
+    }
+  },
+  { immediate: true }
+)
+
 // 获取视频上下文
 function getVideoContext() {
   const videoId = `live-photo-video-${componentId.value}`
   return uni.createVideoContext(videoId, instance)
 }
 
-// 长按开始 - 播放视频
+// 开始视频加载
+function startVideoLoad() {
+  if (isVideoLoading.value || isVideoLoaded.value) return
+
+  isVideoLoading.value = true
+  videoLoadProgress.value = 0
+
+  // 模拟进度增长，直到视频真正加载完成
+  const progressTimer = setInterval(() => {
+    if (isVideoLoaded.value) {
+      clearInterval(progressTimer)
+      return
+    }
+
+    if (videoLoadProgress.value < 90) {
+      videoLoadProgress.value += Math.random() * 10 + 5
+    }
+  }, 200)
+
+  // 防止无限等待，5秒后强制完成
+  setTimeout(() => {
+    clearInterval(progressTimer)
+    if (!isVideoLoaded.value) {
+      isVideoLoaded.value = true
+      isVideoLoading.value = false
+      videoLoadProgress.value = 100
+    }
+  }, 5000)
+}
+
+// 视频加载完成
+function onVideoLoadedData() {
+  isVideoLoaded.value = true
+  isVideoLoading.value = false
+  videoLoadProgress.value = 100
+  emit('video-loaded')
+}
+
+// 视频加载错误
+function onVideoError() {
+  isVideoLoading.value = false
+  isVideoLoaded.value = false
+  videoLoadProgress.value = 0
+  console.warn('视频加载失败')
+}
+
+// 视频加载进度 - 简化处理
+function onVideoProgress(e: any) {
+  // uni-app 的视频进度事件可能数据结构不同，暂时依赖模拟进度
+  if (isVideoLoading.value && e.detail) {
+    console.log('视频进度事件:', e.detail)
+  }
+} // 长按开始 - 播放视频
 function onLongPressStart() {
   if (isPressed.value) return
 
@@ -88,6 +197,11 @@ function onLongPressStart() {
     } catch (error) {
       console.log('振动反馈不可用:', error)
     }
+  }
+
+  // 长按时才开始加载视频（如果还未加载）
+  if (!isVideoLoaded.value) {
+    startVideoLoad()
   }
 
   nextTick(() => {
@@ -147,7 +261,7 @@ function onVideoPause() {
   emit('video-pause')
 }
 
-// 视频结束事件 - 自动重新开始播放（如果还在长按中）
+// 视频结束事件
 function onVideoEnded() {
   if (isPressed.value) {
     // 如果还在长按，重新播放
@@ -156,34 +270,34 @@ function onVideoEnded() {
       videoCtx.seek(0)
       videoCtx.play()
     }
+  } else if (props.autoplay) {
+    // 自动播放模式下，视频结束后停止播放，但保持可交互状态
+    isVideoPlaying.value = false
   } else {
+    // 手动模式下，视频结束后停止播放
     isVideoPlaying.value = false
   }
   emit('video-ended')
 }
-const imageLoaded = ref(false);
-// 图片加载成功
-function onImageLoad() {
-  imageLoaded.value = true
-  imageError.value = false
-  emit('image-load')
+
+// 图片加载成功 - 转发给父组件
+function onImageLoad(event: any) {
+  emit('load', event)
 }
 
-// 图片加载失败
-function onImageError() {
-  imageError.value = true
-  imageLoaded.value = false
-  emit('image-error')
+// 图片加载失败 - 转发给父组件
+function onImageError(event: any) {
+  emit('error', event)
 }
 
-// 获取图片源
-function getDisplayImageSrc() {
-  return props.imageSrc
+// 图片点击事件 - 转发给父组件
+function onImageClick(event: any) {
+  emit('click', event)
 }
 
 // 获取视频封面
 function getVideoPoster() {
-  return props.imageSrc
+  return props.src
 }
 
 // 暴露给父组件的方法
@@ -192,8 +306,6 @@ defineExpose({
   isPlaying: () => isVideoPlaying.value,
   reset: () => {
     onLongPressEnd()
-    imageLoaded.value = false
-    imageError.value = false
   }
 })
 
@@ -221,7 +333,7 @@ export default {
 
 <template>
   <view :class="rootClass" :style="containerStyle">
-    <!-- 静态图片层 - 默认显示 -->
+    <!-- 静态图片层 - 默认显示，使用 up-image 组件 -->
     <view
       class="up-live-photo__image-layer"
       :class="{
@@ -229,19 +341,46 @@ export default {
         'up-live-photo__image-layer--transitioning': isTransitioning
       }"
     >
-      <image :src="getDisplayImageSrc()" :mode="mode" class="up-live-photo__image" @load="onImageLoad" @error="onImageError" />
-
-      <!-- 加载中状态 -->
-      <view v-if="!imageLoaded && !imageError" class="up-live-photo__loading">
-        <view class="up-live-photo__loading-bg" />
-      </view>
+      <up-image
+        :src="imageProps.src"
+        :mode="imageProps.mode"
+        :width="imageProps.width"
+        :height="imageProps.height"
+        :radius="imageProps.radius"
+        :round="imageProps.round"
+        :lazy-load="imageProps.lazyLoad"
+        :enable-preview="imageProps.enablePreview"
+        :preview-src="imageProps.previewSrc"
+        :placeholder-src="imageProps.placeholderSrc"
+        :filter="imageProps.filter"
+        :delay="imageProps.delay"
+        :min-height="imageProps.minHeight"
+        :custom-style="imageProps.customStyle"
+        :custom-class="imageProps.customClass"
+        class="up-live-photo__image"
+        @load="onImageLoad"
+        @error="onImageError"
+        @click="onImageClick"
+      >
+        <!-- 转发所有插槽 -->
+        <template #loading>
+          <slot name="loading">
+            <view class="up-live-photo__loading">
+              <view class="up-live-photo__loading-bg" />
+            </view>
+          </slot>
+        </template>
+        <template #error>
+          <slot name="error"></slot>
+        </template>
+      </up-image>
     </view>
 
-    <!-- 视频层 - 长按时显示 -->
+    <!-- 视频层 - 长按时显示或自动播放时显示 -->
     <view
       class="up-live-photo__video-layer"
       :class="{
-        'up-live-photo__video-layer--visible': isPressed && isVideoPlaying,
+        'up-live-photo__video-layer--visible': (isPressed && isVideoPlaying) || (autoplay && isVideoPlaying),
         'up-live-photo__video-layer--transitioning': isTransitioning
       }"
     >
@@ -261,7 +400,22 @@ export default {
         @play="onVideoPlay"
         @pause="onVideoPause"
         @ended="onVideoEnded"
+        @loadeddata="onVideoLoadedData"
+        @error="onVideoError"
+        @progress="onVideoProgress"
+        @timeupdate="onVideoProgress"
       />
+    </view>
+
+    <!-- Live Photo 指示器 - 独立于交互层，避免动画影响 -->
+    <view v-if="showIndicator" class="up-live-photo__indicator" :class="{ 'up-live-photo__indicator--active': isPressed }">
+      <view class="up-live-photo__indicator-icon">
+        <!-- SVG 图标 -->
+        <!-- eslint-disable-next-line vue/no-v-text-v-html-on-component -->
+        <view class="up-live-photo__indicator-svg" v-html="indicatorIcon"></view>
+        <!-- LIVE 文字 -->
+        <text class="up-live-photo__indicator-text">LIVE</text>
+      </view>
     </view>
 
     <!-- 交互层 - 处理长按事件 -->
@@ -271,19 +425,7 @@ export default {
       @touchstart="onLongPressStart"
       @touchend="onLongPressEnd"
       @touchcancel="onLongPressEnd"
-    >
-      <!-- Live Photo 指示器 -->
-      <view v-if="showIndicator" class="up-live-photo__indicator" :class="{ 'up-live-photo__indicator--active': isPressed }">
-        <view class="up-live-photo__indicator-icon">
-          <text class="up-live-photo__indicator-text">LIVE</text>
-        </view>
-      </view>
-
-      <!-- 长按提示 -->
-      <view v-if="showHint && !isPressed" class="up-live-photo__hint" :class="{ 'up-live-photo__hint--hiding': isTransitioning }">
-        <text class="up-live-photo__hint-text">{{ hintText }}</text>
-      </view>
-    </view>
+    />
   </view>
 </template>
 

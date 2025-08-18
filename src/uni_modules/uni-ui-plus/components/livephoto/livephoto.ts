@@ -1,77 +1,28 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 import { makeNumericProp } from '../_utils'
+import { imageProps } from '../image/image'
 
-// 定义 props
-export const livePhotoProps = {
+// 定义 LivePhoto 特有的 props
+const livePhotoSpecificProps = {
   // 视频源
   videoSrc: {
     type: String,
     required: true
   },
-  // 静态图片源
-  imageSrc: {
+  // 静态图片源 - 重命名为 src 以与 image 组件保持一致
+  src: {
     type: String,
     required: true
-  },
-  // 视频封面
-  poster: {
-    type: String,
-    default: ''
-  },
-  // 默认图片源
-  defaultImageSrc: {
-    type: String,
-    default: ''
-  },
-  // 宽度
-  width: {
-    type: [Number, String] as PropType<number | string>,
-    default: '100%'
-  },
-  // 高度
-  height: {
-    type: [Number, String] as PropType<number | string>,
-    default: '100%'
-  },
-  // 圆角
-  radius: {
-    type: [Number, String] as PropType<number | string>,
-    default: 0
-  },
-  // 是否圆形
-  round: {
-    type: Boolean,
-    default: false
-  },
-  // 自定义样式
-  customStyle: {
-    type: String,
-    default: ''
-  },
-  // 自定义类名
-  customClass: {
-    type: String,
-    default: ''
-  },
-  // 填充模式
-  mode: {
-    type: String,
-    default: 'aspectFill'
   },
   // 是否显示 Live Photo 指示器
   showIndicator: {
     type: Boolean,
     default: true
   },
-  // 是否显示长按提示
-  showHint: {
+  // 是否自动播放视频
+  autoplay: {
     type: Boolean,
-    default: true
-  },
-  // 提示文本
-  hintText: {
-    type: String,
-    default: '长按查看实况'
+    default: false
   },
   // 是否启用振动反馈
   enableVibration: {
@@ -85,15 +36,31 @@ export const livePhotoProps = {
   }
 } as const
 
+// 合并 image props 和 LivePhoto 特有的 props
+export const livePhotoProps = {
+  ...imageProps,
+  ...livePhotoSpecificProps,
+  // 覆盖一些默认值以适应 LivePhoto 的需求
+  enablePreview: {
+    type: Boolean,
+    default: false // LivePhoto 不应该启用预览
+  }
+} as const
+
 export type LivePhotoProps = ExtractPropTypes<typeof livePhotoProps>
 
-// 定义 emits
+// 定义 emits - 包含 image 组件的 emits 和 LivePhoto 特有的 emits
 export interface LivePhotoEmits {
+  // 继承自 image 组件的事件
+  (e: 'load', event: any): void
+  (e: 'error', event: any): void
+  (e: 'click', event: any): void
+  // LivePhoto 特有的事件
   (e: 'video-play'): void
   (e: 'video-pause'): void
   (e: 'press-start'): void
   (e: 'press-end'): void
   (e: 'video-ended'): void
-  (e: 'image-load'): void
-  (e: 'image-error'): void
+  (e: 'video-loaded'): void
+  (e: 'video-progress', progress: number): void
 }

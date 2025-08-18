@@ -174,6 +174,10 @@ export default defineConfig({
             {
               link: '/component/waterfall',
               text: 'Waterfall 瀑布流'
+            },
+            {
+              link:'/component/livephoto',
+              text: 'LivePhoto 实况照片'
             }
           ]
         },

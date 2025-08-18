@@ -45,7 +45,7 @@
           }"
         >
           <template #default="{ item }">
-            <view class="list-item-box" :key="item.id">
+            <view class="list-item-box">
               <image :src="item.cover" class="cover" mode="aspectFill" />
               <view class="content">
                 <view class="title">{{ item.title }}</view>

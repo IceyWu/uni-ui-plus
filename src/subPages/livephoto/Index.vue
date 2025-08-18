@@ -3,7 +3,7 @@
     <!-- 基本用法 -->
     <demo-block title="基本用法">
       <view class="demo-item">
-        <up-live-photo :video-src="demoData.videoSrc" :image-src="demoData.imageSrc" width="300" height="200" radius="12" />
+        <up-live-photo :video-src="demoData.videoSrc" :src="demoData.imageSrc" width="300" height="200" radius="12" />
       </view>
     </demo-block>
 
@@ -14,54 +14,22 @@
         <slider @change="onRadiusChange" :min="0" :max="100" :step="10" :value="customRadius" show-value style="width: 300px; margin: 20rpx 0" />
       </view>
       <view class="demo-item">
-        <up-live-photo :video-src="demoData.videoSrc" :image-src="demoData.imageSrc" width="300" height="200" :radius="customRadius" />
+        <up-live-photo :video-src="demoData.videoSrc" :src="demoData.imageSrc" width="300" height="200" :radius="customRadius" />
       </view>
     </demo-block>
 
     <!-- 不同尺寸 -->
-    <demo-block title="不同尺寸">
-      <view class="demo-grid">
-        <view class="demo-grid-item">
-          <text class="size-label">小</text>
-          <up-live-photo :video-src="demoData.videoSrc" :image-src="demoData.imageSrc" width="120" height="80" radius="8" />
-        </view>
-        <view class="demo-grid-item">
-          <text class="size-label">中</text>
-          <up-live-photo :video-src="demoData.videoSrc" :image-src="demoData.imageSrc" width="180" height="120" radius="12" />
-        </view>
-        <view class="demo-grid-item">
-          <text class="size-label">大</text>
-          <up-live-photo :video-src="demoData.videoSrc" :image-src="demoData.imageSrc" width="240" height="160" radius="16" />
-        </view>
+    <demo-block title="自动播放">
+      <view class="demo-item">
+        <text>自动播放模式，视频会自动开始播放，结束后仍可手动交互</text>
+        <up-live-photo :video-src="demoData.videoSrc" :src="demoData.imageSrc" width="300" height="200" radius="12" :autoplay="true" />
       </view>
     </demo-block>
 
-    <!-- 自定义提示文本 -->
-    <demo-block title="自定义提示文本">
+    <!-- 隐藏指示器 -->
+    <demo-block title="隐藏指示器">
       <view class="demo-item">
-        <up-live-photo
-          :video-src="demoData.videoSrc"
-          :image-src="demoData.imageSrc"
-          width="300"
-          height="200"
-          radius="12"
-          hint-text="按住播放动态效果"
-        />
-      </view>
-    </demo-block>
-
-    <!-- 隐藏指示器和提示 -->
-    <demo-block title="隐藏指示器和提示">
-      <view class="demo-item">
-        <up-live-photo
-          :video-src="demoData.videoSrc"
-          :image-src="demoData.imageSrc"
-          width="300"
-          height="200"
-          radius="12"
-          :show-indicator="false"
-          :show-hint="false"
-        />
+        <up-live-photo :video-src="demoData.videoSrc" :src="demoData.imageSrc" width="300" height="200" radius="12" :show-indicator="false" />
       </view>
     </demo-block>
 
@@ -70,7 +38,7 @@
       <view class="demo-item">
         <up-live-photo
           :video-src="demoData.videoSrc"
-          :image-src="demoData.imageSrc"
+          :src="demoData.imageSrc"
           width="300"
           height="200"
           radius="12"
@@ -93,7 +61,7 @@
     <!-- 组件方法调用 -->
     <demo-block title="组件方法">
       <view class="demo-item">
-        <up-live-photo ref="livePhotoRef" :video-src="demoData.videoSrc" :image-src="demoData.imageSrc" width="300" height="200" radius="12" />
+        <up-live-photo ref="livePhotoRef" :video-src="demoData.videoSrc" :src="demoData.imageSrc" width="300" height="200" radius="12" />
       </view>
       <view class="demo-buttons">
         <button @click="stopVideo" size="mini" type="primary">停止播放</button>
@@ -102,6 +70,26 @@
       </view>
       <view v-if="playingStatus !== null" class="status-info">
         <text>播放状态：{{ playingStatus ? '播放中' : '已停止' }}</text>
+      </view>
+    </demo-block>
+
+    <!-- 自定义插槽 -->
+    <demo-block title="自定义插槽">
+      <view class="demo-item">
+        <up-live-photo :video-src="demoData.videoSrc" :src="'invalid-url'" width="300" height="200" radius="12">
+          <template #loading>
+            <view class="custom-loading">
+              <text class="loading-text">正在加载...</text>
+              <view class="loading-spinner"></view>
+            </view>
+          </template>
+          <template #error>
+            <view class="custom-error">
+              <text class="error-text">图片加载失败</text>
+              <text class="error-desc">请检查网络连接</text>
+            </view>
+          </template>
+        </up-live-photo>
       </view>
     </demo-block>
   </page-wraper>
@@ -196,25 +184,11 @@ function resetComponent() {
   margin: 20rpx 0;
 }
 
-.demo-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20rpx;
-  justify-content: space-around;
-  margin: 20rpx 0;
-}
-
-.demo-grid-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10rpx;
-}
-
-.size-label {
+.demo-item text {
   font-size: 28rpx;
   color: #666;
-  margin-bottom: 10rpx;
+  text-align: center;
+  margin-bottom: 16rpx;
 }
 
 .event-log {
@@ -255,9 +229,65 @@ function resetComponent() {
 .status-info {
   margin-top: 20rpx;
   padding: 16rpx;
-  background-color: #e8f4fd;
+  background-color: #e7f3ff;
   border-radius: 8rpx;
   text-align: center;
+}
+
+.custom-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: #f5f5f5;
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.loading-spinner {
+  width: 40rpx;
+  height: 40rpx;
+  border: 4rpx solid #e0e0e0;
+  border-top: 4rpx solid #007aff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.custom-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: #fff2f0;
+  border: 2rpx solid #ffccc7;
+}
+
+.error-text {
+  font-size: 30rpx;
+  color: #ff4d4f;
+  margin-bottom: 8rpx;
+}
+
+.error-desc {
+  font-size: 24rpx;
+  color: #999;
 }
 
 .status-info text {
