@@ -122,24 +122,55 @@
   &__indicator-icon {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 8rpx;
   }
 
-  &__indicator-svg {
+  // 纯 CSS 图标 - 兼容所有平台
+  &__indicator-css {
+    position: relative;
+    width: 48rpx;
+    height: 48rpx;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
-    padding: 0 2rpx;
-    
-    :global(svg) {
-      width: 32rpx;
-      height: 32rpx;
-      color: #ffffff;
-    }
-    
-    :global(.live-icon) {
-      color: #ffffff;
+    transform: scale(0.6); // 缩小到更小的显示尺寸
+  }
+
+  &__indicator-center {
+    position: absolute;
+    width: 8rpx;
+    height: 8rpx;
+    background-color: #ffffff;
+    border-radius: 50%;
+    z-index: 3;
+  }
+
+  &__indicator-inner-ring {
+    position: absolute;
+    width: 20rpx;
+    height: 20rpx;
+    border: 3rpx solid #ffffff; // 增加边框粗细
+    border-radius: 50%;
+    z-index: 2;
+  }
+
+  &__indicator-dots {
+    position: absolute;
+    width: 48rpx;
+    height: 48rpx;
+  }
+
+  &__indicator-progress-dot {
+    position: absolute;
+    width: 5rpx; // 增加圆点大小
+    height: 5rpx; // 增加圆点大小
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transition: background-color 0.3s ease-out;
+
+    &--active {
+      background-color: #ffffff;
     }
   }
 
@@ -147,9 +178,8 @@
     font-size: 24rpx;
     font-weight: 500;
     color: #ffffff;
+    letter-spacing: 0.5rpx;
     line-height: 1;
-    margin-left: 8rpx;
-    margin-right: 6rpx;
   }
 
   &__hint {

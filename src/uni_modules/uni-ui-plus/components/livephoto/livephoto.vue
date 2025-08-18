@@ -4,7 +4,6 @@ import { addUnit, isDef, objToStyle } from '../_utils'
 import UpImage from '../image/image.vue'
 import type { LivePhotoEmits, LivePhotoProps } from './livephoto'
 import { livePhotoProps } from './livephoto'
-import { liveIcon, createProgressLiveIcon } from './icons'
 
 // Props 定义
 const props = defineProps(livePhotoProps)
@@ -78,13 +77,21 @@ const rootClass = computed(() => {
   return `up-live-photo ${props.customClass}`
 })
 
-// 计算指示器图标
-const indicatorIcon = computed(() => {
-  if (isVideoLoading.value) {
-    return createProgressLiveIcon(videoLoadProgress.value)
+// 计算圆点位置
+function getDotPosition(index: number) {
+  const angle = (index * 30 - 90) * (Math.PI / 180) // 从顶部开始，转换为弧度
+  const radius = 20 // 圆点到中心的距离
+  const centerX = 24 // 容器中心 X (48/2)
+  const centerY = 24 // 容器中心 Y (48/2)
+
+  const x = centerX + radius * Math.cos(angle)
+  const y = centerY + radius * Math.sin(angle)
+
+  return {
+    left: `${x - 2.5}rpx`, // 减去圆点半径（5rpx/2）
+    top: `${y - 2.5}rpx` // 减去圆点半径（5rpx/2）
   }
-  return liveIcon
-})
+}
 
 // 监听视频源变化，重置加载状态
 watch(
@@ -410,9 +417,23 @@ export default {
     <!-- Live Photo 指示器 - 独立于交互层，避免动画影响 -->
     <view v-if="showIndicator" class="up-live-photo__indicator" :class="{ 'up-live-photo__indicator--active': isPressed }">
       <view class="up-live-photo__indicator-icon">
-        <!-- SVG 图标 -->
-        <!-- eslint-disable-next-line vue/no-v-text-v-html-on-component -->
-        <view class="up-live-photo__indicator-svg" v-html="indicatorIcon"></view>
+        <!-- 纯 CSS 图标 - 兼容所有平台 -->
+        <view class="up-live-photo__indicator-css">
+          <!-- 中心圆点 -->
+          <view class="up-live-photo__indicator-center"></view>
+          <!-- 内圆环 -->
+          <view class="up-live-photo__indicator-inner-ring"></view>
+          <!-- 外围进度圆点 -->
+          <view class="up-live-photo__indicator-dots">
+            <view
+              v-for="(dot, index) in 12"
+              :key="index"
+              class="up-live-photo__indicator-progress-dot"
+              :class="{ 'up-live-photo__indicator-progress-dot--active': (isVideoLoading && index / 12 <= videoLoadProgress / 100) || isVideoLoaded }"
+              :style="getDotPosition(index)"
+            ></view>
+          </view>
+        </view>
         <!-- LIVE 文字 -->
         <text class="up-live-photo__indicator-text">LIVE</text>
       </view>
