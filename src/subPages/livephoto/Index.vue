@@ -92,6 +92,57 @@
         </up-live-photo>
       </view>
     </demo-block>
+
+    <!-- 展示模式 -->
+    <demo-block title="展示模式">
+      <view class="demo-item">
+        <text>展示模式下只显示图片和指示器，不支持视频交互</text>
+        <up-live-photo :video-src="demoData.videoSrc" :src="demoData.imageSrc" width="300" height="200" radius="12" :display-only="true" />
+      </view>
+    </demo-block>
+
+    <!-- 自定义指示器位置 -->
+    <demo-block title="自定义指示器位置">
+      <view class="demo-item">
+        <text>自定义指示器的位置</text>
+        <view class="position-controls">
+          <view class="control-item">
+            <text>Left: {{ indicatorLeft }}rpx</text>
+            <slider @change="onIndicatorLeftChange" :min="0" :max="200" :step="10" :value="indicatorLeft" show-value style="width: 250px" />
+          </view>
+          <view class="control-item">
+            <text>Top: {{ indicatorTop }}rpx</text>
+            <slider @change="onIndicatorTopChange" :min="0" :max="150" :step="10" :value="indicatorTop" show-value style="width: 250px" />
+          </view>
+        </view>
+        <up-live-photo
+          :video-src="demoData.videoSrc"
+          :src="demoData.imageSrc"
+          width="300"
+          height="200"
+          radius="12"
+          :indicator-left="indicatorLeft"
+          :indicator-top="indicatorTop"
+        />
+      </view>
+    </demo-block>
+
+    <!-- 自定义图片插槽 -->
+    <demo-block title="自定义图片插槽">
+      <view class="demo-item">
+        <text>使用插槽自定义图片内容</text>
+        <up-live-photo :video-src="demoData.videoSrc" :src="demoData.imageSrc" width="300" height="200" radius="12">
+          <template #image="{ src }">
+            <view class="custom-image-container">
+              <image :src="src" mode="aspectFill" class="custom-image" @load="onCustomImageLoad" @error="onCustomImageError" />
+              <view class="custom-overlay">
+                <text class="overlay-text">自定义图片</text>
+              </view>
+            </view>
+          </template>
+        </up-live-photo>
+      </view>
+    </demo-block>
   </page-wraper>
 </template>
 
@@ -113,6 +164,10 @@ const demoData = reactive({
 // 自定义圆角
 const customRadius = ref(20)
 
+// 自定义指示器位置
+const indicatorLeft = ref(20)
+const indicatorTop = ref(20)
+
 // 播放状态
 const playingStatus = ref<boolean | null>(null)
 
@@ -132,6 +187,15 @@ function addEventLog(event: string) {
 // 圆角变化
 function onRadiusChange(e: any) {
   customRadius.value = e.detail.value
+}
+
+// 指示器位置变化
+function onIndicatorLeftChange(e: any) {
+  indicatorLeft.value = e.detail.value
+}
+
+function onIndicatorTopChange(e: any) {
+  indicatorTop.value = e.detail.value
 }
 
 // 事件处理
@@ -172,6 +236,15 @@ function resetComponent() {
     playingStatus.value = null
     addEventLog('重置组件状态')
   }
+}
+
+// 自定义图片事件
+function onCustomImageLoad() {
+  addEventLog('自定义图片加载成功')
+}
+
+function onCustomImageError() {
+  addEventLog('自定义图片加载失败')
 }
 </script>
 
@@ -293,5 +366,57 @@ function resetComponent() {
 .status-info text {
   font-size: 28rpx;
   color: #007aff;
+}
+
+.custom-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.custom-image {
+  width: 100%;
+  height: 100%;
+}
+
+.custom-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  padding: 16rpx;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.overlay-text {
+  color: white;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.position-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin: 20rpx 0;
+  padding: 20rpx;
+  background-color: #f8f9fa;
+  border-radius: 12rpx;
+}
+
+.control-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.control-item text {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 0 !important;
 }
 </style>

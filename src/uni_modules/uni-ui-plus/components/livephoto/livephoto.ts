@@ -33,6 +33,21 @@ const livePhotoSpecificProps = {
   muted: {
     type: Boolean,
     default: true
+  },
+  // 是否仅展示模式（只显示图片和指示器，不支持交互和视频播放）
+  displayOnly: {
+    type: Boolean,
+    default: false
+  },
+  // 指示器水平位置（距离左边的距离）
+  indicatorLeft: {
+    type: [String, Number] as PropType<string | number>,
+    default: '20rpx'
+  },
+  // 指示器垂直位置（距离顶部的距离）
+  indicatorTop: {
+    type: [String, Number] as PropType<string | number>,
+    default: '20rpx'
   }
 } as const
 
