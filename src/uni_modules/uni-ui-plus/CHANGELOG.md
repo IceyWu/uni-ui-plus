@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.0.62
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.61...v0.0.62)
+
+### 🚀 Enhancements
+
+- 更新 LivePhoto 组件样式导入方式，使用 @use 替代 @import ([d8b644d](https://github.com/iceywu/uni-ui-plus/commit/d8b644d))
+- 更新 Algolia 搜索配置，添加应用 ID、API 密钥和索引名称 ([decbdeb](https://github.com/iceywu/uni-ui-plus/commit/decbdeb))
+
+### 🏡 Chore
+
+- 发布 v0.0.62 版本 ([95101e2](https://github.com/iceywu/uni-ui-plus/commit/95101e2))
+
+### ❤️ Contributors
+
+- IceyWu ([@iceywu](https://github.com/iceywu))
+
+## v0.0.61
+
+- 添加 LivePhoto 组件及其文档，支持视频和图片的长按播放功能 ([ddc62ed](https://github.com/iceywu/uni-ui-plus/commit/ddc62ed))
+- Add LivePhoto component and enhance documentation ([cbfacd0](https://github.com/iceywu/uni-ui-plus/commit/cbfacd0))
+- 更新 LivePhoto 组件的指示器样式，添加纯 CSS 图标支持 ([7379731](https://github.com/iceywu/uni-ui-plus/commit/7379731))
+
 ## v0.0.60
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.58...v0.0.60)

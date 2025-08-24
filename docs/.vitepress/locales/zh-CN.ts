@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   lang: 'zh-CN',
-  description: '基于uni-ui的二次封装的uniapp组件库',
+  description: '🚀 现代化的 uni-app 组件库，提供丰富的高质量组件',
   themeConfig: {
     lastUpdated: {
       text: '最后更新'

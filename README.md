@@ -4,7 +4,7 @@ width="100"
 height="100" style="max-width: 100%;" alt="logo" />
 </p>
 <h1 align="center">uni-ui-plus</h1>
-<p align="center">uni-ui 二次封装</p>
+<p align="center">🚀 现代化的 uni-app 组件库</p>
 <p align="center">
 <a href="https://github.com/iceywu/uni-ui-plus">
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/iceywu/uni-ui-plus?logo=github&color=%234d80f0&link=https%3A%2F%2Fgithub.com%2iceywu%2Funi-ui-plus">
@@ -19,32 +19,39 @@ height="100" style="max-width: 100%;" alt="logo" />
   <img src="https://img.shields.io/npm/dt/uni-ui-plus?style=flat-square" alt="downloads">
 </a>
 
-## 介绍
+## 🎯 介绍
 
-uni-ui-plus 是对@dcloudio/uni-ui的二次封装，旨在提供更好的使用体验和更多的功能。
+**uni-ui-plus** 是一个专为 uni-app 生态打造的现代化组件库，致力于提供：
 
-# 文档
-[docs](https://uni-ui-plus-docs.netlify.app/)
+- 🚀 **开箱即用**：零配置快速上手，简化开发流程
+- 🎨 **精美设计**：遵循现代设计语言，提供优雅的用户体验  
+- 📱 **全端兼容**：完美支持 H5、小程序、App 等多端平台
+- 🛠️ **TypeScript**：完整的类型定义，提供更好的开发体验
+- 🎭 **主题定制**：灵活的主题系统，轻松实现个性化定制
+- ⚡ **高性能**：经过优化的组件实现，确保流畅的用户体验
 
-# 快速上手
+## 📚 文档
 
-## NPM方式
+[📖 在线文档](https://uni-ui-plus-docs.netlify.app/)
 
-### 安装
+## 🚀 快速上手
 
-```bash [pnpm]
+### 📦 安装
+
+使用你喜欢的包管理器安装：
+
+```bash
+# pnpm (推荐)
 pnpm add uni-ui-plus
-```
 
-```bash [yarn]
+# yarn
 yarn add uni-ui-plus
-```
 
-```bash [npm]
+# npm
 npm install uni-ui-plus
 ```
 
-### 配置
+### ⚙️ 配置
 
 ---
 

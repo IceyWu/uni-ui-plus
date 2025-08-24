@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@dcloudio/uni-ui':
-        specifier: '>=1.5.7'
-        version: 1.5.7
       '@uni-helper/uni-app-types':
         specifier: ^1.0.0-alpha.6
         version: 1.0.0-alpha.6(typescript@5.8.3)(vue@3.5.16(typescript@5.8.3))
@@ -42,9 +39,6 @@ packages:
   '@babel/types@7.27.3':
     resolution: {integrity: sha512-Y1GkI4ktrtvmawoSq+4FCVHNryea6uR+qUQy0AGxLSsjCX0nVmkYQMBLHDkXZuo5hGx7eYdnIaslsdBFm7zbUw==}
     engines: {node: '>=6.9.0'}
-
-  '@dcloudio/uni-ui@1.5.7':
-    resolution: {integrity: sha512-DugxSIrQrze1FLdUOj9a+JEQ0bHGjnJTcGUK1mN/MivKg7nuKJBRWk5Ipa9sUdoBznX6ndz5h2e7Uao6x1CdCw==}
 
   '@jridgewell/sourcemap-codec@1.5.0':
     resolution: {integrity: sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==}
@@ -309,8 +303,6 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
-
-  '@dcloudio/uni-ui@1.5.7': {}
 
   '@jridgewell/sourcemap-codec@1.5.0': {}
 

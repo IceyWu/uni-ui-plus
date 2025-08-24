@@ -54,16 +54,16 @@ inquirer
     // 项目版本更新
     switch (answers['version']) {
       case '🐛 patch 小版本':
-        execSync('pnpm release-patch')
+        execSync('pnpm release:patch')
         break
       case '✨ minor 中版本':
-        execSync('pnpm release-minor')
+        execSync('pnpm release:minor')
         break
       case '🚀 major 大版本':
-        execSync('pnpm release-major')
+        execSync('pnpm release:major')
         break
       default:
-        execSync('pnpm release-minor')
+        execSync('pnpm release:minor')
         break
     }
     // 生成日志

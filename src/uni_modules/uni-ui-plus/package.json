@@ -1,8 +1,8 @@
 {
   "name": "uni-ui-plus",
   "displayName": "uni-ui-plus",
-  "version": "0.0.61",
-  "description": "🦄基于uni-ui的二次封装的uniapp组件库",
+  "version": "0.0.62",
+  "description": "🦄 现代化的 uni-app 组件库，提供丰富的高质量组件",
   "author": "Icey Wu <3128006406@qq.com>",
   "license": "MIT",
   "homepage": "https://github.com/iceywu/uni-ui-plus#readme",
@@ -61,7 +61,6 @@
     "test": "pnpm lint && pnpm test:types"
   },
   "peerDependencies": {
-    "@dcloudio/uni-ui": ">=1.5.7",
     "@uni-helper/uni-app-types": "^1.0.0-alpha.6",
     "vue": ">=3.2.0"
   },

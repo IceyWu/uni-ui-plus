@@ -1,6 +1,6 @@
 # 介绍
 
-`uni-ui-plus`组件库基于`vue3`+`Typescript`+`uni-ui`构建的二次封装的uniapp组件库
+`uni-ui-plus` 是一个专为 uni-app 生态打造的现代化组件库，基于 `Vue 3` + `TypeScript` 构建，提供丰富的高质量组件。
 
 ## 快速上手
 

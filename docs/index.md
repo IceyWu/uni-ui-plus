@@ -2,11 +2,11 @@
 layout: home
 
 title: uni-ui-plus
-titleTemplate: 基于uni-ui的二次封装的uniapp组件库
+titleTemplate: 🚀 现代化的 uni-app 组件库
 
 hero:
   name: uni-ui-plus
-  text: 基于uni-ui的二次封装的uniapp组件库
+  text: 🚀 现代化的 uni-app 组件库
   tagline: 基于Vue3+TS开发，支持多端
   image:
     src: /logo.png

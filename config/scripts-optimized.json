@@ -1,0 +1,42 @@
+{
+  "scripts": {
+    "dev": "uni",
+    "dev:platform": "uni -p",
+    "build": "uni build",
+    "build:platform": "uni build -p",
+
+    "dev:h5": "uni",
+    "dev:app": "uni -p app",
+    "dev:mp-weixin": "uni -p mp-weixin",
+    "dev:mp-alipay": "uni -p mp-alipay",
+
+    "build:h5": "uni build",
+    "build:app": "uni build -p app",
+    "build:mp-weixin": "uni build -p mp-weixin",
+    "build:mp-alipay": "uni build -p mp-alipay",
+
+    "docs:dev": "vitepress dev docs --port 5174",
+    "docs:build": "pnpm run build:h5 && vitepress build docs && esno ./scripts/demoCopy.ts",
+    "docs:serve": "vitepress serve docs",
+
+    "test": "vitest",
+    "test:h5": "cross-env UNI_PLATFORM=h5 vitest",
+    "test:mp-weixin": "cross-env UNI_PLATFORM=mp-weixin vitest",
+    "test:coverage": "vitest run --coverage",
+
+    "lint": "eslint --fix --ext .js,.vue,.ts src",
+    "type-check": "vue-tsc --noEmit",
+
+    "release": "esno ./scripts/release.ts",
+    "release:major": "standard-version --release-as major",
+    "release:minor": "standard-version --release-as minor",
+    "release:patch": "standard-version --release-as patch",
+
+    "build:lib": "pnpm run --dir src/uni_modules/uni-ui-plus build",
+    "build:web-types": "esno ./scripts/build-web-types.ts",
+    "build:theme-vars": "esno ./scripts/buildThemeVars.ts",
+
+    "prepare": "husky install",
+    "preinstall": "npx only-allow pnpm"
+  }
+}
