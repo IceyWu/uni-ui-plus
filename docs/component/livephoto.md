@@ -60,6 +60,60 @@
 />
 ```
 
+## 展示模式
+
+通过 `display-only` 属性启用展示模式，只显示图片和指示器，不支持视频交互。
+
+```vue
+<up-live-photo
+  video-src="https://sample-videos.com/zip/10/mp4/SampleVideo_360x240_1mb.mp4"
+  src="https://picsum.photos/400/300?random=1"
+  width="300"
+  height="200"
+  radius="12"
+  :display-only="true"
+/>
+```
+
+## 自定义指示器位置
+
+通过 `indicator-left` 和 `indicator-top` 属性自定义指示器的位置。
+
+```vue
+<up-live-photo
+  video-src="https://sample-videos.com/zip/10/mp4/SampleVideo_360x240_1mb.mp4"
+  src="https://picsum.photos/400/300?random=1"
+  width="300"
+  height="200"
+  radius="12"
+  indicator-left="50"
+  indicator-top="30"
+/>
+```
+
+## 自定义图片插槽
+
+使用 `image` 插槽自定义图片内容，可以添加覆盖层、特效等自定义元素。
+
+```vue
+<up-live-photo
+  video-src="https://sample-videos.com/zip/10/mp4/SampleVideo_360x240_1mb.mp4"
+  src="https://picsum.photos/400/300?random=1"
+  width="300"
+  height="200"
+  radius="12"
+>
+  <template #image="{ src }">
+    <view class="custom-image-container">
+      <image :src="src" mode="aspectFill" class="custom-image" />
+      <view class="custom-overlay">
+        <text>自定义覆盖内容</text>
+      </view>
+    </view>
+  </template>
+</up-live-photo>
+```
+
 ## 事件监听
 
 支持监听长按开始/结束、视频播放/暂停等事件。
@@ -135,6 +189,9 @@ function resetComponent() {
 | autoplay          | 是否自动播放             | boolean           | false            | -      |
 | enable-vibration  | 是否启用振动反馈         | boolean           | true             | -      |
 | muted             | 是否静音播放             | boolean           | true             | -      |
+| display-only      | 是否仅展示模式           | boolean           | false            | -      |
+| indicator-left    | 指示器距左边距离         | string \| number  | '20rpx'          | -      |
+| indicator-top     | 指示器距顶部距离         | string \| number  | '20rpx'          | -      |
 | lazy-load         | 是否懒加载图片           | boolean           | true             | -      |
 | enable-preview    | 是否启用图片预览         | boolean           | false            | -      |
 | preview-src       | 预览图片地址             | string            | ''               | -      |
@@ -143,6 +200,14 @@ function resetComponent() {
 | delay             | 加载延迟时间             | number            | 0                | -      |
 | min-height        | 最小高度                 | number \| string  | '200rpx'         | -      |
 | round             | 是否为圆形               | boolean           | false            | -      |
+
+## Slots
+
+| 插槽名 | 说明           | 参数                          |
+|--------|----------------|-------------------------------|
+| image  | 自定义图片内容 | { src: string, imageProps: object } |
+| loading| 自定义加载状态 | -                             |
+| error  | 自定义错误状态 | -                             |
 
 ## Events
 

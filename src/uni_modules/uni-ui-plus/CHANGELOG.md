@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.0.63
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.62...v0.0.63)
+
+### 🚀 Enhancements
+
+- **LivePhoto组件**: 新增图片插槽支持，允许完全自定义图片内容
+- **LivePhoto组件**: 新增展示模式 `displayOnly`，仅显示图片和指示器，不支持视频交互
+- **LivePhoto组件**: 新增指示器位置自定义功能，支持 `indicatorLeft` 和 `indicatorTop` 属性
+- 更新 LivePhoto 组件示例页面，展示新功能的使用方法
+
+### 📚 Documentation
+
+- 新增 LivePhoto 组件功能更新说明文档
+- 更新 API 文档，添加新增属性的说明
+
+### ❤️ Contributors
+
+- IceyWu ([@iceywu](https://github.com/iceywu))
+
 ## v0.0.62
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.61...v0.0.62)
