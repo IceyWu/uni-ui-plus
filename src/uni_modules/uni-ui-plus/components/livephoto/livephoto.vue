@@ -451,5 +451,5 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import './index.scss';
+@use './index' as *;
 </style>
