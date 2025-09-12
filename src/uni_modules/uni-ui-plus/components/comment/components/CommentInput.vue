@@ -7,7 +7,7 @@
       <view class="up-comment-input__content">
         <textarea
           v-model="inputValue"
-          :placeholder="placeholder"
+          :placeholder="computedPlaceholder"
           :maxlength="maxLength"
           :auto-focus="autoFocus"
           :disabled="disabled"
@@ -33,7 +33,7 @@
         :class="{ 'up-comment-input__submit--disabled': !canSubmit }"
         @click="handleSubmit"
       >
-        {{ buttonText }}
+        {{ computedButtonText }}
       </button>
     </view>
 
@@ -51,6 +51,9 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { getDefaultAvatar } from '../utils'
+import { useTranslate } from '../../composables-fn/useTranslate'
+
+const { translate } = useTranslate('comment')
 
 interface CommentInputProps {
   placeholder?: string
@@ -77,16 +80,20 @@ interface Emits {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  placeholder: '请输入评论内容...',
+  placeholder: '',
   maxLength: 500,
   showAvatar: true,
   avatar: '',
-  buttonText: '发布',
+  buttonText: '',
   autoFocus: false,
   showEmotion: true,
   disabled: false,
   modelValue: ''
 })
+
+// 计算默认占位符和按钮文本
+const computedPlaceholder = computed(() => props.placeholder || translate('placeholder'))
+const computedButtonText = computed(() => props.buttonText || translate('submit'))
 
 const emit = defineEmits<Emits>()
 

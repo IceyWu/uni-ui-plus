@@ -2,12 +2,12 @@
   <view class="up-comment-list">
     <!-- 加载状态 -->
     <view v-if="loading && comments.length === 0" class="up-comment-list__loading">
-      <text class="up-comment-list__loading-text">加载中...</text>
+      <text class="up-comment-list__loading-text">{{ translate('loading') }}</text>
     </view>
 
     <!-- 空状态 -->
     <view v-else-if="comments.length === 0" class="up-comment-list__empty">
-      <text class="up-comment-list__empty-text">暂无评论</text>
+      <text class="up-comment-list__empty-text">{{ translate('empty') }}</text>
     </view>
 
     <!-- 评论列表 -->
@@ -29,12 +29,12 @@
 
       <!-- 加载更多 -->
       <view v-if="loading && comments.length > 0" class="up-comment-list__load-more">
-        <text class="up-comment-list__load-more-text">加载中...</text>
+        <text class="up-comment-list__load-more-text">{{ translate('loading') }}</text>
       </view>
 
       <!-- 没有更多 -->
       <view v-if="finished && comments.length > 0" class="up-comment-list__finished">
-        <text class="up-comment-list__finished-text">没有更多了</text>
+        <text class="up-comment-list__finished-text">{{ translate('noMore') }}</text>
       </view>
     </view>
   </view>
@@ -44,7 +44,10 @@
 import { computed } from 'vue'
 import type { CommentItem as CommentItemType } from '../comment'
 import { buildCommentTree } from '../utils'
+import { useTranslate } from '../../composables-fn/useTranslate'
 import CommentItem from './CommentItem.vue'
+
+const { translate } = useTranslate('comment')
 
 interface CommentListProps {
   comments: CommentItemType[]

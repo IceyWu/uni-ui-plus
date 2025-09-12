@@ -1623,5 +1623,22 @@
   "image-slot-error": "Custom Image Loading Slot - Error",
   "image-delay": "Image Load Delay (2000ms)",
   "image-filter": "Image Loading Filter",
-  "comment": "Comment"
+  "comment": "Comment",
+  "comment-reply": "Reply",
+  "comment-cancel": "Cancel",
+  "comment-report": "Report",
+  "comment-delete": "Delete",
+  "comment-confirm-delete": "Are you sure to delete this comment?",
+  "comment-reply-to": "Reply to",
+  "comment-like": "Like",
+  "comment-submit": "Submit",
+  "comment-placeholder": "Please enter comment...",
+  "comment-loading": "Loading...",
+  "comment-empty": "No comments yet",
+  "comment-load-more": "Load more",
+  "comment-no-more": "No more comments",
+  "comment-custom-placeholder": "Say something...",
+  "comment-send": "Send",
+  "comment-list-only": "Comment List Only",
+  "ziDingYiPeiZhi": "Custom Configuration"
 }

@@ -133,5 +133,20 @@ export default {
     clearText: '清空',
     revokeText: '撤销',
     restoreText: '恢复'
+  },
+  comment: {
+    reply: '回复',
+    cancel: '取消',
+    report: '举报',
+    delete: '删除',
+    confirmDelete: '确认删除这条评论吗？',
+    replyTo: '回复',
+    like: '点赞',
+    submit: '发布',
+    placeholder: '请输入评论内容...',
+    loading: '加载中...',
+    empty: '暂无评论',
+    loadMore: '加载更多',
+    noMore: '没有更多了'
   }
 }

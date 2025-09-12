@@ -1627,5 +1627,22 @@
   "empty-image": "图片类型",
   "empty-image-custom": "自定义图片",
   "empty-slot": "底部内容",
-  "comment": "Comment 评论"
+  "comment": "Comment 评论",
+  "comment-reply": "回复",
+  "comment-cancel": "取消",
+  "comment-report": "举报",
+  "comment-delete": "删除",
+  "comment-confirm-delete": "确认删除这条评论吗？",
+  "comment-reply-to": "回复",
+  "comment-like": "点赞",
+  "comment-submit": "发布",
+  "comment-placeholder": "请输入评论内容...",
+  "comment-loading": "加载中...",
+  "comment-empty": "暂无评论",
+  "comment-load-more": "加载更多",
+  "comment-no-more": "没有更多了",
+  "comment-custom-placeholder": "说点什么吧...",
+  "comment-send": "发送",
+  "comment-list-only": "只显示评论列表",
+  "ziDingYiPeiZhi": "自定义配置"
 }

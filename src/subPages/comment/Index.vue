@@ -1,10 +1,10 @@
 <template>
   <page-wraper>
-    <wd-navbar title="Comment 评论" left-arrow @click-left="handleBack"></wd-navbar>
+    <wd-navbar :title="$t('comment')" left-arrow @click-left="handleBack"></wd-navbar>
 
     <view class="demo-container">
       <!-- 基础用法 -->
-      <demo-block title="基础用法">
+      <demo-block :title="$t('jiBenYongFa')">
         <up-comment
           :comments="basicComments"
           :loading="loading"
@@ -17,14 +17,14 @@
       </demo-block>
 
       <!-- 自定义配置 -->
-      <demo-block title="自定义配置">
+      <demo-block :title="$t('ziDingYiPeiZhi')">
         <up-comment
           :comments="customComments"
           :max-level="2"
           :show-emotion="false"
           :max-length="200"
-          input-placeholder="说点什么吧..."
-          button-text="发送"
+          :input-placeholder="$t('comment-custom-placeholder')"
+          :button-text="$t('comment-send')"
           time-format="MM-DD HH:mm"
           @submit="handleCustomSubmit"
           @like="handleLike"
@@ -32,7 +32,7 @@
       </demo-block>
 
       <!-- 只显示列表 -->
-      <demo-block title="只显示评论列表">
+      <demo-block :title="$t('comment-list-only')">
         <up-comment :comments="listOnlyComments" :show-input="false" :show-count="false" @like="handleLike" />
       </demo-block>
     </view>
@@ -41,9 +41,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import UpComment from '@/uni_modules/uni-ui-plus/components//comment/comment.vue'
 import type { CommentItem } from '../../uni_modules/uni-ui-plus/components/comment/comment'
 
+const { t } = useI18n()
 const loading = ref(false)
 
 // 基础评论数据

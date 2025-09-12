@@ -8,7 +8,7 @@
       <view class="up-comment-item__content">
         <view class="up-comment-item__header">
           <text class="up-comment-item__username">{{ comment.username }}</text>
-          <text v-if="comment.replyTo" class="up-comment-item__reply-to">回复 @{{ comment.replyTo }}</text>
+          <text v-if="comment.replyTo" class="up-comment-item__reply-to">{{ translate('replyTo') }} @{{ comment.replyTo }}</text>
           <text v-if="showTime" class="up-comment-item__time">
             {{ formattedTime }}
           </text>
@@ -26,7 +26,7 @@
 
           <view v-if="showReply && (!maxLevel || (comment.level || 0) < maxLevel)" class="up-comment-item__action" @click="handleReply">
             <text class="up-comment-item__action-icon">💬</text>
-            <text class="up-comment-item__action-text">回复</text>
+            <text class="up-comment-item__action-text">{{ translate('reply') }}</text>
           </view>
 
           <view class="up-comment-item__action" @click="handleMore">
@@ -40,15 +40,15 @@
     <view v-if="showReplyInput" class="up-comment-item__reply-input">
       <CommentInput
         v-model="replyContent"
-        :placeholder="`回复 @${comment.username}`"
+        :placeholder="`${translate('replyTo')} @${comment.username}`"
         :parent-id="comment.parentId || comment.id"
         :reply-to="comment.username"
-        button-text="回复"
+        :button-text="translate('reply')"
         :show-avatar="false"
         @submit="handleReplySubmit"
       />
       <view class="up-comment-item__reply-actions">
-        <button class="up-comment-item__reply-cancel" @click="cancelReply">取消</button>
+        <button class="up-comment-item__reply-cancel" @click="cancelReply">{{ translate('cancel') }}</button>
       </view>
     </view>
 
@@ -76,7 +76,10 @@
 import { ref, computed } from 'vue'
 import type { CommentItem } from '../comment'
 import { formatTime, getDefaultAvatar } from '../utils'
+import { useTranslate } from '../../composables-fn/useTranslate'
 import CommentInput from './CommentInput.vue'
+
+const { translate } = useTranslate('comment')
 
 interface CommentItemProps {
   comment: CommentItem
@@ -150,14 +153,24 @@ const cancelReply = () => {
 
 const handleMore = () => {
   // 使用 uni-app 的 API
-  // @ts-expect-error uni-app API not typed
   uni.showActionSheet({
-    itemList: ['举报', '删除'],
+    itemList: [translate('report'), translate('delete')],
     success: (res: any) => {
       if (res.tapIndex === 0) {
         emit('report', props.comment)
       } else if (res.tapIndex === 1) {
-        emit('delete', props.comment)
+        // 显示确认删除对话框
+        uni.showModal({
+          title: translate('confirmDelete'),
+          showCancel: true,
+          cancelText: translate('cancel'),
+          confirmText: translate('delete'),
+          success: (modalRes: any) => {
+            if (modalRes.confirm) {
+              emit('delete', props.comment)
+            }
+          }
+        })
       }
     }
   })

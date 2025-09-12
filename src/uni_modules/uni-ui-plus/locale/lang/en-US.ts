@@ -129,5 +129,20 @@ export default {
     clearText: 'Clear',
     revokeText: 'Undo',
     restoreText: 'Restore'
+  },
+  comment: {
+    reply: 'Reply',
+    cancel: 'Cancel',
+    report: 'Report',
+    delete: 'Delete',
+    confirmDelete: 'Are you sure to delete this comment?',
+    replyTo: 'Reply to',
+    like: 'Like',
+    submit: 'Submit',
+    placeholder: 'Please enter comment...',
+    loading: 'Loading...',
+    empty: 'No comments yet',
+    loadMore: 'Load more',
+    noMore: 'No more comments'
   }
 }
