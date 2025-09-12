@@ -213,7 +213,32 @@ const handleLike = (comment: CommentItem) => {
 }
 
 const handleReply = (comment: CommentItem) => {
-  console.log('回复评论:', comment)
+  console.log('处理回复评论:', comment)
+
+  // 确保 parentId 和 replyTo 正确设置
+  if (!comment.parentId || !comment.replyTo) {
+    console.error('回复数据不完整:', comment)
+    return
+  }
+
+  // 使用 push 方法确保 Vue 可以检测到数组变化
+  basicComments.value.push({
+    ...comment,
+    id: Date.now() + Math.random(), // 确保 id 唯一
+    createTime: new Date(),
+    username: '当前用户',
+    avatar: '',
+    likeCount: 0,
+    isLiked: false
+  })
+
+  console.log('更新后的评论列表:', basicComments.value)
+
+  uni.showToast({
+    title: '回复成功',
+    icon: 'success',
+    duration: 1000
+  })
 }
 
 const handleDelete = (comment: CommentItem) => {

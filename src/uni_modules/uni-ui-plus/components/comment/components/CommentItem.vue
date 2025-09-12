@@ -135,12 +135,21 @@ const handleReply = () => {
 }
 
 const handleReplySubmit = (content: string, parentId?: string | number, replyTo?: string) => {
+  console.log('CommentItem handleReplySubmit:', { content, parentId, replyTo, currentComment: props.comment })
+  
   const replyComment: CommentItem = {
-    ...props.comment,
+    id: Date.now(), // 生成新的 id
     content,
+    username: '当前用户', // 应该从用户信息获取
+    avatar: '',
+    createTime: new Date(),
     parentId,
-    replyTo
+    replyTo,
+    likeCount: 0,
+    isLiked: false
   }
+  
+  console.log('发射回复事件:', replyComment)
   emit('reply', replyComment)
   showReplyInput.value = false
   replyContent.value = ''
