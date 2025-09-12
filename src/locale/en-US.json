@@ -1622,5 +1622,6 @@
   "image-slot": "Custom Image Loading Slot - Loading",
   "image-slot-error": "Custom Image Loading Slot - Error",
   "image-delay": "Image Load Delay (2000ms)",
-  "image-filter": "Image Loading Filter"
+  "image-filter": "Image Loading Filter",
+  "comment": "Comment"
 }

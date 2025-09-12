@@ -139,6 +139,21 @@
             "navigationBarTitleText": "%livephoto%"
             // #endif
           }
+        },
+        {
+          "path": "comment/Index",
+          "name": "comment",
+          "style": {
+            "mp-alipay": {
+              "allowsBounceVertical": "NO"
+            },
+            // #ifdef MP
+            "navigationBarTitleText": "Comment 评论",
+            // #endif
+            // #ifndef MP
+            "navigationBarTitleText": "%comment%"
+            // #endif
+          }
         }
       ]
     }

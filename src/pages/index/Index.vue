@@ -73,6 +73,10 @@ const list = computed(() => [
       {
         id: 'skeleton',
         name: t('skeleton')
+      },
+      {
+        id: 'comment',
+        name: t('comment')
       }
     ]
   },

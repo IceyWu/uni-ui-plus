@@ -1626,5 +1626,6 @@
   "empty": "Empty 空状态",
   "empty-image": "图片类型",
   "empty-image-custom": "自定义图片",
-  "empty-slot": "底部内容"
+  "empty-slot": "底部内容",
+  "comment": "Comment 评论"
 }
