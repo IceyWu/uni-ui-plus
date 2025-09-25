@@ -31,12 +31,11 @@
       width: 100%;
       height: 36rpx;
       border-radius: 3px;
+      @include background;
 
       &:first-child {
         margin-top: 0;
       }
-
-      @include background;
 
       &__list {
         width: 100%;
