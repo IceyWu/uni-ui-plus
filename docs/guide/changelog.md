@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.0.65
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.64...v0.0.65)
+
+### 🏡 Chore
+
+- **release:** 更新版本至 v0.0.64，更新变更日志 ([a16c4e5](https://github.com/iceywu/uni-ui-plus/commit/a16c4e5))
+
+### 🎨 Styles
+
+- [skeleton] 优化@include顺序 ([c1402de](https://github.com/iceywu/uni-ui-plus/commit/c1402de))
+
+### ❤️ Contributors
+
+- IceyWu ([@Life-Palette](https://github.com/Life-Palette))
+
 ## v0.0.64
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.63...v0.0.64)
