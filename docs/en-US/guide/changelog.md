@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.0.64
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.63...v0.0.64)
+
+### 🩹 Fixes
+
+- 移除重复的背景样式定义，优化样式代码 ([95629fa](https://github.com/iceywu/uni-ui-plus/commit/95629fa))
+
+### 🏡 Chore
+
+- Release v0.0.63 ([82cf858](https://github.com/iceywu/uni-ui-plus/commit/82cf858))
+
+### ❤️ Contributors
+
+- IceyWu ([@Life-Palette](https://github.com/Life-Palette))
+
 ## v0.0.63
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.62...v0.0.63)
