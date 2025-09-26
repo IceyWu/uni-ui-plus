@@ -6,7 +6,7 @@
 
 ### 🏡 Chore
 
-- **release:** 更新版本至 v0.0.65，更新变更日志 ([00df583](https://github.com/iceywu/uni-ui-plus/commit/00df583))
+- **release:** 更新版本至 v0.0.66，更新变更日志 ([00df583](https://github.com/iceywu/uni-ui-plus/commit/00df583))
 
 ### 🎨 Styles
 

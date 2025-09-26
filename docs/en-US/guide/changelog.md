@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.0.66
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.65...v0.0.66)
+
+### 🏡 Chore
+
+- **release:** 更新版本至 v0.0.66，更新变更日志 ([00df583](https://github.com/iceywu/uni-ui-plus/commit/00df583))
+
+### 🎨 Styles
+
+- 优化组件样式，统一类名命名规则，调整样式结构 ([ff04ecd](https://github.com/iceywu/uni-ui-plus/commit/ff04ecd))
+
+### ❤️ Contributors
+
+- IceyWu ([@Life-Palette](https://github.com/Life-Palette))
+
 ## v0.0.65
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.64...v0.0.65)
