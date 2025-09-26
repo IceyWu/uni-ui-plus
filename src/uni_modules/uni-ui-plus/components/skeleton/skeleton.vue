@@ -37,7 +37,7 @@ export default {
       <template v-if="type === 'avatar'">
         <view
           class="unip-skeleton__wrapper__avatar"
-          :class="[`unip-skeleton__wrapper__avatar--${avatarShape}`, animate && 'animate']"
+          :class="[`unip-skeleton__wrapper__avatar--${avatarShape}`, animate && 'unip-animate']"
           :style="{
             width: getStyleVal(avatarSize),
             height: getStyleVal(avatarSize)
@@ -51,7 +51,7 @@ export default {
             v-for="idx in rows"
             :key="idx"
             class="unip-skeleton__wrapper__title"
-            :class="[animate && 'animate']"
+            :class="[animate && 'unip-animate']"
             :style="{
               height: getStyleVal(titleHeight),
               width: idx === 1 ? '50%' : getStyleVal(titleWidth)

@@ -41,7 +41,7 @@ const rootStyle = computed(() => {
   return `${objToStyle(style)}${props.customStyle}`
 })
 const rootClass = computed(() => {
-  return `up-img  ${props.round ? 'is-round' : ''} ${props.customClass}`
+  return `up-img ${props.round ? 'up-img--round' : ''} ${props.customClass}`
 })
 const filterStyle = computed(() => {
   const style: Record<string, string | number> = {}

@@ -41,7 +41,7 @@
           :virtual-list-props="{
             enabled: true,
             itemHeight: 120,
-            containerHeight: 500
+            containerHeight: 600
           }"
         >
           <template #default="{ item }">

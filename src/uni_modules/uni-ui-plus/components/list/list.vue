@@ -123,7 +123,7 @@ export default {
     <template v-if="!listObj?.list?.length && !listObj?.loading">
       <view
         class="empty-box"
-        :class="[isNeedEmptyCenter ? 'center-empty' : '', isNeedEmptyPb ? '' : '!pb-0']"
+        :class="[isNeedEmptyCenter ? 'up-center-empty' : '', isNeedEmptyPb ? '' : 'up-no-padding-bottom']"
         :style="{
           paddingTop: emptyTop || '0'
         }"
@@ -148,7 +148,7 @@ export default {
         <!-- 虚拟列表模式下的底部 loading -->
         <div
           v-if="listObj?.loading"
-          class="virtual-loading-box"
+          class="up-virtual-loading-box"
           :style="{
             top: `${listHeight + 60 + 0}px`,
             position: 'absolute',
@@ -175,7 +175,7 @@ export default {
       </template>
     </template>
     <template v-if="listObj?.loading">
-      <view :class="scrollViewProps.scrollX ? 'loading-box' : ''">
+      <view :class="scrollViewProps.scrollX ? 'up-loading-box' : ''">
         <!-- 骨架屏 -->
         <slot name="loading">
           <UpSkeleton />

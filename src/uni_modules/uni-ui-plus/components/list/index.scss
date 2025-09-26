@@ -26,24 +26,31 @@
     margin: 0 0 10px 0;
     overflow: hidden;
   }
-}
-.virtual-loading-box {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  pointer-events: none; // 可选，防止遮挡操作
-}
-.loading-box {
-  display: inline-block;
-  position: absolute;
-  width: 100%;
-}
-.center-empty {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  box-sizing: border-box;
-  padding-bottom: 100rpx;
+
+  .up-virtual-loading-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; // 可选，防止遮挡操作
+  }
+
+  .up-loading-box {
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+  }
+
+  .up-center-empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    box-sizing: border-box;
+    padding-bottom: 100rpx;
+  }
+
+  .up-no-padding-bottom {
+    padding-bottom: 0 !important;
+  }
 }
