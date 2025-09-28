@@ -319,5 +319,5 @@ function handleIndicatorChange({ dir }: { dir: 'prev' | 'next' }) {
 </script>
 
 <style lang="scss" scoped>
-@import './index.scss';
+@use './index.scss';
 </style>

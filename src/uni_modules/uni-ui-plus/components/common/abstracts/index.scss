@@ -1,0 +1,16 @@
+/**
+ * 样式系统入口
+ * 简化版本，直接导出原有模块
+ */
+
+// 导出基础配置 (最先导出)
+@forward '_config';
+
+// 导出辅助函数 (依赖config)
+@forward '_function';
+
+// 导出变量 (依赖function)
+@forward '_variable';
+
+// 导出mixins (依赖config和function，最后导出)
+@forward '_mixin';

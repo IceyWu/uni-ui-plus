@@ -1,5 +1,7 @@
-@import '../common/abstracts/variable';
-@import '../common/abstracts/mixin';
+@use '../common/abstracts/_mixin' as *;
+@import '../common/abstracts/_variable';
+// @use '../common/abstracts/_variable' as *;
+
 
 @include b(swiper) {
   position: relative;
