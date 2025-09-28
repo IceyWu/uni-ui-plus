@@ -7,7 +7,6 @@
     <demo-block v-if="activeTab === 0" :title="$t('jiBenYongFa')">
       <view class="demo-box">
         <up-list
-          ref="scrollListRef"
           v-model:list-obj="result"
           :scroll-view-props="{
             refresherEnabled: true,
@@ -44,12 +43,12 @@
             containerHeight: 600
           }"
         >
-          <template #default="{ item }">
+          <template #default="slotProps">
             <view class="list-item-box">
-              <image :src="item.cover" class="cover" mode="aspectFill" />
+              <image :src="slotProps.item.cover" class="cover" mode="aspectFill" />
               <view class="content">
-                <view class="title">{{ item.title }}</view>
-                <view class="desc">{{ item.desc }}</view>
+                <view class="title">{{ slotProps.item.title }}</view>
+                <view class="desc">{{ slotProps.item.desc }}</view>
               </view>
             </view>
           </template>
@@ -72,10 +71,13 @@ const tabList = ['普通列表', '虚拟列表']
 const onTabChange = (index: number) => {
   console.log('切换到：', tabList[index])
 }
-
-const scrollListRef = ref()
 // 模拟api
-async function getTestApi(params) {
+interface ListFetchParams {
+  page?: number
+  size?: number
+  maxPage?: number
+}
+async function getTestApi(params: ListFetchParams) {
   await sleep(500)
   const { page = 0, size = 10, maxPage = 3 } = params
   const baseSize = page * size
@@ -119,20 +121,21 @@ const {
       const total = getObjVal(data, 'result.total', 0)
       return total
     }
-  },
-  onRequestEnd: (res) => {
-    if (scrollListRef.value) {
-      scrollListRef.value.stopRefresh()
-    }
   }
 })
 
 // 虚拟列表数据
+interface DemoListItem {
+  id: number
+  cover: string
+  title: string
+  desc: string
+}
 const virtualListObj = ref({
   loading: false,
   finished: false,
   refreshing: false,
-  list: []
+  list: [] as DemoListItem[]
 })
 onMounted(() => {
   onRefresh()
@@ -142,7 +145,7 @@ onMounted(() => {
     cover: `https://picsum.photos/id/${index}/200/300`,
     title: `title ${index}`,
     desc: `desc ${index}`
-  }))
+  })) as DemoListItem[]
 })
 </script>
 

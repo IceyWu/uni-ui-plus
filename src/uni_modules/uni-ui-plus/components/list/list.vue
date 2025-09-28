@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, defineComponent, onMounted, ref, reactive, watch } from 'vue'
+import { computed, defineComponent, nextTick, onMounted, ref, reactive, watch } from 'vue'
 import type {
   ScrollViewOnRefresherrefresh,
   ScrollViewOnScrolltolower,
@@ -50,6 +50,13 @@ function handleScrollEvent(e: any) {
   if (end.value > state.list.length) emit('onLoad')
   emit('onScroll', e)
 }
+const setTriggered = (value: boolean | 'restore' = false) => {
+  triggered.value = value
+}
+
+function stopRefresh() {
+  setTriggered(false)
+}
 watch(
   () => props.listObj?.list,
   () => {
@@ -61,7 +68,7 @@ watch(
 const onRefresh: ScrollViewOnRefresherrefresh = (event) => {
   const tempData = { ...props.listObj }
   tempData.finished = false
-  triggered.value = true
+  setTriggered(true)
   emit('update:listObj', tempData)
   emit('onRefresh')
 }
@@ -70,16 +77,28 @@ const onLowerBottom: ScrollViewOnScrolltolower = (event) => {
   emit('onLoad')
 }
 const triggered = ref<any>(false)
+
 function onPulling(e: any) {
   emit('onPulling', e)
 }
 function onRestore() {
-  triggered.value = 'restore'
+  setTriggered('restore')
 }
 function onAbort() {}
-function stopRefresh() {
-  triggered.value = false
-}
+
+watch(
+  () => props.listObj,
+  (newListObj, oldListObj) => {
+    if (!props.autoSetTriggered) return
+    if (!oldListObj) return
+    if (triggered.value === false) return
+    if (typeof newListObj?.loading !== 'undefined' && newListObj.loading) return
+    nextTick(() => {
+      setTriggered(false)
+    })
+  },
+  { deep: true }
+)
 defineExpose({
   stopRefresh
 })

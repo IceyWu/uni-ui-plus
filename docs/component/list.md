@@ -8,10 +8,9 @@
 
 ```vue
 <script setup>
+import { onMounted } from 'vue'
 import { getObjVal, list, sleep } from '@iceywu/utils'
 import { useRequest } from 'vue-hooks-pure'
-
-const scrollListRef = ref()
 // 模拟api
 async function getTestApi(params) {
   await sleep(500)
@@ -48,21 +47,16 @@ const {
     const list = getObjVal(res, 'result.content', [])
     return list
   },
-  listOptions: {
-    defaultPageKey: 'page',
-    defaultSizeKey: 'size',
-    defaultDataKey: 'list',
-    defaultPage: -1,
-    getTotal: (data) => {
-      const total = getObjVal(data, 'result.total', 0)
-      return total
+    listOptions: {
+      defaultPageKey: 'page',
+      defaultSizeKey: 'size',
+      defaultDataKey: 'list',
+      defaultPage: -1,
+      getTotal: (data) => {
+        const total = getObjVal(data, 'result.total', 0)
+        return total
+      }
     }
-  },
-  onRequestEnd: (res) => {
-    if (scrollListRef.value) {
-      scrollListRef.value.stopRefresh()
-    }
-  }
 })
 onMounted(() => {
   onRefresh()
@@ -72,7 +66,6 @@ onMounted(() => {
 <template>
   <view class="h-50vh">
     <up-list
-      ref="scrollListRef"
       v-model:list-obj="result"
       :scroll-view-props="{
         refresherEnabled: true,
@@ -91,6 +84,8 @@ onMounted(() => {
   </view>
 </template>
 ```
+
+刷新完成后组件会在列表数据更新时自动重置 `refresher-triggered` 状态，因此常规场景不再需要手动调用 `stopRefresh`。若需要完全自定义刷新流程，可将 `auto-set-triggered` 设为 `false` 后自行控制。
 
 ## 虚拟列表
 
@@ -198,6 +193,7 @@ onMounted(() => {
 | empty-top            | 空状态顶部内边距                                                                        | string  | -         |
 | empty-obj            | 空状态对象                                                                              | object  | -         |
 | list-obj             | 列表数据对象，包含 loading/finished/list 等                                             | 见 demo | -（必填） |
+| auto-set-triggered   | 列表数据更新后是否自动重置下拉刷新状态                                                 | boolean | true      |
 | skeleton-obj         | 骨架屏配置                                                                              | 见 demo | 见 demo   |
 | scroll-view-props    | scroll-view 属性（[参考文档](https://uniapp.dcloud.net.cn/component/scroll-view.html)） | 见 demo | 见 demo   |
 | virtual-list-props   | 虚拟列表配置                                                                            | 见 dem  | 见 demo   |

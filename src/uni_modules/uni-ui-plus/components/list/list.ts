@@ -108,6 +108,14 @@ export const listProps = {
     })
   },
   /**
+   * @description 列表对象更新时是否自动重置 refresher 状态
+   * @default true
+   */
+  autoSetTriggered: {
+    type: Boolean,
+    default: true
+  },
+  /**
    * @description 虚拟列表配置对象，包含是否启用虚拟列表、项高度、容器高度、底部 loading 骨架高度等
    * @default { enabled: false, itemHeight: 50, containerHeight: undefined, loadingHeight: 100 }
    */
