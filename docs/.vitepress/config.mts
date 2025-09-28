@@ -178,7 +178,11 @@ export default defineConfig({
             {
               link:'/component/livephoto',
               text: 'LivePhoto 实况照片'
-            }
+            },
+            {
+              link:'/component/swiper',
+              text: 'Swiper 轮播图'
+            },
           ]
         },
        

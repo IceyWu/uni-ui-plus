@@ -57,7 +57,7 @@ const isShowLoading = ref(false)
 </template>
 ```
 
-## Props
+## Attributes
 
 | 参数         | 说明         | 类型              | 默认值    |
 | ------------ | ------------ | ----------------- | --------- |
@@ -70,3 +70,24 @@ const isShowLoading = ref(false)
 | titleWidth   | 段落宽度     | number/string     | '100%'    |
 | rows         | 行数         | number            | 3         |
 
+## Events
+
+| 事件名称 | 说明         | 参数 |
+| -------- | ------------ | ---- |
+| -        | 暂无事件     | -    |
+
+## Slots
+
+| 名称    | 说明         |
+| ------- | ------------ |
+| default | 自定义骨架屏内容 |
+
+## 外部样式类
+
+| 类名         | 说明       |
+| ------------ | ---------- |
+| custom-class | 根节点样式 |
+
+## 示例
+
+更多用法请参考 `src/subPages/skeleton/Index.vue` 示例页面。

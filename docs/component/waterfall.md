@@ -61,7 +61,6 @@ function handleItemClick(item, index) {
 }
 </script>
 
-
 ## 自定义列数
 
 ```vue
@@ -189,7 +188,7 @@ const getCustomImageSrc = (item) => {
 
 ```
 
-## Props
+## Attributes
 
 | 参数 | 说明 | 类型 | 默认值 |
 |------|------|------|--------|
@@ -214,6 +213,16 @@ const getCustomImageSrc = (item) => {
 | 插槽名 | 说明 | 参数 |
 |--------|------|------|
 | default | 自定义项目渲染 | `{ item, index, onLoad, onError }` |
+
+## 外部样式类
+
+| 类名         | 说明       |
+| ------------ | ---------- |
+| custom-class | 根节点样式 |
+
+## 示例
+
+更多用法请参考 `src/subPages/waterfall/Index.vue` 示例页面。
 
 ## 类型定义
 

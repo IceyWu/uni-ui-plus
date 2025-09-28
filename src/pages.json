@@ -139,6 +139,21 @@
             "navigationBarTitleText": "%livephoto%"
             // #endif
           }
+        },
+        {
+          "path": "swiper/Index",
+          "name": "swiper",
+          "style": {
+            "mp-alipay": {
+              "allowsBounceVertical": "NO"
+            },
+            // #ifdef MP
+            "navigationBarTitleText": "Swiper 轮播",
+            // #endif
+            // #ifndef MP
+            "navigationBarTitleText": "Swiper 轮播"
+            // #endif
+          }
         }
       ]
     }

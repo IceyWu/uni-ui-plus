@@ -166,7 +166,6 @@
 | enable-preview         | 是否支持点击预览                                   | boolean         | -                                                                                                                                                                                  | false         | -        |
 | preview-src            | 预览图片链接                                       | string          | -                                                                                                                                                                                  | -             | -        |
 
-
 ## Events
 
 | 事件名称 | 说明                 | 参数                        | 最低版本 |
@@ -188,3 +187,7 @@
 | ------------ | -------------------- | -------- |
 | custom-class | 根节点样式           | -        |
 | custom-image | image 外部自定义样式 | -        |
+
+## 示例
+
+更多用法请参考 `src/subPages/img/Index.vue` 示例页面。
