@@ -205,7 +205,7 @@ function resetComponent() {
 
 | 插槽名 | 说明           | 参数                          |
 |--------|----------------|-------------------------------|
-| image  | 自定义图片内容 | { src: string, imageProps: object } |
+| image  | 自定义图片内容 | `{ src: string, imageProps: object }` |
 | loading| 自定义加载状态 | -                             |
 | error  | 自定义错误状态 | -                             |
 
