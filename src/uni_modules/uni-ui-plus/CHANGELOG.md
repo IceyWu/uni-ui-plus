@@ -1,5 +1,30 @@
 # Changelog
 
+## v0.0.67
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.66...v0.0.67)
+
+### 🚀 Enhancements
+
+- Add swiper component with customizable features and navigation ([13d656a](https://github.com/iceywu/uni-ui-plus/commit/13d656a))
+- [List] 添加自动重置下拉刷新状态的功能，优化列表组件的使用体验 ([4f222b5](https://github.com/iceywu/uni-ui-plus/commit/4f222b5))
+
+### 🩹 Fixes
+
+- Refactor SCSS imports to use @use and @forward syntax ([99f89ff](https://github.com/iceywu/uni-ui-plus/commit/99f89ff))
+
+### 📖 Documentation
+
+- [livephoto]修正自定义图片内容参数的格式说明 ([bda858b](https://github.com/iceywu/uni-ui-plus/commit/bda858b))
+
+### 🏡 Chore
+
+- **release:** 更新版本至 v0.0.66，更新变更日志 ([7185549](https://github.com/iceywu/uni-ui-plus/commit/7185549))
+
+### ❤️ Contributors
+
+- IceyWu ([@Life-Palette](https://github.com/Life-Palette))
+
 ## v0.0.66
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.65...v0.0.66)
