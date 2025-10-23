@@ -79,16 +79,17 @@ inquirer
     console.log(`√ bumping version in package.json from ${oldVersion} to ${newVersion}`)
     const tarfetPackageJson = require('../src/uni_modules/uni-ui-plus/package.json')
     tarfetPackageJson.version = newVersion
-    writeFileSync(path.resolve(src, 'package.json'), JSON.stringify(tarfetPackageJson))
-    // 生成制品
-    execSync('pnpm build:theme-vars')
+    writeFileSync(path.resolve(src, 'package.json'), JSON.stringify(tarfetPackageJson, null, 2))
+    // 同步 changelog
+    execSync('pnpm build:changelog')
+    // 代码检查
     execSync('pnpm lint')
-    return
+    // 提交到 git
     execSync('git add -A ')
-    execSync(`git commit -am "build: compile ${newVersion}"`)
-    execSync(`git tag -a v${newVersion} -am "chore(release): ${newVersion}"`)
+    execSync(`git commit -m "chore(release): ${newVersion}"`)
+    execSync(`git tag -a v${newVersion} -m "chore(release): ${newVersion}"`)
     console.log('√ committing changes')
-    const branch = execSync('git branch --show-current').toString().replace(/\*/g, '').replace(/ /g, '')
+    const branch = execSync('git branch --show-current').toString().replace(/\*/g, '').replace(/ /g, '').trim()
     console.log('🎉 版本发布成功')
     const tip = 'Run `git push --follow-tags origin ' + branch + '` ' + 'to publish'
     console.log(tip.replace(/\n/g, ''))
