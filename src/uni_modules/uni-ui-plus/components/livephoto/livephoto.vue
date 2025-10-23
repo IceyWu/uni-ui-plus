@@ -206,12 +206,15 @@ function onVideoError() {
 function onVideoProgress(e: any) {
   // uni-app 的视频进度事件可能数据结构不同，暂时依赖模拟进度
   if (isVideoLoading.value && e.detail) {
-    console.log('视频进度事件:', e.detail)
+    emit('video-progress', e)
   }
 }
 
-// 长按开始 - 播放视频
+// Interaction handling: distinguish short tap (click) and long press
+let pressTimer: ReturnType<typeof setTimeout> | null = null
+
 function onLongPressStart() {
+  // 原来的长按开始逻辑（在定时器触发时调用）
   // 如果是展示模式，不响应交互
   if (isDisplayOnly.value || isPressed.value) return
 
@@ -253,7 +256,6 @@ function onLongPressStart() {
   emit('video-play')
 }
 
-// 长按结束 - 暂停视频，显示图片
 function onLongPressEnd() {
   // 如果是展示模式，不响应交互
   if (isDisplayOnly.value || !isPressed.value) return
@@ -278,6 +280,34 @@ function onLongPressEnd() {
 
   emit('press-end')
   emit('video-pause')
+}
+
+// 当交互开始（touchstart）时，启动定时器，超过一定时间认定为长按
+function onInteractionStart(e: any) {
+  if (isDisplayOnly.value) return
+  // 防止重复启动
+  if (pressTimer) return
+
+  pressTimer = setTimeout(() => {
+    pressTimer = null
+    onLongPressStart()
+  }, props.longPressDelay)
+}
+
+// 当交互结束（touchend / touchcancel）时，根据定时器是否触发判断短按还是长按
+function onInteractionEnd(e: any) {
+  if (isDisplayOnly.value) return
+
+  if (pressTimer) {
+    // 定时器尚未触发，视为短按 -> 触发 click
+    clearTimeout(pressTimer)
+    pressTimer = null
+    // 发出 click 事件给父组件
+    emit('click', e)
+  } else {
+    // 定时器已触发，表示是长按，调用长按结束逻辑
+    onLongPressEnd()
+  }
 }
 
 // 视频播放事件
@@ -481,9 +511,9 @@ export default {
       v-if="!isDisplayOnly.value"
       class="up-live-photo__interaction"
       :class="{ 'up-live-photo__interaction--pressing': isPressed }"
-      @touchstart="onLongPressStart"
-      @touchend="onLongPressEnd"
-      @touchcancel="onLongPressEnd"
+      @touchstart="onInteractionStart"
+      @touchend="onInteractionEnd"
+      @touchcancel="onInteractionEnd"
     />
   </view>
 </template>

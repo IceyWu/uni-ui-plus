@@ -48,6 +48,11 @@ const livePhotoSpecificProps = {
   indicatorTop: {
     type: [String, Number] as PropType<string | number>,
     default: '20rpx'
+  },
+  // 长按触发延迟时间（单位 ms），区分短按（点击）与长按
+  longPressDelay: {
+    type: Number,
+    default: 150
   }
 } as const
 

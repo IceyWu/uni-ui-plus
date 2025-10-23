@@ -45,6 +45,10 @@
 
 ## Attributes
 
+### 原生属性
+
+Button 组件基于 uni-app 原生 button 组件封装，支持所有原生 button 属性。常用属性如下：
+
 | 参数       | 说明         | 类型    | 可选值                                      | 默认值    |
 | ---------- | ------------ | ------- | ------------------------------------------- | --------- |
 | type       | 按钮类型     | string  | primary / success / info / warning / error  | primary   |
@@ -53,7 +57,20 @@
 | disabled   | 是否禁用     | boolean | -                                           | false     |
 | loading    | 是否加载中   | boolean | -                                           | false     |
 | form-type  | 表单类型     | string  | submit / reset                              | -         |
-| open-type  | 开放能力     | string  | getUserInfo / contact / 等                  | -         |
+| open-type  | 开放能力     | string  | getUserInfo / contact / getPhoneNumber 等   | -         |
+
+> 更多原生属性请参考 [uni-app button 文档](https://uniapp.dcloud.net.cn/component/button.html)
+
+### 扩展属性
+
+| 参数          | 说明                                                   | 类型   | 默认值 |
+| ------------- | ------------------------------------------------------ | ------ | ------ |
+| public-id     | 打开公众号资料卡时的号码（open-type="openPublicProfile"） | string | -      |
+| data-im-id    | 客服的抖音号（open-type="im"）                         | string | -      |
+| data-im-type  | IM 卡片类型（open-type="im"）                          | string | -      |
+| data-goods-id | 商品 id（open-type="im"）                              | string | -      |
+| data-order-id | 订单 id（open-type="im"）                              | string | -      |
+| data-biz-line | 商品类型，"1"代表生活服务，"2"代表泛知识（open-type="im"） | string | -      |
 
 ## Events
 

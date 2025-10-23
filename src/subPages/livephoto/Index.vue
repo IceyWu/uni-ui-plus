@@ -46,6 +46,7 @@
           @press-end="onPressEnd"
           @video-play="onVideoPlay"
           @video-pause="onVideoPause"
+          @click="onClick"
         />
       </view>
       <view class="event-log">
@@ -200,11 +201,11 @@ function onIndicatorTopChange(e: any) {
 
 // 事件处理
 function onPressStart() {
-  addEventLog('开始长按')
+  addEventLog('开始长按（press-start）')
 }
 
 function onPressEnd() {
-  addEventLog('结束长按')
+  addEventLog('结束长按（press-end）')
 }
 
 function onVideoPlay() {
@@ -213,6 +214,10 @@ function onVideoPlay() {
 
 function onVideoPause() {
   addEventLog('视频暂停播放')
+}
+
+function onClick() {
+  addEventLog('点击（click）')
 }
 
 // 组件方法调用

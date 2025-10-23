@@ -99,16 +99,69 @@
 
 ## Attributes
 
+### 基础属性
+
 | 参数 | 说明 | 类型 | 默认值 |
 |------|------|------|--------|
-| list | 轮播数据列表 | `Array<string \| SwiperList>` | `[]` |
-| height | 轮播图高度 | `string \| number` | `200` |
-| indicator | 指示器配置 | `boolean \| IndicatorConfig` | `true` |
-| direction | 滑动方向 | `'horizontal' \| 'vertical'` | `'horizontal'` |
+| list | 轮播数据列表，可以是字符串数组或对象数组 | `Array<string \| SwiperList>` | `[]` |
+| current | 当前轮播在哪一项（下标） | `number` | `0` |
+| height | 轮播图高度 | `string \| number` | `192` |
+| direction | 轮播滑动方向 | `'horizontal' \| 'vertical'` | `'horizontal'` |
 | autoplay | 是否自动播放 | `boolean` | `true` |
-| interval | 自动切换时间间隔 | `number` | `3000` |
-| duration | 滑动动画时长 | `number` | `300` |
+| interval | 轮播间隔时间，单位 ms | `number` | `5000` |
+| duration | 滑动动画时长，单位 ms | `number` | `300` |
 | loop | 是否循环播放 | `boolean` | `true` |
+| display-multiple-items | 同时显示的滑块数量 | `number` | `1` |
+| easing-function | 指定 swiper 切换缓动动画类型 | `'default' \| 'linear' \| 'easeInCubic' \| 'easeOutCubic' \| 'easeInOutCubic'` | `'default'` |
+| previous-margin | 前边距，可用于露出前一项的一小部分 | `string \| number` | `'0'` |
+| next-margin | 后边距，可用于露出后一项的一小部分 | `string \| number` | `'0'` |
+| snap-to-edge | 当 swiper-item 的个数大于等于 2，关闭时会将当前 item 居中 | `boolean` | `false` |
+
+### 指示器属性
+
+| 参数 | 说明 | 类型 | 默认值 |
+|------|------|------|--------|
+| indicator | 指示器配置，可以是布尔值或配置对象 | `boolean \| IndicatorConfig` | `true` |
+| indicator-position | 指示器位置（快捷方式，也可通过 indicator 对象配置） | `IndicatorPositionType` | `'bottom'` |
+
+### 图片/内容属性
+
+| 参数 | 说明 | 类型 | 默认值 |
+|------|------|------|--------|
+| image-mode | 图片裁剪、缩放的模式 | `ImageMode` | `'aspectFill'` |
+| value-key | 选项对象中，value 对应的 key | `string` | `'value'` |
+| text-key | 选项对象中，标题 text 对应的 key | `string` | `'text'` |
+
+### 视频播放属性
+
+| 参数 | 说明 | 类型 | 默认值 |
+|------|------|------|--------|
+| video-loop | 视频是否循环播放 | `boolean` | `true` |
+| muted | 是否静音播放 | `boolean` | `true` |
+| autoplay-video | 视频是否自动播放 | `boolean` | `true` |
+| stop-previous-video | 切换轮播项时是否停止上一个视频的播放 | `boolean` | `true` |
+| stop-autoplay-when-video-play | 视频播放时是否停止自动轮播 | `boolean` | `false` |
+
+### 高度调整属性（支付宝小程序）
+
+| 参数 | 说明 | 类型 | 默认值 |
+|------|------|------|--------|
+| adjust-height | 自动以指定滑块的高度为整个容器的高度 | `'first' \| 'current' \| 'highest' \| 'none'` | `'highest'` |
+| adjust-vertical-height | vertical 为 true 时强制使 adjust-height 生效 | `boolean` | `false` |
+
+### 自定义样式类
+
+| 参数 | 说明 | 类型 | 默认值 |
+|------|------|------|--------|
+| custom-indicator-class | 自定义指示器类名 | `string` | `''` |
+| custom-image-class | 自定义图片类名 | `string` | `''` |
+| custom-prev-image-class | 自定义上一个图片类名 | `string` | `''` |
+| custom-next-image-class | 自定义下一个图片类名 | `string` | `''` |
+| custom-item-class | 自定义 swiper 子项类名 | `string` | `''` |
+| custom-prev-class | 自定义上一个子项类名 | `string` | `''` |
+| custom-next-class | 自定义下一个子项类名 | `string` | `''` |
+| custom-text-class | 自定义文字标题类名 | `string` | `''` |
+| custom-text-style | 自定义文字标题样式 | `string` | `''` |
 
 ### IndicatorConfig
 
