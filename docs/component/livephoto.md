@@ -175,16 +175,13 @@ function resetComponent() {
 
 ## Attributes
 
+> **注意**：LivePhoto 组件继承了 Image 组件的所有属性，因此支持 Image 组件的所有配置选项。
+
+### LivePhoto 特有属性
+
 | 参数              | 说明                     | 类型               | 默认值           | 可选值 |
 |-------------------|--------------------------|-------------------|------------------|--------|
-| video-src         | 视频源地址               | string            | -                | -      |
-| src               | 静态图片源地址           | string            | -                | -      |
-| width             | 组件宽度                 | number \| string  | '100%'           | -      |
-| height            | 组件高度                 | number \| string  | '100%'           | -      |
-| radius            | 圆角大小                 | number \| string  | 0                | -      |
-| custom-style      | 自定义样式               | string            | ''               | -      |
-| custom-class      | 自定义类名               | string            | ''               | -      |
-| mode              | 图片填充模式             | string            | 'scaleToFill'    | -      |
+| video-src         | 视频源地址（必填）       | string            | -                | -      |
 | show-indicator    | 是否显示Live Photo指示器 | boolean           | true             | -      |
 | autoplay          | 是否自动播放             | boolean           | false            | -      |
 | enable-vibration  | 是否启用振动反馈         | boolean           | true             | -      |
@@ -192,14 +189,29 @@ function resetComponent() {
 | display-only      | 是否仅展示模式           | boolean           | false            | -      |
 | indicator-left    | 指示器距左边距离         | string \| number  | '20rpx'          | -      |
 | indicator-top     | 指示器距顶部距离         | string \| number  | '20rpx'          | -      |
-| lazy-load         | 是否懒加载图片           | boolean           | true             | -      |
-| enable-preview    | 是否启用图片预览         | boolean           | false            | -      |
-| preview-src       | 预览图片地址             | string            | ''               | -      |
-| placeholder-src   | 占位图片地址             | string            | ''               | -      |
-| filter            | 图片滤镜                 | number \| string  | ''               | -      |
-| delay             | 加载延迟时间             | number            | 0                | -      |
-| min-height        | 最小高度                 | number \| string  | '200rpx'         | -      |
+| long-press-delay  | 长按触发延迟时间（ms），用于区分短按（点击）与长按 | number | 150 | -      |
+
+### 继承自 Image 组件的属性
+
+| 参数              | 说明                     | 类型               | 默认值           | 可选值 |
+|-------------------|--------------------------|-------------------|------------------|--------|
+| src               | 静态图片源地址（必填）   | string            | -                | -      |
+| width             | 组件宽度                 | number \| string  | -                | -      |
+| height            | 组件高度                 | number \| string  | -                | -      |
+| mode              | 图片填充模式             | ImageMode         | 'scaleToFill'    | 见 Image 组件 |
+| radius            | 圆角大小                 | number \| string  | 0                | -      |
 | round             | 是否为圆形               | boolean           | false            | -      |
+| delay             | 加载延迟时间（ms）       | number            | 0                | -      |
+| min-height        | 最小高度                 | number \| string  | '200rpx'         | -      |
+| lazy-load         | 是否懒加载图片           | boolean           | true             | -      |
+| placeholder-src   | 占位图片地址             | string            | ''               | -      |
+| filter            | 图片滤镜模糊值           | number \| string  | ''               | -      |
+| enable-preview    | 是否启用图片预览（LivePhoto 默认禁用） | boolean | false | -      |
+| preview-src       | 预览图片地址             | string            | ''               | -      |
+| custom-style      | 自定义样式               | string            | ''               | -      |
+| custom-class      | 自定义类名               | string            | ''               | -      |
+
+> 更多 Image 组件属性请参考 [Image 组件文档](./img.md)
 
 ## Slots
 

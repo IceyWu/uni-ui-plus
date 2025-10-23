@@ -36,17 +36,20 @@
     <!-- 事件监听 -->
     <demo-block title="事件监听">
       <view class="demo-item">
-        <up-live-photo
-          :video-src="demoData.videoSrc"
-          :src="demoData.imageSrc"
-          width="300"
-          height="200"
-          radius="12"
-          @press-start="onPressStart"
-          @press-end="onPressEnd"
-          @video-play="onVideoPlay"
-          @video-pause="onVideoPause"
-        />
+        <view :class="['livephoto-click-wrapper', { 'click-active': clickActive }]">
+          <up-live-photo
+            :video-src="demoData.videoSrc"
+            :src="demoData.imageSrc"
+            width="300"
+            height="200"
+            radius="12"
+            @press-start="onPressStart"
+            @press-end="onPressEnd"
+            @video-play="onVideoPlay"
+            @video-pause="onVideoPause"
+            @click="onClick"
+          />
+        </view>
       </view>
       <view class="event-log">
         <text class="event-title">事件日志：</text>
@@ -174,6 +177,9 @@ const playingStatus = ref<boolean | null>(null)
 // 事件日志
 const eventLogs = ref<string[]>([])
 
+// 点击高亮状态（用于区分点击与长按）
+const clickActive = ref(false)
+
 // 添加事件日志
 function addEventLog(event: string) {
   const timestamp = new Date().toLocaleTimeString()
@@ -200,11 +206,11 @@ function onIndicatorTopChange(e: any) {
 
 // 事件处理
 function onPressStart() {
-  addEventLog('开始长按')
+  addEventLog('开始长按（press-start）')
 }
 
 function onPressEnd() {
-  addEventLog('结束长按')
+  addEventLog('结束长按（press-end）')
 }
 
 function onVideoPlay() {
@@ -213,6 +219,15 @@ function onVideoPlay() {
 
 function onVideoPause() {
   addEventLog('视频暂停播放')
+}
+
+function onClick() {
+  addEventLog('点击（click）')
+  // 点击时短暂高亮，便于区分
+  clickActive.value = true
+  setTimeout(() => {
+    clickActive.value = false
+  }, 400)
 }
 
 // 组件方法调用
@@ -418,5 +433,18 @@ function onCustomImageError() {
   font-size: 28rpx;
   color: #333;
   margin-bottom: 0 !important;
+}
+
+.livephoto-click-wrapper {
+  display: inline-block;
+  padding: 6rpx;
+  border-radius: 14rpx;
+  transition: all 0.25s ease;
+}
+
+.livephoto-click-wrapper.click-active {
+  background-color: rgba(0, 122, 255, 0.12);
+  box-shadow: 0 6rpx 18rpx rgba(0, 122, 255, 0.12);
+  transform: translateY(-4rpx) scale(1.01);
 }
 </style>

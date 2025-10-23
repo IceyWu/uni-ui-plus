@@ -166,6 +166,25 @@ onMounted(() => {
 </up-list>
 ```
 
+### 禁用下拉刷新
+
+如需禁用下拉刷新功能，可通过 `scroll-view-props` 的 `refresherEnabled` 属性控制：
+
+```vue
+<up-list
+  v-model:list-obj="result"
+  :scroll-view-props="{
+    refresherEnabled: false,  // 禁用下拉刷新
+    scrollY: true
+  }"
+  @on-load="onLoadMore"
+>
+  <template #default="{ data: { list } }">
+    <!-- 列表内容 -->
+  </template>
+</up-list>
+```
+
 ## 空状态与骨架屏
 
 支持自定义空状态和 loading 骨架屏。
@@ -185,7 +204,6 @@ onMounted(() => {
 
 | 参数                 | 说明                                                                                    | 类型    | 默认值    |
 | -------------------- | --------------------------------------------------------------------------------------- | ------- | --------- |
-| is-disabled-refresh  | 是否禁用下拉刷新                                                                        | boolean | false     |
 | is-need-h-full       | 是否需要设置高度为全屏                                                                  | boolean | true      |
 | is-need-empty        | 是否需要显示空状态                                                                      | boolean | true      |
 | is-need-empty-center | 空状态是否居中显示                                                                      | boolean | true      |
