@@ -19,7 +19,7 @@
 
 ### 🏡 Chore
 
-- **release:** 更新版本至 v0.0.66，更新变更日志 ([7185549](https://github.com/iceywu/uni-ui-plus/commit/7185549))
+- **release:** 更新版本至 v0.0.67，更新变更日志 ([7185549](https://github.com/iceywu/uni-ui-plus/commit/7185549))
 
 ### ❤️ Contributors
 
