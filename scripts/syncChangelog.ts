@@ -17,26 +17,35 @@ const syncChangelog = (config: SyncConfig): void => {
   const { fromPath, targets } = config
 
   try {
+    // 检查源文件是否存在
+    if (!fs.existsSync(fromPath)) {
+      console.error(`源文件不存在: ${fromPath}`)
+      process.exit(1)
+    }
+
     // 读取changelog
     const content = fs.readFileSync(fromPath, 'utf-8')
 
     // 同步到目标位置
     targets.forEach((target) => {
-      const { path: targetPath, createDir } = target
+      const { path: targetPath } = target
       const targetDir = path.dirname(targetPath)
 
       // 确保目标目录存在
-      if (createDir && !fs.existsSync(targetDir)) {
+      if (!fs.existsSync(targetDir)) {
         fs.mkdirSync(targetDir, { recursive: true })
+        console.log(`✓ 创建目录: ${targetDir}`)
       }
 
       // 写入文件
-      fs.writeFileSync(targetPath, content)
+      fs.writeFileSync(targetPath, content, 'utf-8')
+      console.log(`✓ 同步到: ${targetPath}`)
     })
 
-    console.log('Changelog 同步成功')
+    console.log('✅ Changelog 同步成功')
   } catch (error) {
-    console.error('Changelog 同步失败:', error)
+    console.error('❌ Changelog 同步失败:', error)
+    process.exit(1)
   }
 }
 
