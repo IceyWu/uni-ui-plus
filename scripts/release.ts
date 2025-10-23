@@ -66,22 +66,24 @@ inquirer
         execSync('pnpm release:minor')
         break
     }
-    // 生成日志
-    execSync('pnpm build:changelog')
     // 更新版本
     const file = readFileSync(path.resolve(__dirname, '../package.json'))
     const packageJson = JSON.parse(file.toString())
     const newVersion = packageJson.version
 
-    // 处理文档中的最低版本标识
-    handleLowestVersion(path.resolve(__dirname, '../docs'), newVersion)
-
     console.log(`√ bumping version in package.json from ${oldVersion} to ${newVersion}`)
+
+    // 同步版本号到 uni_modules
     const tarfetPackageJson = require('../src/uni_modules/uni-ui-plus/package.json')
     tarfetPackageJson.version = newVersion
     writeFileSync(path.resolve(src, 'package.json'), JSON.stringify(tarfetPackageJson, null, 2))
-    // 同步 changelog
+
+    // 处理文档中的最低版本标识
+    handleLowestVersion(path.resolve(__dirname, '../docs'), newVersion)
+
+    // 同步 changelog 到各个目录
     execSync('pnpm build:changelog')
+
     // 代码检查
     execSync('pnpm lint')
     // 提交到 git
