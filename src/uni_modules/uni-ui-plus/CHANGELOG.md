@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.69
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.68...v0.0.69)
+
+### 🏡 Chore
+
+- Release v0.0.68 ([21f6687](https://github.com/iceywu/uni-ui-plus/commit/21f6687))
+
+### ❤️ Contributors
+
+- IceyWu <3128006406@qq.com>
+
 ## v0.0.67
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.66...v0.0.67)
