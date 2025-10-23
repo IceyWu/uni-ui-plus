@@ -45,7 +45,8 @@
           <up-swiper
             :list="swiperList"
             :height="200"
-            :indicator="{ type: 'dots', indicatorPosition: selectedPosition }"
+            :indicator="{ type: 'dots' }"
+            :indicator-position="selectedPosition"
             @click="handleClick"
             @change="handleChange"
           />
@@ -58,7 +59,8 @@
           :list="swiperList"
           :height="300"
           direction="vertical"
-          :indicator="{ type: 'dots', direction: 'vertical', indicatorPosition: 'right' }"
+          indicatorPosition="right"
+          :indicator="{ type: 'dots' }"
           @click="handleClick"
           @change="handleChange"
         />
@@ -80,7 +82,8 @@
         <up-swiper
           :list="swiperList"
           :height="200"
-          :indicator="{ type: 'fraction', indicatorPosition: 'top-right' }"
+          :indicator="{ type: 'fraction' }"
+          indicator-position="top-right"
           @click="handleClick"
           @change="handleChange"
         />
@@ -105,16 +108,17 @@
         <up-swiper
           :list="customList"
           :height="160"
-          :indicator="{ type: 'dots', indicatorPosition: 'bottom' }"
+          :indicator="{ type: 'dots' }"
+          indicator-position="bottom"
           :autoplay="false"
           @click="handleClick"
           @change="handleChange"
         >
           <template #default="{ item, index }">
             <view class="custom-item">
-              <view class="custom-content" :style="{ background: item.color }">
-                <text class="custom-title">{{ item.title }}</text>
-                <text class="custom-desc">{{ item.description }}</text>
+              <view class="custom-content" :style="{ background: (item as CustomCard).color }">
+                <text class="custom-title">{{ (item as CustomCard).title }}</text>
+                <text class="custom-desc">{{ (item as CustomCard).description }}</text>
                 <view class="custom-index">{{ index + 1 }}</view>
               </view>
             </view>
@@ -128,7 +132,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import UpSwiper from '../../uni_modules/uni-ui-plus/components/swiper/swiper.vue'
-import type { SwiperIndicatorType, IndicatorPositionType } from '../../uni_modules/uni-ui-plus/components/swiper-nav/types'
+import type { SwiperIndicatorType } from '../../uni_modules/uni-ui-plus/components/swiper-nav/types'
+import type { IndicatorPositionType } from '../../uni_modules/uni-ui-plus/components/swiper/swiper'
 
 // 轮播数据
 const swiperList = ref([
@@ -142,8 +147,17 @@ const swiperList = ref([
 // 单项数据用于测试最小显示数量
 const singleItemList = ref(['https://picsum.photos/400/200?random=6'])
 
+// 自定义卡片类型
+interface CustomCard {
+  id: number
+  title: string
+  description: string
+  color: string
+  value?: string
+}
+
 // 自定义内容数据
-const customList = ref([
+const customList = ref<CustomCard[]>([
   {
     id: 1,
     title: '自定义卡片1',
@@ -325,6 +339,95 @@ function handleChange(current: number, source: string) {
 
   :deep(.up-demo-block) {
     margin-bottom: 40rpx;
+  }
+
+  // 自定义轮播项样式
+  .custom-item {
+    width: 100%;
+    height: 100%;
+    padding: 20rpx;
+    box-sizing: border-box;
+
+    .custom-content {
+      width: 100%;
+      height: 100%;
+      border-radius: 16rpx;
+      padding: 40rpx;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+
+      // 添加渐变光效
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 50%);
+        pointer-events: none;
+      }
+
+      .custom-title {
+        font-size: 40rpx;
+        font-weight: bold;
+        color: #ffffff;
+        text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
+        margin-bottom: 16rpx;
+        z-index: 1;
+        letter-spacing: 1rpx;
+      }
+
+      .custom-desc {
+        font-size: 26rpx;
+        color: rgba(255, 255, 255, 0.9);
+        text-align: center;
+        line-height: 1.6;
+        z-index: 1;
+        max-width: 500rpx;
+        text-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.15);
+      }
+
+      .custom-index {
+        position: absolute;
+        top: 24rpx;
+        right: 24rpx;
+        width: 60rpx;
+        height: 60rpx;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10rpx);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28rpx;
+        font-weight: bold;
+        color: #ffffff;
+        border: 2rpx solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+        z-index: 1;
+      }
+
+      // 添加底部装饰线
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 6rpx;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 3rpx;
+      }
+    }
   }
 }
 </style>
