@@ -49,6 +49,6 @@ page {
   font-family: San Francisco, Rotobo, arial, PingFang SC, Noto SansCJK, Microsoft Yahei, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: $filled-bottom;
+  background: var(--up-filled-bottom, #ffffff);
 }
 </style>

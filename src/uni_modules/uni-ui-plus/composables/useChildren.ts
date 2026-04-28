@@ -78,7 +78,7 @@ export function useChildren<Child extends ComponentPublicInstance = ComponentPub
       publicChildren.splice(index, 1)
       internalChildren.splice(index, 1)
     }
-    provide(key, { link, unlink, children: publicChildren, internalChildren, ...value })
+    provide(key, { link, unlink, children: publicChildren, internalChildren, ...value } as any)
   }
 
   return { children: publicChildren, linkChildren }

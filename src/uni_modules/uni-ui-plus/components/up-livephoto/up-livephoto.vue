@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { computed, getCurrentInstance, nextTick, onUnmounted, ref, watch } from 'vue'
   import { addUnit, isDef, objToStyle } from '../../common/util'
-  import UpImage from '../up-image/image.vue'
+  import UpImage from '../up-image/up-image.vue'
   import type { LivePhotoEmits, LivePhotoProps } from './types'
   import { livePhotoProps } from './types'
 

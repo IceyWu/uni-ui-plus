@@ -41,7 +41,7 @@ i18n.global.t = ((key: string | number, ...args: any[]) => {
 
   // 处理对象参数场景: t(key, {key1: value1, key2: value2})
   if (args.length === 1 && typeof args[0] === 'object' && !Array.isArray(args[0])) {
-    const result = originalT(key, ...args)
+    const result = (originalT as any)(key, ...args)
     return result
   }
 
@@ -57,7 +57,7 @@ i18n.global.t = ((key: string | number, ...args: any[]) => {
   }
 
   // 处理默认场景: t(key) 或 t(key, defaultMessage) 或 t(key, plural) 等
-  const result = originalT(key, ...args)
+  const result = (originalT as any)(key, ...args)
 
   return result
 }) as typeof i18n.global.t

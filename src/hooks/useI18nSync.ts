@@ -20,7 +20,7 @@ function setLocale(locale: string, syncComponentLib = true) {
   uni.setLocale(locale)
 
   // 设置应用语言
-  i18n.global.locale.value = locale
+  i18n.global.locale.value = locale as any
 
   uni.setStorageSync('currentLang', locale)
 

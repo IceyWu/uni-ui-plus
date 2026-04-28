@@ -1,5 +1,13 @@
 import { ref } from 'vue'
-import { useToast } from '@/uni_modules/uni-ui-plus'
+
+// TODO: useToast 待实现
+function useToast() {
+  return {
+    loading: (..._args: any[]) => {},
+    close: () => {},
+    show: (..._args: any[]) => {}
+  }
+}
 
 // 是否免除广告，免除后不再显示广告
 const isFree = ref(false)

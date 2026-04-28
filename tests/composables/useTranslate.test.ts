@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { useTranslate } from '@/uni_modules/uni-ui-plus/components/composables/useTranslate'
+import { useTranslate } from '@/uni_modules/uni-ui-plus/composables/useTranslate'
 import Locale from '@/uni_modules/uni-ui-plus/locale'
 import arSA from '@/uni_modules/uni-ui-plus/locale/lang/ar-SA'
 import deDE from '@/uni_modules/uni-ui-plus/locale/lang/de-DE'

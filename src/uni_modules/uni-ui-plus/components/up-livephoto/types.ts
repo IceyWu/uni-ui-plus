@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import { imageProps } from '../up-image/image'
+import { imageProps } from '../up-image/types'
 
 // 定义 LivePhoto 特有的 props
 const livePhotoSpecificProps = {

@@ -221,7 +221,14 @@ export function useUpload(): UseUploadReturn {
           })
           break
         case 'video':
-          uni.chooseVideo({ sourceType, compressed, maxDuration, camera, success: (res) => resolve(formatVideo(res)), fail: reject })
+          uni.chooseVideo({
+            sourceType,
+            compressed,
+            maxDuration,
+            camera: camera as 'front' | 'back' | undefined,
+            success: (res) => resolve(formatVideo(res)),
+            fail: reject
+          })
           break
         default:
           uni.chooseImage({

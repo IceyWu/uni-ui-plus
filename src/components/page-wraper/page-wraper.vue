@@ -25,6 +25,6 @@
 .page-wraper {
   min-height: calc(100vh - var(--window-top) - var(--window-bottom));
   box-sizing: border-box;
-  background: $filled-bottom;
+  background: var(--up-filled-bottom, #ffffff);
 }
 </style>

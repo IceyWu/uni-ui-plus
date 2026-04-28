@@ -1,4 +1,4 @@
-@use "../variable";
+﻿@use "../variable" as *;
 
 /**
  * 混合宏
@@ -231,7 +231,7 @@ $B: null;
 }
 
 /* 0.5px 边框 指定方向*/
-@mixin halfPixelBorder($direction: "bottom", $left: 0, $color: variable.$border-main) {
+@mixin halfPixelBorder($direction: "bottom", $left: 0, $color: $border-main) {
   position: relative;
 
   &::after {
@@ -247,7 +247,7 @@ $B: null;
       width: calc(100% - #{$left} * 2);
     }
 
-    height: variable.$stroke-main;
+    height: $stroke-main;
     left: $left;
 
     @if ($direction=="bottom") {
@@ -265,7 +265,7 @@ $B: null;
 
 
 /* 0.5px 边框 环绕 */
-@mixin halfPixelBorderSurround($color: variable.$border-main) {
+@mixin halfPixelBorderSurround($color: $border-main) {
   position: relative;
 
   &::after {
@@ -277,7 +277,7 @@ $B: null;
     height: 200%;
     left: 0;
     top: 0;
-    border: variable.$stroke-main solid $color;
+    border: $stroke-main solid $color;
     transform: scale(0.5);
     box-sizing: border-box;
     transform-origin: left top;
@@ -286,7 +286,7 @@ $B: null;
 }
 
 /* 1px 边框 指定方向 */
-@mixin pixelBorder($direction: "bottom", $left: 0, $color: variable.$border-main, $width: variable.$stroke-main) {
+@mixin pixelBorder($direction: "bottom", $left: 0, $color: $border-main, $width: $stroke-main) {
   position: relative;
 
   &::after {
@@ -318,7 +318,7 @@ $B: null;
 }
 
 /* 1px 边框 环绕 */
-@mixin pixelBorderSurround($color: variable.$border-main, $style: solid, $width: variable.$stroke-main) {
+@mixin pixelBorderSurround($color: $border-main, $style: solid, $width: $stroke-main) {
   position: relative;
 
   &::after {

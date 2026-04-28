@@ -1,6 +1,6 @@
 import path from 'path'
 import type { Plugin } from 'vite'
-import { camelCase } from '../../../src/uni_modules/uni-ui-plus/components/common/util'
+import { camelCase } from '../../../src/uni_modules/uni-ui-plus/common/util'
 import i18n from '../locales/markdown-transform'
 
 export function MarkdownTransform(): Plugin {

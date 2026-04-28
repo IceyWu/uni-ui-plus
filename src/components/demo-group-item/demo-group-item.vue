@@ -31,15 +31,15 @@
   position: relative;
 
   &__title {
-    padding: $padding-main $padding-loose;
-    font-size: $typography-body-size-main;
-    font-weight: $font-weight-medium;
-    color: $text-main;
-    line-height: $typography-body-line-height-size-main;
+    padding: 24rpx 32rpx;
+    font-size: 28rpx;
+    font-weight: 500;
+    color: var(--up-text-main, #18181B);
+    line-height: 40rpx;
   }
 
   &__container {
-    padding: $padding-zero $padding-loose;
+    padding: 0 32rpx;
   }
 
   &.is-no-padding {

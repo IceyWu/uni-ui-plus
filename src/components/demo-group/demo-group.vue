@@ -39,22 +39,22 @@
 .demo-group {
   width: 100%;
   position: relative;
-  background: $filled-oppo;
+  background: var(--up-filled-oppo, #ffffff);
   &:last-child {
-    padding-bottom: $padding-loose;
+    padding-bottom: 32rpx;
   }
 
   &__title {
     box-sizing: border-box;
-    font-size: $typography-body-size-extra-large;
-    font-weight: $font-weight-medium;
-    color: $text-main;
-    line-height: $typography-body-line-height-size-large;
-    padding: $padding-loose;
+    font-size: 36rpx;
+    font-weight: 500;
+    color: var(--up-text-main, #18181B);
+    line-height: 48rpx;
+    padding: 32rpx;
   }
 
   &__container {
-    padding-bottom: $padding-loose;
+    padding-bottom: 32rpx;
   }
 }
 </style>

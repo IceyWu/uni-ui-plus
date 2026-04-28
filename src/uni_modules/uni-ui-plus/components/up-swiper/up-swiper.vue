@@ -95,7 +95,7 @@
   import { computed, defineComponent, getCurrentInstance, ref, useSlots, watch } from 'vue'
   import { PREFIX } from '../../common/event'
   import { addUnit, isDef, isImageUrl, isObj, isVideoUrl, uuid } from '../../common/util'
-  import UpSwiperNav from '../up-swiper-nav/swiper-nav.vue'
+  import UpSwiperNav from '../up-swiper-nav/up-swiper-nav.vue'
   import { type SwiperList, swiperProps } from './types'
 
   const slots = useSlots()

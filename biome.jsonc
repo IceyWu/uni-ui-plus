@@ -10,7 +10,6 @@
       "!dist",
       "!docs/public",
       "!src/uni_modules/mp-html",
-      "!babel.config.js",
       "!src/pages.json",
       "!src/manifest.json",
       "!vite-plugins/conditional-test.vue"

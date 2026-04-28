@@ -6,8 +6,7 @@
     ScrollViewProps
   } from '@uni-helper/uni-app-types'
   import { computed, defineComponent, nextTick, onMounted, reactive, ref, watch } from 'vue'
-  import UpSkeleton from '../skeleton/skeleton.vue'
-  import type { ListInst } from './type'
+  import UpSkeleton from '../up-skeleton/up-skeleton.vue'
   import { type ListEmits, listProps } from './types'
 
   const props = defineProps(listProps)
@@ -62,7 +61,7 @@
     emit('update:listObj', tempData)
     emit('onRefresh')
   }
-  const listRef = ref<ListInst | null>(null)
+  const listRef = ref<any>(null)
   const onLowerBottom: ScrollViewOnScrolltolower = (event) => {
     emit('onLoad')
   }

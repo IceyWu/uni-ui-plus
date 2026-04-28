@@ -31,9 +31,9 @@
           <view class="page-swiper__container">
             <up-swiper :list="customList" height="200">
               <template #default="{ item }">
-                <view class="page-swiper__custom" :style="{ background: item.color }">
-                  <text class="page-swiper__custom-title">{{ item.title }}</text>
-                  <text class="page-swiper__custom-desc">{{ item.description }}</text>
+                <view class="page-swiper__custom" :style="{ background: (item as any).color }">
+                  <text class="page-swiper__custom-title">{{ (item as any).title }}</text>
+                  <text class="page-swiper__custom-desc">{{ (item as any).description }}</text>
                 </view>
               </template>
             </up-swiper>
@@ -46,6 +46,7 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue'
+  import type { SwiperList } from '@/uni_modules/uni-ui-plus/components/up-swiper/types'
   import UpSwiper from '@/uni_modules/uni-ui-plus/components/up-swiper/up-swiper.vue'
   import type { SwiperIndicatorType } from '@/uni_modules/uni-ui-plus/components/up-swiper-nav/types'
 
@@ -65,7 +66,7 @@
 
   const selectedType = ref<SwiperIndicatorType>('dots')
 
-  const customList = ref([
+  const customList = ref<SwiperList[]>([
     { id: 1, title: '自定义卡片 1', description: '自定义轮播内容', color: '#FF6B6B' },
     { id: 2, title: '自定义卡片 2', description: '完全自定义样式', color: '#4ECDC4' },
     { id: 3, title: '自定义卡片 3', description: '支持插槽展示', color: '#45B7D1' }

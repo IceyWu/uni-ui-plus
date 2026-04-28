@@ -113,7 +113,8 @@
   }
 
   onMounted(() => {
-    baseUrl.value = process.env.NODE_ENV === 'production' ? `${location.origin}/demo/?timestamp=${Date.now()}#/` : 'http://localhost:5173/demo/#/'
+    baseUrl.value =
+      process.env.NODE_ENV === 'production' ? `https://uni-ui-plus-docs.netlify.app/demo/?timestamp=${Date.now()}#/` : 'http://localhost:5173/demo/#/'
 
     // 监听 iframe 加载完成事件
     iframe.value?.addEventListener('load', () => {

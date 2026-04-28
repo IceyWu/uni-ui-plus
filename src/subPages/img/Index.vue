@@ -78,7 +78,7 @@
     'center',
     'bottom',
     'top'
-  ]
+  ] as const
 </script>
 
 <style lang="scss" scoped>

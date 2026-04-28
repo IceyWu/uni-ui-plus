@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { useUpload } from '@/uni_modules/uni-ui-plus/components/composables/useUpload'
 import type { UploadFileItem } from '@/uni_modules/uni-ui-plus/components/up-upload/types'
+import { useUpload } from '@/uni_modules/uni-ui-plus/composables/useUpload'
 
 // Mock uni API
 const mockUploadTask = {
