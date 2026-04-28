@@ -1,123 +1,122 @@
 <script lang="ts" setup>
-import { computed, defineComponent, nextTick, onMounted, ref, reactive, watch } from 'vue'
-import type {
-  ScrollViewOnRefresherrefresh,
-  ScrollViewOnScrolltolower,
-  ScrollViewProps,
-  ScrollViewOnRefresherpulling
-} from '@uni-helper/uni-app-types'
-import { listProps, type ListEmits } from './types'
-import type { ListInst } from './type'
-import UpSkeleton from '../skeleton/skeleton.vue'
+  import type {
+    ScrollViewOnRefresherpulling,
+    ScrollViewOnRefresherrefresh,
+    ScrollViewOnScrolltolower,
+    ScrollViewProps
+  } from '@uni-helper/uni-app-types'
+  import { computed, defineComponent, nextTick, onMounted, reactive, ref, watch } from 'vue'
+  import UpSkeleton from '../skeleton/skeleton.vue'
+  import type { ListInst } from './type'
+  import { type ListEmits, listProps } from './types'
 
-const props = defineProps(listProps)
-const emit = defineEmits<ListEmits>()
+  const props = defineProps(listProps)
+  const emit = defineEmits<ListEmits>()
 
-// 虚拟列表相关
-const state = reactive({
-  startOffset: 0,
-  start: 0,
-  list: computed(() => props.listObj?.list || []).value.slice()
-})
-const clientHeight = uni.getSystemInfoSync().windowHeight || 667
-const getContainerHeight = computed(() => {
-  return props.virtualListProps.containerHeight || Math.min(clientHeight, (props.virtualListProps.itemHeight ?? 50) * 10)
-})
-const visibleCount = computed(() => {
-  return Math.ceil(getContainerHeight.value / (props.virtualListProps.itemHeight ?? 50))
-})
-const end = computed(() => {
-  return state.start + visibleCount.value
-})
-const getTransform = computed(() => {
-  return `translate3d(0, ${state.startOffset}px, 0)`
-})
+  // 虚拟列表相关
+  const state = reactive({
+    startOffset: 0,
+    start: 0,
+    list: computed(() => props.listObj?.list || []).value.slice()
+  })
+  const clientHeight = uni.getSystemInfoSync().windowHeight || 667
+  const getContainerHeight = computed(
+    () => props.virtualListProps.containerHeight || Math.min(clientHeight, (props.virtualListProps.itemHeight ?? 50) * 10)
+  )
+  const visibleCount = computed(() => Math.ceil(getContainerHeight.value / (props.virtualListProps.itemHeight ?? 50)))
+  const end = computed(() => state.start + visibleCount.value)
+  const getTransform = computed(() => `translate3d(0, ${state.startOffset}px, 0)`)
 
-const listHeight = computed(() => {
-  return state.list.length * (props.virtualListProps.itemHeight ?? 50)
-})
-const phantomHeight = computed(() => {
-  return props.listObj?.loading ? listHeight.value + (props.virtualListProps.loadingHeight ?? 0) : listHeight.value
-})
-const visibleData = computed(() => {
-  return state.list.slice(state.start, Math.min(end.value, state.list.length))
-})
-function handleScrollEvent(e: any) {
-  const { scrollTop } = e.detail
-  const itemHeight = props.virtualListProps.itemHeight ?? 50
-  state.start = Math.floor(scrollTop / itemHeight)
-  state.startOffset = scrollTop - (scrollTop % itemHeight)
-  if (end.value > state.list.length) emit('onLoad')
-  emit('onScroll', e)
-}
-const setTriggered = (value: boolean | 'restore' = false) => {
-  triggered.value = value
-}
-
-function stopRefresh() {
-  setTriggered(false)
-}
-watch(
-  () => props.listObj?.list,
-  () => {
-    state.list = (props.listObj?.list || []).slice()
+  const listHeight = computed(() => state.list.length * (props.virtualListProps.itemHeight ?? 50))
+  const phantomHeight = computed(() => (props.listObj?.loading ? listHeight.value + (props.virtualListProps.loadingHeight ?? 0) : listHeight.value))
+  const visibleData = computed(() => state.list.slice(state.start, Math.min(end.value, state.list.length)))
+  function handleScrollEvent(e: any) {
+    const { scrollTop } = e.detail
+    const itemHeight = props.virtualListProps.itemHeight ?? 50
+    state.start = Math.floor(scrollTop / itemHeight)
+    state.startOffset = scrollTop - (scrollTop % itemHeight)
+    if (end.value > state.list.length) {
+      emit('onLoad')
+    }
+    emit('onScroll', e)
   }
-)
+  const setTriggered = (value: boolean | 'restore' = false) => {
+    triggered.value = value
+  }
 
-// 普通列表相关
-const onRefresh: ScrollViewOnRefresherrefresh = (event) => {
-  const tempData = { ...props.listObj }
-  tempData.finished = false
-  setTriggered(true)
-  emit('update:listObj', tempData)
-  emit('onRefresh')
-}
-const listRef = ref<ListInst | null>(null)
-const onLowerBottom: ScrollViewOnScrolltolower = (event) => {
-  emit('onLoad')
-}
-const triggered = ref<any>(false)
+  function stopRefresh() {
+    setTriggered(false)
+  }
+  watch(
+    () => props.listObj?.list,
+    () => {
+      state.list = (props.listObj?.list || []).slice()
+    }
+  )
 
-function onPulling(e: any) {
-  emit('onPulling', e)
-}
-function onRestore() {
-  setTriggered('restore')
-}
-function onAbort() {}
+  // 普通列表相关
+  const onRefresh: ScrollViewOnRefresherrefresh = (event) => {
+    const tempData = { ...props.listObj }
+    tempData.finished = false
+    setTriggered(true)
+    emit('update:listObj', tempData)
+    emit('onRefresh')
+  }
+  const listRef = ref<ListInst | null>(null)
+  const onLowerBottom: ScrollViewOnScrolltolower = (event) => {
+    emit('onLoad')
+  }
+  const triggered = ref<any>(false)
 
-watch(
-  () => props.listObj,
-  (newListObj, oldListObj) => {
-    if (!props.autoSetTriggered) return
-    if (!oldListObj) return
-    if (triggered.value === false) return
-    if (typeof newListObj?.loading !== 'undefined' && newListObj.loading) return
-    nextTick(() => {
-      setTriggered(false)
-    })
-  },
-  { deep: true }
-)
-defineExpose({
-  stopRefresh
-})
+  function onPulling(e: any) {
+    emit('onPulling', e)
+  }
+  function onRestore() {
+    setTriggered('restore')
+  }
+  function onAbort() {}
+
+  watch(
+    () => props.listObj,
+    (newListObj, oldListObj) => {
+      if (!props.autoSetTriggered) {
+        return
+      }
+      if (!oldListObj) {
+        return
+      }
+      if (triggered.value === false) {
+        return
+      }
+      if (typeof newListObj?.loading !== 'undefined' && newListObj.loading) {
+        return
+      }
+      nextTick(() => {
+        setTriggered(false)
+      })
+    },
+    { deep: true }
+  )
+  defineExpose({
+    stopRefresh
+  })
 </script>
 
 <script lang="ts">
-import { PREFIX } from '../../common/event'
-const componentName = `${PREFIX}-list`
+  import { PREFIX } from '../../common/event'
 
-export default {
-  name: componentName,
-  options: {
-    virtualHost: true,
-    addGlobalClass: true,
-    // #ifndef H5
-    styleIsolation: 'shared'
-    // #endif
+  const componentName = `${PREFIX}-list`
+
+  export default {
+    name: componentName,
+    options: {
+      virtualHost: true,
+      addGlobalClass: true,
+      // #ifndef H5
+      styleIsolation: 'shared'
+      // #endif
+    }
   }
-}
 </script>
 
 <template>
@@ -177,28 +176,20 @@ export default {
             height: virtualListProps.loadingHeight + 'px'
           }"
         >
-          <slot name="loading">
-            <UpSkeleton />
-          </slot>
+          <slot name="loading"> <UpSkeleton /> </slot>
         </div>
       </template>
       <template v-else>
         <template v-if="isListMode">
-          <div v-for="(item, index) in listObj.list" :key="index" class="up-list-item">
-            <slot :item="item" :index="index + state.start" />
-          </div>
+          <div v-for="(item, index) in listObj.list" :key="index" class="up-list-item"><slot :item="item" :index="index + state.start" /></div>
         </template>
-        <template v-else>
-          <slot :data="listObj" />
-        </template>
+        <template v-else> <slot :data="listObj" /> </template>
       </template>
     </template>
     <template v-if="listObj?.loading">
       <view :class="scrollViewProps.scrollX ? 'up-loading-box' : ''">
         <!-- 骨架屏 -->
-        <slot name="loading">
-          <UpSkeleton />
-        </slot>
+        <slot name="loading"> <UpSkeleton /> </slot>
       </view>
     </template>
   </scroll-view>

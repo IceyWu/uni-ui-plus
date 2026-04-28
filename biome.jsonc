@@ -1,0 +1,98 @@
+{
+  "extends": [
+    "ultracite/biome/core",
+    "ultracite/biome/vue",
+    "ultracite/biome/vitest"
+  ],
+  "files": {
+    "includes": [
+      "!node_modules",
+      "!dist",
+      "!docs/public",
+      "!src/uni_modules/mp-html",
+      "!babel.config.js",
+      "!src/pages.json",
+      "!src/manifest.json",
+      "!vite-plugins/conditional-test.vue"
+    ]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 150
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "semicolons": "asNeeded",
+      "trailingCommas": "none",
+      "arrowParentheses": "always"
+    }
+  },
+  "linter": {
+    "rules": {
+      "suspicious": {
+        "noExplicitAny": "off",
+        "noConsole": "off",
+        "noDebugger": "off",
+        "noDuplicateObjectKeys": "off",
+        "useAwait": "off",
+        "noEmptyBlockStatements": "off",
+        "noUnusedExpressions": "off",
+        "noBitwiseOperators": "off",
+        "noEvolvingTypes": "off",
+        "noImplicitAnyLet": "off",
+        "noAssignInExpressions": "off",
+        "useGuardForIn": "off",
+        "noDoubleEquals": "off",
+        "noThenProperty": "off",
+        "noShadowRestrictedNames": "off",
+        "useIterableCallbackReturn": "off"
+      },
+      "correctness": {
+        "noUnusedVariables": "off",
+        "noUnusedImports": "warn",
+        "noUndeclaredVariables": "off",
+        "noUnusedFunctionParameters": "off",
+        "noVueDuplicateKeys": "off",
+        "noUnknownPseudoClass": "off"
+      },
+      "style": {
+        "useConsistentArrayType": "off",
+        "noNonNullAssertion": "off",
+        "useFilenamingConvention": "off",
+        "useNodejsImportProtocol": "off",
+        "useConsistentTypeDefinitions": "off",
+        "noParameterAssign": "off",
+        "noDescendingSpecificity": "off",
+        "noNestedTernary": "off",
+        "noSubstr": "off",
+        "useTemplate": "off",
+        "noEnum": "off",
+        "noNegationElse": "off",
+        "noUnusedTemplateLiteral": "off",
+        "useCollapsedIf": "off",
+        "useForOf": "off"
+      },
+      "performance": {
+        "useTopLevelRegex": "off",
+        "noBarrelFile": "off"
+      },
+      "complexity": {
+        "noForEach": "off",
+        "noExcessiveCognitiveComplexity": "off",
+        "noBannedTypes": "off",
+        "useSimplifiedLogicExpression": "off",
+        "useOptionalChain": "off"
+      },
+      "a11y": {
+        "useButtonType": "off",
+        "useGenericFontNames": "off",
+        "noSvgWithoutTitle": "off",
+        "useIframeTitle": "off",
+        "useHtmlLang": "off"
+      }
+    }
+  },
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json"
+}

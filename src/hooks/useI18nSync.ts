@@ -1,6 +1,6 @@
 import { computed, onBeforeMount } from 'vue'
-import { Locale } from '../uni_modules/uni-ui-plus/locale'
 import i18n from '../locale'
+import { Locale } from '../uni_modules/uni-ui-plus/locale'
 
 // 支持的语言列表
 const SUPPORTED_LOCALES = ['zh-CN', 'en-US']
@@ -10,7 +10,7 @@ const SUPPORTED_LOCALES = ['zh-CN', 'en-US']
  * @param locale 语言代码
  * @param syncComponentLib 是否同步组件库语言设置
  */
-function setLocale(locale: string, syncComponentLib: boolean = true) {
+function setLocale(locale: string, syncComponentLib = true) {
   if (!SUPPORTED_LOCALES.includes(locale)) {
     console.warn(`不支持的语言: ${locale}，将使用默认语言 zh-CN`)
     locale = 'zh-CN'
@@ -43,10 +43,10 @@ function initLocale(defaultLocale: string, syncComponentLib: boolean) {
 }
 
 interface I18nSyncOptions {
-  /** 是否同步组件库语言设置 */
-  syncComponentLib?: boolean
   /** 默认语言 */
   defaultLocale?: string
+  /** 是否同步组件库语言设置 */
+  syncComponentLib?: boolean
 }
 
 /**

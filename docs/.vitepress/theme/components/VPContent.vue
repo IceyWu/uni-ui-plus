@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { useData } from 'vitepress';
-import NotFound from 'vitepress/dist/client/theme-default//NotFound.vue'
-import VPDoc from './VPDoc.vue'
-import VPHome from 'vitepress/dist/client/theme-default/components/VPHome.vue'
-import VPPage from 'vitepress/dist/client/theme-default/components/VPPage.vue'
-import { useSidebar } from 'vitepress/theme';
+  import { useData } from 'vitepress'
+  import NotFound from 'vitepress/dist/client/theme-default//NotFound.vue'
+  import VPHome from 'vitepress/dist/client/theme-default/components/VPHome.vue'
+  import VPPage from 'vitepress/dist/client/theme-default/components/VPPage.vue'
+  import { useSidebar } from 'vitepress/theme'
+  import VPDoc from './VPDoc.vue'
 
-
-const { page, frontmatter }:any = useData()
-const { hasSidebar } = useSidebar()
+  const { page, frontmatter }: any = useData()
+  const { hasSidebar } = useSidebar()
 </script>
 
 <template>
@@ -39,10 +38,7 @@ const { hasSidebar } = useSidebar()
       <template #home-features-after><slot name="home-features-after" /></template>
     </VPHome>
 
-    <component
-      v-else-if="frontmatter.layout && frontmatter.layout !== 'doc'"
-      :is="frontmatter.layout"
-    />
+    <component v-else-if="frontmatter.layout && frontmatter.layout !== 'doc'" :is="frontmatter.layout" />
 
     <VPDoc v-else>
       <template #doc-top><slot name="doc-top" /></template>
@@ -63,36 +59,34 @@ const { hasSidebar } = useSidebar()
 </template>
 
 <style scoped>
-.VPContent {
-  flex-grow: 1;
-  flex-shrink: 0;
-  margin: var(--vp-layout-top-height, 0px) auto 0;
-  width: 100%;
-}
-
-.VPContent.is-home {
-  width: 100%;
-  max-width: 100%;
-}
-
-.VPContent.has-sidebar {
-  margin: 0;
-}
-
-.VPNavBar.container{
-  max-width: none;
-}
-
-@media (min-width: 960px) {
   .VPContent {
-    padding-top: var(--vp-nav-height);
+    flex-grow: 1;
+    flex-shrink: 0;
+    width: 100%;
+    margin: var(--vp-layout-top-height, 0px) auto 0;
+  }
+
+  .VPContent.is-home {
+    width: 100%;
+    max-width: 100%;
   }
 
   .VPContent.has-sidebar {
-    margin: var(--vp-layout-top-height, 0px) 0 0;
-    padding-left: var(--vp-sidebar-width);
+    margin: 0;
   }
-}
+
+  .VPNavBar.container {
+    max-width: none;
+  }
+
+  @media (min-width: 960px) {
+    .VPContent {
+      padding-top: var(--vp-nav-height);
+    }
+
+    .VPContent.has-sidebar {
+      padding-left: var(--vp-sidebar-width);
+      margin: var(--vp-layout-top-height, 0px) 0 0;
+    }
+  }
 </style>
-
-

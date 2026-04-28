@@ -10,24 +10,24 @@ type LocaleText = Record<CatalogLocale, string>
 type CatalogCategoryId = 'basic' | 'navigation' | 'form' | 'feedback' | 'display' | 'composables'
 
 interface DocsMeta {
+  available?: boolean
   slug: string
   text: string
-  available?: boolean
 }
 
 interface CatalogItem {
+  docs: Record<CatalogLocale, DocsMeta>
   id: string
   titleKey?: string
-  docs: Record<CatalogLocale, DocsMeta>
 }
 
 interface CatalogCategory {
-  id: CatalogCategoryId
-  icon?: string
-  appNameKey?: string
   appName?: LocaleText
+  appNameKey?: string
   docsNavText: LocaleText
   docsSidebarText: LocaleText
+  icon?: string
+  id: CatalogCategoryId
   includeInApp?: boolean
   includeInDocsNav?: boolean
   items: CatalogItem[]

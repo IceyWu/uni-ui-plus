@@ -3,9 +3,7 @@
     <view class="page-swiper">
       <demo-group title="组件类型">
         <demo-group-item title="基本使用" :no-padding="true">
-          <view class="page-swiper__container">
-            <up-swiper :list="swiperList" height="200" @click="handleClick" @change="handleChange" />
-          </view>
+          <view class="page-swiper__container"><up-swiper :list="swiperList" height="200" @click="handleClick" @change="handleChange" /></view>
         </demo-group-item>
       </demo-group>
 
@@ -24,9 +22,7 @@
           </view>
         </demo-group-item>
         <demo-group-item :title="selectedType" :no-padding="true">
-          <view class="page-swiper__container">
-            <up-swiper :list="swiperList" height="200" :indicator-type="selectedType" />
-          </view>
+          <view class="page-swiper__container"><up-swiper :list="swiperList" height="200" :indicator-type="selectedType" /></view>
         </demo-group-item>
       </demo-group>
 
@@ -49,39 +45,39 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import UpSwiper from '@/uni_modules/uni-ui-plus/components/up-swiper/up-swiper.vue'
-import type { SwiperIndicatorType } from '@/uni_modules/uni-ui-plus/components/up-swiper-nav/types'
+  import { ref } from 'vue'
+  import UpSwiper from '@/uni_modules/uni-ui-plus/components/up-swiper/up-swiper.vue'
+  import type { SwiperIndicatorType } from '@/uni_modules/uni-ui-plus/components/up-swiper-nav/types'
 
-const swiperList = ref([
-  'https://picsum.photos/400/200?random=1',
-  'https://picsum.photos/400/200?random=2',
-  'https://picsum.photos/400/200?random=3',
-  'https://picsum.photos/400/200?random=4'
-])
+  const swiperList = ref([
+    'https://picsum.photos/400/200?random=1',
+    'https://picsum.photos/400/200?random=2',
+    'https://picsum.photos/400/200?random=3',
+    'https://picsum.photos/400/200?random=4'
+  ])
 
-const indicatorTypes = ref<{ label: string; value: SwiperIndicatorType }[]>([
-  { label: '圆点', value: 'dots' },
-  { label: '圆点条', value: 'dots-bar' },
-  { label: '分式', value: 'fraction' },
-  { label: '线条', value: 'line' }
-])
+  const indicatorTypes = ref<{ label: string; value: SwiperIndicatorType }[]>([
+    { label: '圆点', value: 'dots' },
+    { label: '圆点条', value: 'dots-bar' },
+    { label: '分式', value: 'fraction' },
+    { label: '线条', value: 'line' }
+  ])
 
-const selectedType = ref<SwiperIndicatorType>('dots')
+  const selectedType = ref<SwiperIndicatorType>('dots')
 
-const customList = ref([
-  { id: 1, title: '自定义卡片 1', description: '自定义轮播内容', color: '#FF6B6B' },
-  { id: 2, title: '自定义卡片 2', description: '完全自定义样式', color: '#4ECDC4' },
-  { id: 3, title: '自定义卡片 3', description: '支持插槽展示', color: '#45B7D1' }
-])
+  const customList = ref([
+    { id: 1, title: '自定义卡片 1', description: '自定义轮播内容', color: '#FF6B6B' },
+    { id: 2, title: '自定义卡片 2', description: '完全自定义样式', color: '#4ECDC4' },
+    { id: 3, title: '自定义卡片 3', description: '支持插槽展示', color: '#45B7D1' }
+  ])
 
-function handleClick(item: any, index: number) {
-  uni.showToast({ title: `点击了第 ${index + 1} 项`, icon: 'none' })
-}
+  function handleClick(item: any, index: number) {
+    uni.showToast({ title: `点击了第 ${index + 1} 项`, icon: 'none' })
+  }
 
-function handleChange(current: number, source: string) {
-  console.log('swiper changed:', current, source)
-}
+  function handleChange(current: number, source: string) {
+    console.log('swiper changed:', current, source)
+  }
 </script>
 
 <style lang="scss" scoped>

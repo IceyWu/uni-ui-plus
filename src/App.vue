@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import { onLaunch, onShow, onHide, onThemeChange } from '@dcloudio/uni-app'
-import { useDark } from './store'
-import { useI18nSync } from './hooks/useI18nSync'
-import { useIframeMessage } from './hooks/useIframeMessage'
+  import { onHide, onLaunch, onShow, onThemeChange } from '@dcloudio/uni-app'
+  import { useI18nSync } from './hooks/useI18nSync'
+  import { useIframeMessage } from './hooks/useIframeMessage'
+  import { useDark } from './store'
 
-// 初始化国际化
-const darkMode = useDark()
-const { setLocale } = useI18nSync()
+  // 初始化国际化
+  const darkMode = useDark()
+  const { setLocale } = useI18nSync()
 
-// 使用专门的iframe消息处理hook
-useIframeMessage({
-  onLocaleChange: (locale) => {
-    setLocale(locale)
-  },
-  onThemeChange: (isDark) => {
-    darkMode.setDark(isDark)
-  }
-})
+  // 使用专门的iframe消息处理hook
+  useIframeMessage({
+    onLocaleChange: (locale) => {
+      setLocale(locale)
+    },
+    onThemeChange: (isDark) => {
+      darkMode.setDark(isDark)
+    }
+  })
 
-onThemeChange((option) => {
-  darkMode.setDark(option.theme === 'dark')
-})
+  onThemeChange((option) => {
+    darkMode.setDark(option.theme === 'dark')
+  })
 
-onLaunch(() => {
-  const systemInfo = uni.getSystemInfoSync()
-  darkMode.setDark(systemInfo.theme === 'dark')
-})
-onShow(() => {
-  console.log('App Show')
-})
-onHide(() => {
-  console.log('App Hide')
-})
+  onLaunch(() => {
+    const systemInfo = uni.getSystemInfoSync()
+    darkMode.setDark(systemInfo.theme === 'dark')
+  })
+  onShow(() => {
+    console.log('App Show')
+  })
+  onHide(() => {
+    console.log('App Hide')
+  })
 </script>
 <style lang="scss">
 @use '@/iconfont/index.css';

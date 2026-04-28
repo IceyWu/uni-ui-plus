@@ -28,57 +28,57 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
-import UpList from '@/uni_modules/uni-ui-plus/components/up-list/up-list.vue'
-import { getObjVal, list, sleep } from '@iceywu/utils'
-import { useRequest } from 'vue-hooks-pure'
+  import { getObjVal, list, sleep } from '@iceywu/utils'
+  import { onMounted, ref } from 'vue'
+  import { useRequest } from 'vue-hooks-pure'
+  import UpList from '@/uni_modules/uni-ui-plus/components/up-list/up-list.vue'
 
-interface ListFetchParams {
-  page?: number
-  size?: number
-  maxPage?: number
-}
+  interface ListFetchParams {
+    maxPage?: number
+    page?: number
+    size?: number
+  }
 
-async function getTestApi(params: ListFetchParams) {
-  await sleep(500)
-  const { page = 0, size = 10, maxPage = 3 } = params
-  const baseSize = page * size
-  const data = list(0, size - 1, (index) => {
-    const element = baseSize + index
+  async function getTestApi(params: ListFetchParams) {
+    await sleep(500)
+    const { page = 0, size = 10, maxPage = 3 } = params
+    const baseSize = page * size
+    const data = list(0, size - 1, (index) => {
+      const element = baseSize + index
+      return {
+        id: element,
+        cover: `https://picsum.photos/id/${element}/200/300`,
+        title: `title ${element}`,
+        desc: `desc ${element}`
+      }
+    })
     return {
-      id: element,
-      cover: `https://picsum.photos/id/${element}/200/300`,
-      title: `title ${element}`,
-      desc: `desc ${element}`
+      code: 200,
+      msg: '查询成功',
+      result: { content: data, last: page + 1 === maxPage, total: 100 }
+    }
+  }
+
+  const {
+    onRefresh,
+    onLoad: onLoadMore,
+    result
+  } = useRequest(getTestApi, {
+    target: 'list',
+    loadingDelay: 300,
+    getVal: (res) => getObjVal(res, 'result.content', []),
+    listOptions: {
+      defaultPageKey: 'page',
+      defaultSizeKey: 'size',
+      defaultDataKey: 'list',
+      defaultPage: -1,
+      getTotal: (data) => getObjVal(data, 'result.total', 0)
     }
   })
-  return {
-    code: 200,
-    msg: '查询成功',
-    result: { content: data, last: page + 1 === maxPage, total: 100 }
-  }
-}
 
-const {
-  onRefresh,
-  onLoad: onLoadMore,
-  result
-} = useRequest(getTestApi, {
-  target: 'list',
-  loadingDelay: 300,
-  getVal: (res) => getObjVal(res, 'result.content', []),
-  listOptions: {
-    defaultPageKey: 'page',
-    defaultSizeKey: 'size',
-    defaultDataKey: 'list',
-    defaultPage: -1,
-    getTotal: (data) => getObjVal(data, 'result.total', 0)
-  }
-})
-
-onMounted(() => {
-  onRefresh()
-})
+  onMounted(() => {
+    onRefresh()
+  })
 </script>
 
 <style lang="scss" scoped>

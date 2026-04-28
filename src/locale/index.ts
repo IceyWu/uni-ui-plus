@@ -1,8 +1,8 @@
 import { createI18n } from 'vue-i18n'
-import zhCN from './zh-CN.json'
-import enUS from './en-US.json'
 import Locale from '../uni_modules/uni-ui-plus/locale'
 import UpEnUS from '../uni_modules/uni-ui-plus/locale/lang/en-US'
+import enUS from './en-US.json'
+import zhCN from './zh-CN.json'
 
 Locale.add({ 'en-US': UpEnUS })
 

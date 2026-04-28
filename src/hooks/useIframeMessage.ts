@@ -27,7 +27,9 @@ export function useIframeMessage(options: IframeMessageOptions = {}) {
   // 处理接收到的消息
   function handleMessage(event: MessageEvent) {
     // 确保消息来源是父窗口
-    if (event.source !== parent) return
+    if (event.source !== parent) {
+      return
+    }
 
     const data = event.data
 

@@ -1,6 +1,6 @@
-﻿import { defineConfig } from 'vitest/config'
-import vue from '@vitejs/plugin-vue'
+﻿import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+import { defineConfig } from 'vitest/config'
 import vitePluginUniConditionalCompile from './vite-plugins/vite-plugin-uni-conditional-compile'
 
 // 获取当前测试平台
@@ -15,8 +15,8 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, './src'),
-      '@vite-plugins': resolve(__dirname, './vite-plugins')
+      '@': resolve(import.meta.dirname, './src'),
+      '@vite-plugins': resolve(import.meta.dirname, './vite-plugins')
     }
   },
   css: {

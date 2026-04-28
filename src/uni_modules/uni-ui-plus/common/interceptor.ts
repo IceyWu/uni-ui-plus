@@ -2,7 +2,7 @@ import { isPromise } from './util'
 
 function noop() {}
 
-export type Interceptor = (...args: any[]) => Promise<boolean> | boolean | undefined | void
+export type Interceptor = (...args: any[]) => Promise<boolean> | boolean | undefined | undefined
 
 export function callInterceptor(
   interceptor: Interceptor | undefined,
@@ -59,8 +59,11 @@ export function funInterceptor(
     if (isPromise(returnVal)) {
       returnVal
         .then((value) => {
-          if (value) done(value)
-          else if (canceled) canceled()
+          if (value) {
+            done(value)
+          } else if (canceled) {
+            canceled()
+          }
         })
         .catch(() => {})
     } else if (returnVal) {

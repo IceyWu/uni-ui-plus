@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import { makeStringProp, baseProps } from '../../common/props'
+import { baseProps, makeStringProp } from '../../common/props'
 
 export type ConfigProviderTheme = 'light' | 'dark'
 

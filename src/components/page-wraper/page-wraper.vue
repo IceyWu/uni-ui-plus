@@ -1,27 +1,25 @@
 <template>
-  <view class="page-wraper" @click="handleClick">
-    <slot />
-  </view>
+  <view class="page-wraper" @click="handleClick"><slot /></view>
 </template>
 <script lang="ts">
-export default {
-  options: {
-    addGlobalClass: true,
-    virtualHost: true,
-    styleIsolation: 'shared'
+  export default {
+    options: {
+      addGlobalClass: true,
+      virtualHost: true,
+      styleIsolation: 'shared'
+    }
   }
-}
 </script>
 <script lang="ts" setup>
-interface Props {
-  safeAreaInsetBottom?: boolean
-}
+  interface Props {
+    safeAreaInsetBottom?: boolean
+  }
 
-withDefaults(defineProps<Props>(), {
-  safeAreaInsetBottom: true
-})
+  withDefaults(defineProps<Props>(), {
+    safeAreaInsetBottom: true
+  })
 
-function handleClick() {}
+  function handleClick() {}
 </script>
 <style lang="scss" scoped>
 .page-wraper {

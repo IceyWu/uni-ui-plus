@@ -1,8 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 
-const srcRoot = path.join(__dirname, '../dist/build/h5')
-const targetSrcRoot = path.join(__dirname, '../docs/.vitepress/dist/demo')
+const srcRoot = path.join(import.meta.dirname, '../dist/build/h5')
+const targetSrcRoot = path.join(import.meta.dirname, '../docs/.vitepress/dist/demo')
 
 function copyFolder(sourceDir: string, targetDir: string) {
   fs.mkdirSync(targetDir, { recursive: true })

@@ -5,9 +5,7 @@ export function pushToQueue(comp: any) {
 }
 
 export function removeFromQueue(comp: any) {
-  queue = queue.filter((item) => {
-    return item.$.uid !== comp.$.uid
-  })
+  queue = queue.filter((item) => item.$.uid !== comp.$.uid)
 }
 
 export function closeOther(comp: any) {

@@ -1,12 +1,12 @@
 import {
+  type ComponentInternalInstance,
+  type ComponentPublicInstance,
+  getCurrentInstance,
+  type InjectionKey,
   provide,
   reactive,
-  getCurrentInstance,
   type VNode,
-  type InjectionKey,
-  type VNodeNormalizedChildren,
-  type ComponentPublicInstance,
-  type ComponentInternalInstance
+  type VNodeNormalizedChildren
 } from 'vue'
 
 function isVNode(value: any): value is VNode {
@@ -78,7 +78,7 @@ export function useChildren<Child extends ComponentPublicInstance = ComponentPub
       publicChildren.splice(index, 1)
       internalChildren.splice(index, 1)
     }
-    provide(key, Object.assign({ link, unlink, children: publicChildren, internalChildren }, value))
+    provide(key, { link, unlink, children: publicChildren, internalChildren, ...value })
   }
 
   return { children: publicChildren, linkChildren }

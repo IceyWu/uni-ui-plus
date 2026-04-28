@@ -1,32 +1,30 @@
 <template>
   <view :class="['demo-group-item', customClass, noPadding ? 'is-no-padding' : '']">
     <view class="demo-group-item__title">{{ title }}</view>
-    <view class="demo-group-item__container">
-      <slot />
-    </view>
+    <view class="demo-group-item__container"><slot /></view>
   </view>
 </template>
 <script lang="ts">
-export default {
-  options: {
-    addGlobalClass: true,
-    virtualHost: true,
-    styleIsolation: 'shared'
+  export default {
+    options: {
+      addGlobalClass: true,
+      virtualHost: true,
+      styleIsolation: 'shared'
+    }
   }
-}
 </script>
 <script lang="ts" setup>
-interface Props {
-  customClass?: string
-  title?: string
-  noPadding?: boolean
-}
+  interface Props {
+    customClass?: string
+    noPadding?: boolean
+    title?: string
+  }
 
-withDefaults(defineProps<Props>(), {
-  title: '',
-  customClass: '',
-  noPadding: false
-})
+  withDefaults(defineProps<Props>(), {
+    title: '',
+    customClass: '',
+    noPadding: false
+  })
 </script>
 <style lang="scss" scoped>
 .demo-group-item {

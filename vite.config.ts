@@ -1,7 +1,6 @@
-import { defineConfig } from 'vite'
-
 import uni from '@dcloudio/vite-plugin-uni'
 import Components from '@uni-helper/vite-plugin-uni-components'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   base: './',

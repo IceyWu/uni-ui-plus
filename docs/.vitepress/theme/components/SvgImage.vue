@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ svg: string }>()
+  defineProps<{ svg: string }>()
 </script>
 
 <template>
@@ -7,16 +7,16 @@ defineProps<{ svg: string }>()
 </template>
 
 <style>
-.svg-image-root {
-  background-color: #eee;
-  border-radius: 8px;
-  padding: 1ch;
-  margin: 1ch 0;
-}
-html.dark .svg-image-root {
-  background-color: #313641;
-}
-.svg-image-root svg text {
-  font-family: var(--vp-font-family-base);
-}
+  .svg-image-root {
+    padding: 1ch;
+    margin: 1ch 0;
+    background-color: #eee;
+    border-radius: 8px;
+  }
+  html.dark .svg-image-root {
+    background-color: #313641;
+  }
+  .svg-image-root svg text {
+    font-family: var(--vp-font-family-base);
+  }
 </style>

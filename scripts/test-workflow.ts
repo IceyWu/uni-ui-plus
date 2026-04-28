@@ -85,7 +85,7 @@ function showHelp(): void {
  * @returns 所有组件名称列表
  */
 function getAllComponents(): string[] {
-  const testsDir = path.join(__dirname, '..', 'tests', 'components')
+  const testsDir = path.join(import.meta.dirname, '..', 'tests', 'components')
   return fs
     .readdirSync(testsDir)
     .filter((file) => file.endsWith('.test.ts'))
@@ -99,7 +99,7 @@ function getAllComponents(): string[] {
  */
 function checkTestFilesExist(components: string[]): boolean {
   for (const component of components) {
-    const testFile = path.join(__dirname, '..', 'tests', 'components', `${component}.test.ts`)
+    const testFile = path.join(import.meta.dirname, '..', 'tests', 'components', `${component}.test.ts`)
     if (!fs.existsSync(testFile)) {
       console.error(`错误：找不到组件 ${component} 的测试文件：${testFile}`)
       return false
@@ -136,7 +136,7 @@ async function runLint(): Promise<boolean> {
  */
 function getCoverageData(component: string): CoverageData | null {
   try {
-    const coveragePath = path.join(__dirname, '..', 'coverage', 'coverage-summary.json')
+    const coveragePath = path.join(import.meta.dirname, '..', 'coverage', 'coverage-summary.json')
     if (fs.existsSync(coveragePath)) {
       const coverageData = JSON.parse(fs.readFileSync(coveragePath, 'utf8'))
       return coverageData.total as CoverageData
@@ -204,7 +204,7 @@ function generateTestReport(results: TestResult[]): void {
   console.log('\n📊 步骤 3: 生成测试报告')
   console.log('-'.repeat(80))
 
-  const reportDir = path.join(__dirname, '..', 'test-reports')
+  const reportDir = path.join(import.meta.dirname, '..', 'test-reports')
   if (!fs.existsSync(reportDir)) {
     fs.mkdirSync(reportDir, { recursive: true })
   }

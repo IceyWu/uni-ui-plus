@@ -10,11 +10,9 @@
           </view>
         </view>
         <view class="page__desc">
-          {{
-            $t(
+          {{ $t(
               'uni-ui-plus-shi-yi-ge-ji-yu-vue3ts-kai-fa-de-uniapp-zu-jian-ku-ti-gong-70-gao-zhi-liang-zu-jian-zhi-chi-an-hei-mo-shi-guo-ji-hua-he-zi-ding-yi-zhu-ti'
-            )
-          }}
+            ) }}
         </view>
       </view>
       <view class="page__bd">
@@ -46,90 +44,87 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
-import packageConfig from '../../../package.json'
-import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
+  import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
+  import { computed, ref } from 'vue'
+  import { useI18n } from 'vue-i18n'
+  import packageConfig from '../../../package.json'
 
-const imgModules: any = import.meta.glob('../images/*.png', { eager: true })
+  const { t } = useI18n()
 
-// 使用computed使list响应语言变化
-const list = computed(() => [
-  {
-    id: 'widget',
-    name: t('ji-chu'),
-    open: false,
-    icon: imgModules['../images/icon_nav_widget.png'].default,
-    pages: [
-      {
-        id: 'button',
-        name: t('button-an-niu')
-      },
-      {
-        id: 'list',
-        name: t('lie-biao')
-      },
-      {
-        id: 'skeleton',
-        name: t('skeleton')
-      },
-      {
-        id: 'swiper',
-        name: 'Swiper 轮播'
-      }
-    ]
-  },
-  {
-    id: 'show',
-    name: t('shu-ju-zhan-shi'),
-    open: false,
-    icon: imgModules['../images/icon_nav_show.png'].default,
-    pages: [
-      {
-        id: 'img',
-        name: t('img-tu-pian')
-      },
-      {
-        id: 'waterfall',
-        name: t('waterfall')
-      },
-      {
-        id: 'livephoto',
-        name: t('livephoto')
-      }
-    ]
+  const imgModules: any = import.meta.glob('../images/*.png', { eager: true })
+
+  // 使用computed使list响应语言变化
+  const list = computed(() => [
+    {
+      id: 'widget',
+      name: t('ji-chu'),
+      open: false,
+      icon: imgModules['../images/icon_nav_widget.png'].default,
+      pages: [
+        {
+          id: 'button',
+          name: t('button-an-niu')
+        },
+        {
+          id: 'list',
+          name: t('lie-biao')
+        },
+        {
+          id: 'skeleton',
+          name: t('skeleton')
+        },
+        {
+          id: 'swiper',
+          name: 'Swiper 轮播'
+        }
+      ]
+    },
+    {
+      id: 'show',
+      name: t('shu-ju-zhan-shi'),
+      open: false,
+      icon: imgModules['../images/icon_nav_show.png'].default,
+      pages: [
+        {
+          id: 'img',
+          name: t('img-tu-pian')
+        },
+        {
+          id: 'waterfall',
+          name: t('waterfall')
+        },
+        {
+          id: 'livephoto',
+          name: t('livephoto')
+        }
+      ]
+    }
+  ])
+
+  function handleClick(url: string) {
+    uni.navigateTo({
+      url
+    })
   }
-])
 
-function handleClick(url: string) {
-  uni.navigateTo({
-    url
-  })
-}
+  // 创建一个状态来跟踪每个分类的打开状态
+  const openState = ref<Record<string, boolean>>({})
 
-// 创建一个状态来跟踪每个分类的打开状态
-const openState = ref<Record<string, boolean>>({})
+  function kindToggle(id: string) {
+    openState.value[id] = !openState.value[id]
+  }
 
-function kindToggle(id: string) {
-  openState.value[id] = !openState.value[id]
-}
-
-onShareAppMessage(() => {
-  return {
+  onShareAppMessage(() => ({
     title: t('yi-ge-ji-yu-vue3ts-de-uniapp-zu-jian-ku-ti-gong-70-gao-zhi-liang-zu-jian-zhi-chi-an-hei-mo-shi-guo-ji-hua-he-zi-ding-yi-zhu-ti'),
     path: '/pages/index/Index',
     imageUrl: imgModules['../images/share.png'].default
-  }
-})
+  }))
 
-onShareTimeline(() => {
-  return {
+  onShareTimeline(() => ({
     title: t('yi-ge-ji-yu-vue3ts-de-uniapp-zu-jian-ku-ti-gong-70-gao-zhi-liang-zu-jian-zhi-chi-an-hei-mo-shi-guo-ji-hua-he-zi-ding-yi-zhu-ti-0'),
     path: '/pages/index/Index',
     imageUrl: imgModules['../images/share.png'].default
-  }
-})
+  }))
 </script>
 
 <style lang="scss" scoped>

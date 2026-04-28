@@ -1,5 +1,5 @@
 export { useCell } from './useCell'
-export { useChildren, flattenVNodes, sortChildren } from './useChildren'
+export { flattenVNodes, sortChildren, useChildren } from './useChildren'
 export { useCountDown } from './useCountDown'
 export { useLockScroll } from './useLockScroll'
 export { useParent } from './useParent'

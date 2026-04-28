@@ -1,37 +1,37 @@
-import { isArray, isDef, isFunction } from '../common/util'
+import { isArray, isFunction } from '../common/util'
 
 // Re-export types that were previously in wd-upload/types
 // These will need to be defined here or imported from the component
 export type UploadStatusType = 'pending' | 'loading' | 'success' | 'fail'
 
 export interface UploadFileItem {
-  url: string
-  status?: UploadStatusType
-  percent?: number
   error?: string
+  percent?: number
+  status?: UploadStatusType
+  url: string
   [key: string]: any
 }
 
 export interface ChooseFile {
-  path?: string
-  name?: string
-  size?: number
-  type?: string
-  thumb?: string
   duration?: number
+  name?: string
+  path?: string
+  size?: number
+  thumb?: string
+  type?: string
   [key: string]: any
 }
 
 export interface ChooseFileOption {
+  accept?: string
+  camera?: string
+  compressed?: boolean
+  extension?: string[]
+  maxCount?: number
+  maxDuration?: number
   multiple?: boolean
   sizeType?: string[]
   sourceType?: string[]
-  maxCount?: number
-  accept?: string
-  compressed?: boolean
-  maxDuration?: number
-  camera?: string
-  extension?: string[]
 }
 
 export type UploadMethod = (file: UploadFileItem, formData: Record<string, any>, options: any) => UniApp.UploadTask | void | Promise<void>
@@ -44,26 +44,26 @@ export const UPLOAD_STATUS: Record<string, UploadStatusType> = {
 }
 
 export interface UseUploadReturn {
-  startUpload: (file: UploadFileItem, options: UseUploadOptions) => UniApp.UploadTask | void | Promise<void>
   abort: (task?: UniApp.UploadTask) => void
-  UPLOAD_STATUS: Record<string, UploadStatusType>
   chooseFile: (options: ChooseFileOption) => Promise<ChooseFile[]>
+  startUpload: (file: UploadFileItem, options: UseUploadOptions) => UniApp.UploadTask | void | Promise<void>
+  UPLOAD_STATUS: Record<string, UploadStatusType>
 }
 
 export interface UseUploadOptions {
+  abortPrevious?: boolean
   action: string
+  extension?: string[]
+  fileType?: 'image' | 'video' | 'audio'
+  formData?: Record<string, any>
   header?: Record<string, any>
   name?: string
-  formData?: Record<string, any>
-  fileType?: 'image' | 'video' | 'audio'
+  onError?: (res: UniApp.GeneralCallbackResult, file: UploadFileItem, formData: Record<string, any>) => void
+  onProgress?: (res: UniApp.OnProgressUpdateResult, file: UploadFileItem) => void
+  onSuccess?: (res: UniApp.UploadFileSuccessCallbackResult, file: UploadFileItem, formData: Record<string, any>) => void
   statusCode?: number
   statusKey?: string
   uploadMethod?: UploadMethod
-  onSuccess?: (res: UniApp.UploadFileSuccessCallbackResult, file: UploadFileItem, formData: Record<string, any>) => void
-  onError?: (res: UniApp.GeneralCallbackResult, file: UploadFileItem, formData: Record<string, any>) => void
-  onProgress?: (res: UniApp.OnProgressUpdateResult, file: UploadFileItem) => void
-  abortPrevious?: boolean
-  extension?: string[]
 }
 
 export function useUpload(): UseUploadReturn {
@@ -79,7 +79,9 @@ export function useUpload(): UseUploadReturn {
   }
 
   const defaultUpload: UploadMethod = (file, formData, options) => {
-    if (options.abortPrevious) abort()
+    if (options.abortPrevious) {
+      abort()
+    }
 
     const uploadTask = uni.uploadFile({
       url: options.action,
@@ -148,9 +150,8 @@ export function useUpload(): UseUploadReturn {
 
     if (isFunction(uploadMethod)) {
       return uploadMethod(file, formData, uploadOptions)
-    } else {
-      return defaultUpload(file, formData, uploadOptions)
     }
+    return defaultUpload(file, formData, uploadOptions)
   }
 
   function formatImage(res: UniApp.ChooseImageSuccessCallbackResult): ChooseFile[] {

@@ -1,5 +1,4 @@
 import type {
-  ButtonLang,
   ButtonOnAddgroupappEvent,
   ButtonOnAgreeprivacyauthorizationEvent,
   ButtonOnChooseaddressEvent,
@@ -10,10 +9,9 @@ import type {
   ButtonOnLaunchappEvent,
   ButtonOnLoginEvent,
   ButtonOnOpensettingEvent,
-  ButtonOnSubscribeEvent,
-  ButtonOpenType
+  ButtonOnSubscribeEvent
 } from '@uni-helper/uni-app-types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPropTypes } from 'vue'
 
 export const buttonProps = {
   /**

@@ -5,13 +5,13 @@ import { watch } from 'vue'
  * 定义组件 props 类型
  */
 interface TransitionProps {
-  show?: boolean
-  name?: string | string[]
   customClass?: string
   customStyle?: string
-  duration?: number | { enter: number; leave: number }
   destroy?: boolean
+  duration?: number | { enter: number; leave: number }
   lazyRender?: boolean
+  name?: string | string[]
+  show?: boolean
 }
 
 /**
@@ -36,7 +36,9 @@ vi.mock('@/uni_modules/uni-ui-plus/components/up-transition/up-transition.vue', 
       watch(
         () => props.show,
         (newVal, oldVal) => {
-          if (newVal === oldVal) return
+          if (newVal === oldVal) {
+            return
+          }
 
           if (newVal) {
             // 显示

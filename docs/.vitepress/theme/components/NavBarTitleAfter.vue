@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import packageConfig from '../../../../package.json'
-
+  import packageConfig from '../../../../package.json'
 </script>
 
 <template>

@@ -3,15 +3,9 @@
   "compilerOptions": {
     "verbatimModuleSyntax": false,
     "ignoreDeprecations": "5.0",
-    "lib": [
-      "ESNext",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
     "types": [
       "node",
@@ -26,9 +20,7 @@
     "module": "ESNext"
   },
   "vueCompilerOptions": {
-    "plugins": [
-      "@uni-helper/uni-types/volar-plugin"
-    ]
+    "plugins": ["@uni-helper/uni-types/volar-plugin"]
   },
   "include": [
     "src/**/*.ts",
@@ -37,9 +29,5 @@
     "tests/**/*.ts",
     "components.d.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "unpackage",
-    "src/**/*.nvue"
-  ]
+  "exclude": ["node_modules", "unpackage", "src/**/*.nvue"]
 }

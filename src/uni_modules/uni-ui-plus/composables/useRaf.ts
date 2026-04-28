@@ -1,6 +1,5 @@
-import { ref, onUnmounted } from 'vue'
-import { isDef, isNumber } from '../common/util'
-import { isH5 } from '../common/util'
+import { onUnmounted, ref } from 'vue'
+import { isDef, isH5, isNumber } from '../common/util'
 
 type RafCallback = (time: number) => void
 

@@ -1,10 +1,11 @@
 // 从根目录下的 package.json 中获取版本号
-import { arrayToRegExp, getTypeSymbol, hyphenate, isCommonType, isUnionType } from 'components-helper'
-import { version, name } from '../package.json'
+
 import type { ReAttribute, ReComponentName, ReDocUrl, ReWebTypesSource, ReWebTypesType } from 'components-helper'
-import path from 'path'
-import { generateWebTypes } from './component-helper'
+import { arrayToRegExp, getTypeSymbol, hyphenate, isCommonType, isUnionType } from 'components-helper'
 import os from 'os'
+import path from 'path'
+import { name, version } from '../package.json'
+import { generateWebTypes } from './component-helper'
 
 // 定义类型映射
 const typeMap: any = {
@@ -12,18 +13,15 @@ const typeMap: any = {
 }
 
 // 移除HTML标签、非英文字符和数字的函数
-const removeHtmlTagsAndNonEnglish = (str: string) => {
-  return str
+const removeHtmlTagsAndNonEnglish = (str: string) =>
+  str
     .replace(/<\/?[^>]+(>|$)/g, '')
     .replace(/[^\w\s-]/g, '')
     .replace(/\d+/g, '')
     .trim()
-}
 
 // 重新定义组件名称的函数
-const reComponentName: ReComponentName = (title: string) => {
-  return `up-${hyphenate(removeHtmlTagsAndNonEnglish(title)).replace(/[ ]+/g, '-')}`
-}
+const reComponentName: ReComponentName = (title: string) => `up-${hyphenate(removeHtmlTagsAndNonEnglish(title)).replace(/[ ]+/g, '-')}`
 
 // 重新定义文档 URL 的函数
 const reDocUrl: ReDocUrl = (fileName, header) => {
@@ -37,19 +35,16 @@ const reDocUrl: ReDocUrl = (fileName, header) => {
 const reWebTypesSource: ReWebTypesSource = (title) => {
   const symbol = `Wd${removeHtmlTagsAndNonEnglish(title)
     .replace(/-/g, ' ')
-    .replace(/^\w|\s+\w/g, (item: string) => {
-      return item.trim().toUpperCase()
-    })}`
+    .replace(/^\w|\s+\w/g, (item: string) => item.trim().toUpperCase())}`
   return { symbol }
 }
 
 // 获取纯净值（移除所有反引号和星号以及首尾的单双引号）
-const getPureValue = (value: string) => {
-  return value
+const getPureValue = (value: string) =>
+  value
     .replace(/[`*]/g, '')
     .replace(/^['"]|['"]$/g, '')
     .trim()
-}
 
 // 重新定义 WebTypes 类型的函数
 const reWebTypesType: ReWebTypesType = (type) => {
@@ -72,13 +67,11 @@ const findModule = (type: string) => {
       return key
     }
   }
-  return undefined
+  return
 }
 
 // 将驼峰写法转换为短横线连接的写法的函数
-const toKebabCase = (str: string) => {
-  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
-}
+const toKebabCase = (str: string) => str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 
 // 重新定义属性名称的函数
 const reAttribute: ReAttribute = (value, key, row, title) => {
@@ -94,21 +87,21 @@ const reAttribute: ReAttribute = (value, key, row, title) => {
         return 'v-model'
       }
       return toKebabCase(value.replace(/[^\w\s-]/g, ''))
-    } else if (key === '可选值' || key === '默认值') {
+    }
+    if (key === '可选值' || key === '默认值') {
       const pureValue = getPureValue(value)
 
       if (['', '-', '—'].includes(pureValue)) {
-        return undefined
-      } else {
-        return pureValue
+        return
       }
+      return pureValue
     }
   }
   return value
 }
 
 // 定义文档目录
-let entry = path.resolve(__dirname, '../docs/component/*.md')
+let entry = path.resolve(import.meta.dirname, '../docs/component/*.md')
 
 if (os.platform() === 'win32') {
   entry = entry.replace(/\\/g, '/')
@@ -118,7 +111,7 @@ generateWebTypes({
   name,
   version,
   entry,
-  outDir: path.resolve(__dirname, '../src/uni_modules/uni-ui-plus'),
+  outDir: path.resolve(import.meta.dirname, '../src/uni_modules/uni-ui-plus'),
   reComponentName,
   reDocUrl,
   reWebTypesSource,

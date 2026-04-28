@@ -7,8 +7,8 @@
 import fs from 'fs'
 import path from 'path'
 
-const THEME_DIR = path.resolve(__dirname, '../src/uni_modules/uni-ui-plus/styles/theme')
-const OUTPUT_FILE = path.resolve(__dirname, '../unocss-preset/src/generated/css-vars.ts')
+const THEME_DIR = path.resolve(import.meta.dirname, '../src/uni_modules/uni-ui-plus/styles/theme')
+const OUTPUT_FILE = path.resolve(import.meta.dirname, '../unocss-preset/src/generated/css-vars.ts')
 
 function extractCssVars(content: string): string[] {
   const vars: string[] = []

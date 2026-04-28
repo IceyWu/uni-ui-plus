@@ -40,8 +40,15 @@
         "alipay": "n"
       },
       "client": {
-        "Vue": { "vue2": "n", "vue3": "y" },
-        "App": { "app-vue": "y", "app-nvue": "n", "app-uvue": "n" },
+        "Vue": {
+          "vue2": "n",
+          "vue3": "y"
+        },
+        "App": {
+          "app-vue": "y",
+          "app-nvue": "n",
+          "app-uvue": "n"
+        },
         "H5-mobile": {
           "Safari": "y",
           "Android Browser": "y",

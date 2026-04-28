@@ -1,5 +1,5 @@
-import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import { onMounted, ref } from 'vue'
 
 export type CaseData = {
   name: string
@@ -12,10 +12,7 @@ const data = ref<CaseData[]>([])
 export function useCaseData() {
   onMounted(async () => {
     // 定义数据源URL列表，按优先级排序
-    const urls = [
-      'https://sponsor.uni-ui-plusi.cn',
-      'https://up-sponsors.pages.dev'
-    ]
+    const urls = ['https://sponsor.uni-ui-plusi.cn', 'https://up-sponsors.pages.dev']
 
     // 尝试从多个数据源获取数据
     const fetchData = async () => {
@@ -26,14 +23,12 @@ export function useCaseData() {
             timeout: 5000 // 设置5秒超时
           })
           const data = response.data && response.data.data ? response.data.data : []
-          return data.map(item => {
-            return {
-              name: item.name,
-              image: item.image ? url + item.image : '',
-              description: item.description
-            }
-          }) // 成功获取数据后直接返回
-        } catch (error) {
+          return data.map((item) => ({
+            name: item.name,
+            image: item.image ? url + item.image : '',
+            description: item.description
+          })) // 成功获取数据后直接返回
+        } catch {
           console.warn(`Failed to fetch from ${url}`)
           // 继续尝试下一个URL
         }
@@ -48,6 +43,3 @@ export function useCaseData() {
     data
   }
 }
-
-
-

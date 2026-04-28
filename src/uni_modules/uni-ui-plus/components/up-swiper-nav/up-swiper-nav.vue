@@ -27,16 +27,16 @@
 </template>
 
 <script lang="ts" setup>
-import { swiperNavprops } from './types'
+  import { swiperNavprops } from './types'
 
-defineProps(swiperNavprops)
+  defineProps(swiperNavprops)
 
-const emit = defineEmits(['change'])
+  const emit = defineEmits(['change'])
 
-function handleNav(dir: 'prev' | 'next') {
-  const source: string = 'nav'
-  emit('change', { dir, source })
-}
+  function handleNav(dir: 'prev' | 'next') {
+    const source: string = 'nav'
+    emit('change', { dir, source })
+  }
 </script>
 
 <style lang="scss" scoped>

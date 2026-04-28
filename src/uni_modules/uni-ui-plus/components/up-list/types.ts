@@ -1,27 +1,19 @@
-import type {
-  ScrollViewOnRefresherrefresh,
-  ScrollViewOnScrolltolower,
-  ScrollViewOnRefresherpulling,
-  ScrollViewOnScrollEvent,
-  ScrollViewProps
-} from '@uni-helper/uni-app-types'
+import type { ScrollViewOnRefresherpulling, ScrollViewOnScrollEvent, ScrollViewProps } from '@uni-helper/uni-app-types'
 import type { ExtractPropTypes, PropType } from 'vue'
-import type { ListType } from './type'
-import { makeStringProp } from '../../common/props'
 
 // 定义接口
 interface ListObj<T> {
-  loading: boolean
   finished: boolean
-  refreshing: boolean
   list: T[]
+  loading: boolean
+  refreshing: boolean
   total?: number
 }
 
 interface SkeletonObj {
+  gridCol?: number
   num?: number
   rows?: number
-  gridCol?: number
 }
 
 // 定义 props
@@ -149,8 +141,7 @@ export type ListProps = ExtractPropTypes<typeof listProps>
 // ...existing code...
 export type ListEmits = {
   (e: 'update:listObj', data: ListObj<any>): void
-  (e: 'onRefresh'): void
-  (e: 'onLoad'): void
+  (e: 'onLoad' | 'onRefresh'): void
   (e: 'onPulling', data: ScrollViewOnRefresherpulling): void
   (e: 'onScroll', data: ScrollViewOnScrollEvent): void
 }

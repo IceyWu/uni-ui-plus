@@ -45,19 +45,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
-import UpLivePhoto from '@/uni_modules/uni-ui-plus/components/up-livephoto/up-livephoto.vue'
+  import { reactive, ref } from 'vue'
+  import UpLivePhoto from '@/uni_modules/uni-ui-plus/components/up-livephoto/up-livephoto.vue'
 
-const demoData = reactive({
-  videoSrc: 'https://nest-js.oss-accelerate.aliyuncs.com/nestTest/1/1733058160657.MOV',
-  imageSrc: 'https://nest-js.oss-accelerate.aliyuncs.com/nestTest/1/1733058160256.JPEG'
-})
+  const demoData = reactive({
+    videoSrc: 'https://nest-js.oss-accelerate.aliyuncs.com/nestTest/1/1733058160657.MOV',
+    imageSrc: 'https://nest-js.oss-accelerate.aliyuncs.com/nestTest/1/1733058160256.JPEG'
+  })
 
-const customRadius = ref(20)
+  const customRadius = ref(20)
 
-function onRadiusChange(e: any) {
-  customRadius.value = e.detail.value
-}
+  function onRadiusChange(e: any) {
+    customRadius.value = e.detail.value
+  }
 </script>
 
 <style lang="scss" scoped>

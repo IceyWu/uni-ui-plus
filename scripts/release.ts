@@ -1,9 +1,9 @@
-import inquirer from 'inquirer'
 import { execSync } from 'child_process'
-import { writeFileSync, readFileSync, readdirSync, statSync } from 'fs'
+import { readdirSync, readFileSync, statSync, writeFileSync } from 'fs'
+import inquirer from 'inquirer'
 import path from 'path'
 
-const src = path.resolve(__dirname, '../src/uni_modules/uni-ui-plus')
+const src = path.resolve(import.meta.dirname, '../src/uni_modules/uni-ui-plus')
 const oldVersion = require('../package.json').version
 const LOWEST_VERSION = '$LOWEST_VERSION$'
 
@@ -47,12 +47,12 @@ inquirer
     }
   ])
   .then((answers: any) => {
-    if (!answers['release'] || answers['release'].toLowerCase() != 'y') {
+    if (!answers.release || answers.release.toLowerCase() != 'y') {
       console.log('🚨 操作取消')
       return
     }
     // 项目版本更新
-    switch (answers['version']) {
+    switch (answers.version) {
       case '🐛 patch 小版本':
         execSync('pnpm release:patch')
         break
@@ -67,7 +67,7 @@ inquirer
         break
     }
     // 更新版本
-    const file = readFileSync(path.resolve(__dirname, '../package.json'))
+    const file = readFileSync(path.resolve(import.meta.dirname, '../package.json'))
     const packageJson = JSON.parse(file.toString())
     const newVersion = packageJson.version
 
@@ -79,7 +79,7 @@ inquirer
     writeFileSync(path.resolve(src, 'package.json'), JSON.stringify(tarfetPackageJson, null, 2))
 
     // 处理文档中的最低版本标识
-    handleLowestVersion(path.resolve(__dirname, '../docs'), newVersion)
+    handleLowestVersion(path.resolve(import.meta.dirname, '../docs'), newVersion)
 
     // 同步 changelog 到各个目录
     execSync('pnpm build:changelog')
@@ -93,7 +93,7 @@ inquirer
     console.log('√ committing changes')
     const branch = execSync('git branch --show-current').toString().replace(/\*/g, '').replace(/ /g, '').trim()
     console.log('🎉 版本发布成功')
-    const tip = 'Run `git push --follow-tags origin ' + branch + '` ' + 'to publish'
+    const tip = 'Run `git push --follow-tags origin ' + branch + '` to publish'
     console.log(tip.replace(/\n/g, ''))
   })
   .catch((error: any) => {

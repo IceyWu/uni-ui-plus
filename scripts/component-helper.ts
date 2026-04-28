@@ -1,6 +1,6 @@
-import fg from 'fast-glob'
-import { read, parse, vetur, webTypes, write, isString } from 'components-helper'
 import type { Config, InstallOptions, NormalizeData, Options, ParseData, ParseTable } from 'components-helper'
+import { isString, parse, read, vetur, webTypes, write } from 'components-helper'
+import fg from 'fast-glob'
 
 const config: Config = {
   tags: 'tags.json',
@@ -41,12 +41,16 @@ function normalize(options: Options, data: ParseData, path: string): NormalizeDa
   const _slots = new RegExp(slots, 'i')
   const _directives = new RegExp(directives, 'i')
 
-  if (!_data.table || !_data.table.length) return _data
+  if (!_data.table || !_data.table.length) {
+    return _data
+  }
 
   for (let i = 0; i < _data.table.length; i++) {
     const item = _data.table[i]
     const title = item.title
-    if (!title) continue
+    if (!title) {
+      continue
+    }
 
     if (_props.test(title)) {
       setData({
@@ -139,10 +143,18 @@ function setData({
 }
 
 export function generateWebTypes(options = {} as InstallOptions) {
-  if (!options.entry) throw new Error('entry must be a string (non empty) or an array of strings')
-  if (!options.outDir) throw new Error('outDir must be a string (non empty)')
-  if (!options.name) console.warn('missing property "name"')
-  if (!options.version) console.warn('missing property "version"')
+  if (!options.entry) {
+    throw new Error('entry must be a string (non empty) or an array of strings')
+  }
+  if (!options.outDir) {
+    throw new Error('outDir must be a string (non empty)')
+  }
+  if (!options.name) {
+    console.warn('missing property "name"')
+  }
+  if (!options.version) {
+    console.warn('missing property "version"')
+  }
 
   const _options: Options = Object.assign(config, options)
   const files: string[] = fg.sync(_options.entry, _options.fastGlobConfig)

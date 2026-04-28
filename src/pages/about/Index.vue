@@ -19,9 +19,9 @@
 </template>
 
 <script lang="ts" setup>
-function copyLink(url: string) {
-  uni.setClipboardData({ data: url })
-}
+  function copyLink(url: string) {
+    uni.setClipboardData({ data: url })
+  }
 </script>
 
 <style lang="scss" scoped>

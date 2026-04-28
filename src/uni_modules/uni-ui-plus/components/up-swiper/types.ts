@@ -1,6 +1,6 @@
+import type { ImageMode } from '@uni-helper/uni-app-types'
 import type { ExtractPropTypes, PropType } from 'vue'
 import { baseProps, makeBooleanProp, makeNumberProp, makeNumericProp, makeStringProp } from '../../common/props'
-import type { ImageMode } from '@uni-helper/uni-app-types'
 import type { SwiperNavProps } from '../up-swiper-nav/types'
 
 /**
@@ -30,13 +30,13 @@ export type AdjustHeightType = 'first' | 'current' | 'highest' | 'none'
 export type SwiperItemType = 'image' | 'video'
 
 export interface SwiperList {
-  [key: string]: any
-  // 图片、视频等资源地址
-  value?: string
   // 视频资源的封面
   poster?: string
   // 资源文件类型，可选值：'image' | 'video'
   type?: SwiperItemType
+  // 图片、视频等资源地址
+  value?: string
+  [key: string]: any
 }
 
 export const swiperProps = {

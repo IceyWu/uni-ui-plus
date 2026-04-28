@@ -1,12 +1,12 @@
 import {
-  ref,
-  inject,
-  computed,
-  onUnmounted,
-  type InjectionKey,
-  getCurrentInstance,
+  type ComponentInternalInstance,
   type ComponentPublicInstance,
-  type ComponentInternalInstance
+  computed,
+  getCurrentInstance,
+  type InjectionKey,
+  inject,
+  onUnmounted,
+  ref
 } from 'vue'
 
 type ParentProvide<T> = T & {

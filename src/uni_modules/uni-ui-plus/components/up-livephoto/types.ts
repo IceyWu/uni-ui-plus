@@ -1,5 +1,4 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import { makeNumericProp } from '../../common/props'
 import { imageProps } from '../up-image/image'
 
 // 定义 LivePhoto 特有的 props
@@ -72,15 +71,8 @@ export type LivePhotoProps = ExtractPropTypes<typeof livePhotoProps>
 // 定义 emits - 包含 image 组件的 emits 和 LivePhoto 特有的 emits
 export interface LivePhotoEmits {
   // 继承自 image 组件的事件
-  (e: 'load', event: any): void
-  (e: 'error', event: any): void
-  (e: 'click', event: any): void
+  (e: 'click' | ('error' | 'load'), event: any): void
   // LivePhoto 特有的事件
-  (e: 'video-play'): void
-  (e: 'video-pause'): void
-  (e: 'press-start'): void
-  (e: 'press-end'): void
-  (e: 'video-ended'): void
-  (e: 'video-loaded'): void
+  (e: 'video-loaded' | ('video-ended' | ('press-end' | ('press-start' | ('video-pause' | 'video-play'))))): void
   (e: 'video-progress', progress: number): void
 }

@@ -1,5 +1,5 @@
-import { useToast } from '@/uni_modules/uni-ui-plus'
 import { ref } from 'vue'
+import { useToast } from '@/uni_modules/uni-ui-plus'
 
 // 是否免除广告，免除后不再显示广告
 const isFree = ref(false)
@@ -15,7 +15,7 @@ export function useRewardAd() {
   function isFreeAd() {
     const freeAdTime = uni.getStorageSync('freeAdTime')
     if (freeAdTime) {
-      const now = new Date().getTime()
+      const now = Date.now()
       const diff = now - freeAdTime
       if (diff > 24 * 60 * 60 * 1000) {
         isFree.value = false
@@ -44,7 +44,7 @@ export function useRewardAd() {
           // 看完广告则存一个时间戳
           console.log('激励视频 广告完成')
           isFree.value = true
-          uni.setStorageSync('freeAdTime', new Date().getTime())
+          uni.setStorageSync('freeAdTime', Date.now())
           showToast({ msg: '广告观看成功，感谢支持' })
         } else {
           console.log('激励视频 广告未完成')

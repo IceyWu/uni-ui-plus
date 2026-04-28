@@ -65,6 +65,4 @@ export const imageProps = {
 export type ImageProps = ExtractPropTypes<typeof imageProps>
 
 // 定义 emits
-export interface ImageEmits {
-  (e: 'onRefresh'): any
-}
+export type ImageEmits = (e: 'onRefresh') => any

@@ -1,6 +1,5 @@
-import { ref, onMounted } from 'vue'
 import axios from 'axios'
-
+import { onMounted, ref } from 'vue'
 
 const data = ref()
 
@@ -11,10 +10,7 @@ export function useSponsor() {
     }
 
     // 定义数据源URL列表，按优先级排序
-    const urls = [
-      'https://sponsor.uni-ui-plus.cn.json',
-      'https://up-sponsors.pages.dev.json'
-    ]
+    const urls = ['https://sponsor.uni-ui-plus.cn.json', 'https://up-sponsors.pages.dev.json']
 
     // 尝试从多个数据源获取数据
     const fetchData = async () => {
@@ -24,7 +20,7 @@ export function useSponsor() {
             timeout: 5000 // 设置5秒超时
           })
           return response.data // 成功获取数据后直接返回
-        } catch (error) {
+        } catch {
           console.warn(`Failed to fetch from ${url}`)
           // 继续尝试下一个URL
         }
@@ -36,9 +32,6 @@ export function useSponsor() {
   })
 
   return {
-    data,
+    data
   }
 }
-
-
-

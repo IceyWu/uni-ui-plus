@@ -2,14 +2,14 @@ import { createFilter, type FilterPattern } from '@rollup/pluginutils'
 import type { Plugin, TransformResult } from 'vite'
 
 interface ConditionalCompileOptions {
-  include?: FilterPattern
   exclude?: FilterPattern
-  platform?: string
+  include?: FilterPattern
   /**
    * 是否在测试环境中
    * 在测试环境中，我们可能需要特殊处理一些条件编译代码
    */
   isTest?: boolean
+  platform?: string
 }
 
 /**
@@ -55,34 +55,36 @@ export default function vitePluginUniConditionalCompile(options: ConditionalComp
     name: 'vite-plugin-uni-conditional-compile',
 
     transform(code: string, id: string): TransformResult | undefined {
-      if (!filter(id)) return undefined
+      if (!filter(id)) {
+        return
+      }
       let transformed = code
       try {
         // 处理HTML条件块
-        transformed = transformed.replace(htmlConditionalPattern, (_match, type, envExp, content) => {
-          return processCondition(type, envExp, content, platform, isTest as boolean)
-        })
+        transformed = transformed.replace(htmlConditionalPattern, (_match, type, envExp, content) =>
+          processCondition(type, envExp, content, platform, isTest as boolean)
+        )
 
         // 处理Vue编译后的条件编译注释
-        transformed = transformed.replace(vueCompiledConditionalPattern, (_match, type, envExp, content) => {
-          return processCondition(type, envExp, content, platform, isTest as boolean)
-        })
+        transformed = transformed.replace(vueCompiledConditionalPattern, (_match, type, envExp, content) =>
+          processCondition(type, envExp, content, platform, isTest as boolean)
+        )
 
         // 处理JS单行注释条件块
-        transformed = transformed.replace(jsConditionalPattern, (_match, type, envExp, content) => {
-          return processCondition(type, envExp, content, platform, isTest as boolean)
-        })
+        transformed = transformed.replace(jsConditionalPattern, (_match, type, envExp, content) =>
+          processCondition(type, envExp, content, platform, isTest as boolean)
+        )
 
         // 处理JS多行注释条件块
-        transformed = transformed.replace(jsMultilineConditionalPattern, (_match, type, envExp, content) => {
-          return processCondition(type, envExp, content, platform, isTest as boolean)
-        })
+        transformed = transformed.replace(jsMultilineConditionalPattern, (_match, type, envExp, content) =>
+          processCondition(type, envExp, content, platform, isTest as boolean)
+        )
 
         // 处理CSS注释形式的条件编译
         if (id.endsWith('.css') || id.endsWith('.scss') || id.endsWith('.less') || id.includes('style')) {
-          transformed = transformed.replace(cssConditionalPattern, (_match, type, envExp, content) => {
-            return processCondition(type, envExp, content, platform, isTest as boolean)
-          })
+          transformed = transformed.replace(cssConditionalPattern, (_match, type, envExp, content) =>
+            processCondition(type, envExp, content, platform, isTest as boolean)
+          )
         }
 
         // 返回处理结果
@@ -109,7 +111,7 @@ export default function vitePluginUniConditionalCompile(options: ConditionalComp
         }
       }
 
-      return undefined
+      return
     }
   }
 }
@@ -123,7 +125,7 @@ export default function vitePluginUniConditionalCompile(options: ConditionalComp
  * @param isTest 是否在测试环境中
  * @returns 处理后的内容
  */
-function processCondition(type: string, envExp: string, content: string, platform: string, isTest: boolean = false): string {
+function processCondition(type: string, envExp: string, content: string, platform: string, isTest = false): string {
   // 在测试环境中，我们可能需要特殊处理一些条件
   if (isTest) {
     // 如果是测试环境，并且条件中包含测试相关的平台，则保留内容

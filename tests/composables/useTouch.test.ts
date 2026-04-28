@@ -1,5 +1,5 @@
-import { useTouch } from '@/uni_modules/uni-ui-plus/components/composables/useTouch'
 import { describe, expect, it } from 'vitest'
+import { useTouch } from '@/uni_modules/uni-ui-plus/components/composables/useTouch'
 
 describe('useTouch', () => {
   const touch = useTouch()

@@ -2,9 +2,7 @@
   <page-wraper>
     <view class="page-img">
       <demo-group title="组件类型">
-        <demo-group-item title="基本使用">
-          <up-image :width="100" :height="100" :src="imgURL" />
-        </demo-group-item>
+        <demo-group-item title="基本使用"> <up-image :width="100" :height="100" :src="imgURL" /> </demo-group-item>
       </demo-group>
 
       <demo-group title="组件状态">
@@ -16,9 +14,7 @@
             </view>
             <view class="page-img__col">
               <up-image width="100%" height="27vw" src="https://www.invalid-url.com/a.jpg">
-                <template #error>
-                  <view class="page-img__error">加载失败</view>
-                </template>
+                <template #error> <view class="page-img__error">加载失败</view> </template>
               </up-image>
               <view class="page-img__text">自定义提示</view>
             </view>
@@ -56,35 +52,33 @@
       </demo-group>
 
       <demo-group title="特殊用法">
-        <demo-group-item title="可预览">
-          <up-image width="100%" mode="widthFix" :src="imgURL" :enable-preview="true" />
-        </demo-group-item>
+        <demo-group-item title="可预览"> <up-image width="100%" mode="widthFix" :src="imgURL" :enable-preview="true" /> </demo-group-item>
       </demo-group>
     </view>
   </page-wraper>
 </template>
 
 <script lang="ts" setup>
-import UpImage from '@/uni_modules/uni-ui-plus/components/up-image/up-image.vue'
+  import UpImage from '@/uni_modules/uni-ui-plus/components/up-image/up-image.vue'
 
-const imgURL = 'https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example1.jpg'
+  const imgURL = 'https://oss-console-img-demo-cn-hangzhou-3az.oss-cn-hangzhou.aliyuncs.com/example1.jpg'
 
-const modes = [
-  'scaleToFill',
-  'aspectFit',
-  'aspectFill',
-  'heightFix',
-  'widthFix',
-  'top left',
-  'top right',
-  'bottom left',
-  'bottom right',
-  'right',
-  'left',
-  'center',
-  'bottom',
-  'top'
-]
+  const modes = [
+    'scaleToFill',
+    'aspectFit',
+    'aspectFill',
+    'heightFix',
+    'widthFix',
+    'top left',
+    'top right',
+    'bottom left',
+    'bottom right',
+    'right',
+    'left',
+    'center',
+    'bottom',
+    'top'
+  ]
 </script>
 
 <style lang="scss" scoped>

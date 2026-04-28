@@ -44,7 +44,9 @@ export function usePopover(visibleArrow = true) {
     }
 
     getRect('#target', false, proxy).then((rect) => {
-      if (!rect) return
+      if (!rect) {
+        return
+      }
       left.value = rect.left as number
       bottom.value = rect.bottom as number
       width.value = rect.width as number
@@ -52,7 +54,9 @@ export function usePopover(visibleArrow = true) {
       top.value = rect.top as number
     })
     getRect('#pos', false, proxy).then((rect) => {
-      if (!rect) return
+      if (!rect) {
+        return
+      }
       popWidth.value = rect.width as number
       popHeight.value = rect.height as number
     })

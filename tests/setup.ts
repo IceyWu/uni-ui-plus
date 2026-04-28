@@ -1,5 +1,5 @@
-import { vi } from 'vitest'
 import { config } from '@vue/test-utils'
+import { vi } from 'vitest'
 import './suppress-warnings'
 
 // 全局设置 uni 相关 API 的 mock
@@ -247,16 +247,14 @@ vi.stubGlobal('uni', {
           }
 
           // 创建指定数量的节点信息
-          result = Array(count)
-            .fill(0)
-            .map((_, index) => ({
-              ...nodeInfo,
-              id: `${id || className}-${index}`,
-              dataset: { index: index.toString() },
-              width: nodeInfo.width / count,
-              left: (nodeInfo.width / count) * index,
-              right: (nodeInfo.width / count) * (index + 1)
-            }))
+          result = new Array(count).fill(0).map((_, index) => ({
+            ...nodeInfo,
+            id: `${id || className}-${index}`,
+            dataset: { index: index.toString() },
+            width: nodeInfo.width / count,
+            left: (nodeInfo.width / count) * index,
+            right: (nodeInfo.width / count) * (index + 1)
+          }))
         } else {
           result = nodeInfo
         }
@@ -308,7 +306,7 @@ vi.stubGlobal('uni', {
           const id = idMatch ? idMatch[1] : selector
 
           callback({
-            id: id,
+            id,
             dataset: {},
             intersectionRatio: 0.5,
             intersectionRect: {
@@ -347,20 +345,32 @@ vi.stubGlobal('uni', {
   }),
   // 模拟图片预览相关 API
   previewImage: vi.fn().mockImplementation((options) => {
-    if (options.success) options.success({ errMsg: 'previewImage:ok' })
-    if (options.complete) options.complete()
+    if (options.success) {
+      options.success({ errMsg: 'previewImage:ok' })
+    }
+    if (options.complete) {
+      options.complete()
+    }
     return Promise.resolve({ errMsg: 'previewImage:ok' })
   }),
   // 模拟页面滚动相关 API
   pageScrollTo: vi.fn().mockImplementation((options) => {
-    if (options.success) options.success({ errMsg: 'pageScrollTo:ok' })
-    if (options.complete) options.complete()
+    if (options.success) {
+      options.success({ errMsg: 'pageScrollTo:ok' })
+    }
+    if (options.complete) {
+      options.complete()
+    }
     return Promise.resolve({ errMsg: 'pageScrollTo:ok' })
   }),
   // 模拟上传文件相关 API
   uploadFile: vi.fn().mockImplementation((options) => {
-    if (options.success) options.success({ data: '{"code": 0, "msg": "success", "url": "https://example.com/image.jpg"}' })
-    if (options.complete) options.complete()
+    if (options.success) {
+      options.success({ data: '{"code": 0, "msg": "success", "url": "https://example.com/image.jpg"}' })
+    }
+    if (options.complete) {
+      options.complete()
+    }
     return {
       onProgressUpdate: vi.fn(),
       abort: vi.fn()
@@ -374,7 +384,9 @@ vi.stubGlobal('uni', {
         tempFiles: [{ path: 'https://example.com/image.jpg', size: 1024 }]
       })
     }
-    if (options.complete) options.complete()
+    if (options.complete) {
+      options.complete()
+    }
     return Promise.resolve({
       tempFilePaths: ['https://example.com/image.jpg'],
       tempFiles: [{ path: 'https://example.com/image.jpg', size: 1024 }]
@@ -395,7 +407,9 @@ vi.stubGlobal('uni', {
         type: 'image'
       })
     }
-    if (options.complete) options.complete()
+    if (options.complete) {
+      options.complete()
+    }
     return Promise.resolve({
       tempFiles: [
         {
@@ -411,8 +425,12 @@ vi.stubGlobal('uni', {
   }),
   // 模拟保存图片相关 API
   saveImageToPhotosAlbum: vi.fn().mockImplementation((options) => {
-    if (options.success) options.success({ errMsg: 'saveImageToPhotosAlbum:ok' })
-    if (options.complete) options.complete()
+    if (options.success) {
+      options.success({ errMsg: 'saveImageToPhotosAlbum:ok' })
+    }
+    if (options.complete) {
+      options.complete()
+    }
     return Promise.resolve({ errMsg: 'saveImageToPhotosAlbum:ok' })
   }),
   // 模拟获取图片信息相关 API
@@ -427,10 +445,12 @@ vi.stubGlobal('uni', {
           type: 'png'
         })
       }
-    } else {
-      if (options.fail) options.fail()
+    } else if (options.fail) {
+      options.fail()
     }
-    if (options.complete) options.complete()
+    if (options.complete) {
+      options.complete()
+    }
     return Promise.resolve({
       width: 800,
       height: 600,
@@ -441,41 +461,69 @@ vi.stubGlobal('uni', {
   }),
   // 模拟 toast 相关 API
   showToast: vi.fn().mockImplementation((options) => {
-    if (options.success) options.success()
-    if (options.complete) options.complete()
+    if (options.success) {
+      options.success()
+    }
+    if (options.complete) {
+      options.complete()
+    }
     return Promise.resolve({ errMsg: 'showToast:ok' })
   }),
   hideToast: vi.fn().mockImplementation((options) => {
-    if (options?.success) options.success()
-    if (options?.complete) options.complete()
+    if (options?.success) {
+      options.success()
+    }
+    if (options?.complete) {
+      options.complete()
+    }
     return Promise.resolve({ errMsg: 'hideToast:ok' })
   }),
   // 模拟 loading 相关 API
   showLoading: vi.fn().mockImplementation((options) => {
-    if (options.success) options.success()
-    if (options.complete) options.complete()
+    if (options.success) {
+      options.success()
+    }
+    if (options.complete) {
+      options.complete()
+    }
     return Promise.resolve({ errMsg: 'showLoading:ok' })
   }),
   hideLoading: vi.fn().mockImplementation((options) => {
-    if (options?.success) options.success()
-    if (options?.complete) options.complete()
+    if (options?.success) {
+      options.success()
+    }
+    if (options?.complete) {
+      options.complete()
+    }
     return Promise.resolve({ errMsg: 'hideLoading:ok' })
   }),
   // 模拟 modal 相关 API
   showModal: vi.fn().mockImplementation((options) => {
-    if (options.success) options.success({ confirm: true, cancel: false })
-    if (options.complete) options.complete()
+    if (options.success) {
+      options.success({ confirm: true, cancel: false })
+    }
+    if (options.complete) {
+      options.complete()
+    }
     return Promise.resolve({ confirm: true, cancel: false, errMsg: 'showModal:ok' })
   }),
   // 模拟 小程序路由相关 API
   navigateTo: vi.fn().mockImplementation((options) => {
-    if (options?.success) options.success()
-    if (options?.complete) options.complete()
+    if (options?.success) {
+      options.success()
+    }
+    if (options?.complete) {
+      options.complete()
+    }
     return Promise.resolve({ errMsg: 'navigateTo:ok' })
   }),
   redirectTo: vi.fn().mockImplementation((options) => {
-    if (options?.success) options.success()
-    if (options?.complete) options.complete()
+    if (options?.success) {
+      options.success()
+    }
+    if (options?.complete) {
+      options.complete()
+    }
     return Promise.resolve({ errMsg: 'redirectTo:ok' })
   }),
   // 模拟 canIUse API
@@ -491,8 +539,12 @@ vi.stubGlobal('uni', {
 
   // 模拟振动反馈 API
   vibrateShort: vi.fn().mockImplementation((options?: any) => {
-    if (options?.success) options.success()
-    if (options?.complete) options.complete()
+    if (options?.success) {
+      options.success()
+    }
+    if (options?.complete) {
+      options.complete()
+    }
     return Promise.resolve({ errMsg: 'vibrateShort:ok' })
   }),
 
@@ -510,7 +562,9 @@ vi.stubGlobal('uni', {
         bottom: 100
       })
     }
-    if (options?.complete) options.complete()
+    if (options?.complete) {
+      options.complete()
+    }
     return Promise.resolve({
       id: options.selector || '',
       dataset: {},
@@ -659,6 +713,5 @@ class TouchEvent extends Event {
     this.touches = options.touches || [{ clientX: 0, clientY: 0 }]
   }
 }
-
 // 添加到全局
 ;(global as any).TouchEvent = TouchEvent

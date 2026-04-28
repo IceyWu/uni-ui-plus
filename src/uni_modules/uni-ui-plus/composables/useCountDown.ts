@@ -1,4 +1,4 @@
-import { ref, computed, onBeforeUnmount } from 'vue'
+import { computed, onBeforeUnmount, ref } from 'vue'
 import { isDef } from '../common/util'
 import { useRaf } from './useRaf'
 
@@ -64,7 +64,9 @@ export function useCountDown(options: UseCountDownOptions) {
   const microTick = () => {
     if (counting) {
       setRemain(getCurrentRemain())
-      if (remain.value > 0) startRaf()
+      if (remain.value > 0) {
+        startRaf()
+      }
     }
   }
 
@@ -74,13 +76,18 @@ export function useCountDown(options: UseCountDownOptions) {
       if (!isSameSecond(remainRemain, remain.value) || remainRemain === 0) {
         setRemain(remainRemain)
       }
-      if (remain.value > 0) startRaf()
+      if (remain.value > 0) {
+        startRaf()
+      }
     }
   }
 
   function tick() {
-    if (options.millisecond) microTick()
-    else macroTick()
+    if (options.millisecond) {
+      microTick()
+    } else {
+      macroTick()
+    }
   }
 
   const start = () => {

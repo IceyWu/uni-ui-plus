@@ -1,6 +1,6 @@
 ul {
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 
 ul {
@@ -16,15 +16,14 @@ a:active {
   color: #34495e;
 }
 
-
 .style-block {
   display: inline-block;
   width: 180px;
   padding: 15px;
   margin-right: 20px;
   margin-bottom: 20px;
-  border-radius: 4px;
   color: #fff;
+  border-radius: 4px;
 }
 
 .style-block p {
@@ -35,25 +34,25 @@ a:active {
 .a-dot,
 .b-dot {
   position: absolute;
-  border-radius: 50%;
+  z-index: 10;
   width: 12px;
   height: 12px;
   background: #668df8;
-  z-index: 10;
   border: 2px solid #fff;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .09);
+  border-radius: 50%;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.09);
 }
 
 .a-dot {
-  left: -6px;
   top: -6px;
+  left: -6px;
 }
 
 .a-dot:before {
-  content: "A";
   display: inline-block;
-  color: rgba(0, 0, 0, .85);
   font-size: 17px;
+  color: rgba(0, 0, 0, 0.85);
+  content: "A";
   -webkit-transform: translate(14px, -22px);
   transform: translate(14px, -22px);
 }
@@ -64,27 +63,27 @@ a:active {
 }
 
 .b-dot:before {
-  content: "B";
   display: inline-block;
-  color: rgba(0, 0, 0, .85);
   font-size: 17px;
+  color: rgba(0, 0, 0, 0.85);
+  content: "B";
   -webkit-transform: translate(14px, -22px);
   transform: translate(14px, -22px);
 }
 
 .liner-color {
+  position: relative;
   width: 160px;
   height: 160px;
-  position: relative;
 }
 
 .liner-color:after {
   position: absolute;
-  content: "";
+  top: 50%;
+  right: 79px;
   width: 2px;
   height: 250px;
-  right: 79px;
-  top: 50%;
+  content: "";
   background-color: #fff;
   -webkit-transform: translateY(-50%) rotate(-45deg);
   transform: translateY(-50%) rotate(-45deg);
@@ -97,14 +96,14 @@ a:active {
 }
 
 .color-block {
-  width: 65px;
-  vertical-align: middle;
   display: inline-block;
-  text-align: center;
+  width: 65px;
   height: 20px;
-  color: #fff;
-  font-size: 14px;
   margin-left: 5px;
+  font-size: 14px;
+  vertical-align: middle;
+  color: #fff;
+  text-align: center;
 }
 
 .liner-color1:after {
@@ -113,14 +112,14 @@ a:active {
 }
 
 .liner-color1 .a-dot {
-  right: -6px;
   top: -6px;
+  right: -6px;
   left: inherit;
 }
 
 .liner-color1 .b-dot {
-  left: -6px;
   bottom: -6px;
+  left: -6px;
 }
 
 .liner-color1 .b-dot:before {
@@ -134,10 +133,10 @@ a:active {
 }
 
 .color-group {
+  box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   padding-left: 0 !important;
-  box-sizing: border-box;
 }
 
 .color-group.dark {
@@ -147,14 +146,14 @@ a:active {
 }
 
 .color-group li {
+  display: inline-block;
   width: 120px;
   height: 120px;
-  list-style: none;
-  display: inline-block;
   padding: 8px 0 0 8px;
+  list-style: none;
 }
-.color-group-line{
-  margin-top:0 !important;
+.color-group-line {
+  margin-top: 0 !important;
   margin-bottom: 8px;
 }
 

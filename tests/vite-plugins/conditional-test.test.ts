@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import ConditionalTest from '../../vite-plugins/conditional-test.vue'
-import { describe, test, expect, vi, beforeEach } from 'vitest'
 
 // 获取当前平台
 const currentPlatform = process.env.UNI_PLATFORM || 'h5'

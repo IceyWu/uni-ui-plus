@@ -1,6 +1,6 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useUpload } from '@/uni_modules/uni-ui-plus/components/composables/useUpload'
 import type { UploadFileItem } from '@/uni_modules/uni-ui-plus/components/up-upload/types'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 // Mock uni API
 const mockUploadTask = {
@@ -268,7 +268,7 @@ describe('useUpload', () => {
       callback({
         progress: 50,
         totalBytesSent: 5000,
-        totalBytesExpectedToSend: 10000
+        totalBytesExpectedToSend: 10_000
       })
     })
 
@@ -281,7 +281,7 @@ describe('useUpload', () => {
       expect.objectContaining({
         progress: 50,
         totalBytesSent: 5000,
-        totalBytesExpectedToSend: 10000
+        totalBytesExpectedToSend: 10_000
       }),
       file
     )
@@ -325,7 +325,7 @@ describe('useUpload', () => {
     const mockChooseVideo = vi.fn().mockImplementation((options) => {
       options.success({
         tempFilePath: 'temp/video.mp4',
-        size: 10240,
+        size: 10_240,
         duration: 15,
         thumbTempFilePath: 'temp/thumb.jpg',
         name: 'video.mp4'
@@ -347,7 +347,7 @@ describe('useUpload', () => {
     expect(files).toHaveLength(1)
     expect(files[0]).toEqual({
       path: 'temp/video.mp4',
-      size: 10240,
+      size: 10_240,
       name: 'video.mp4',
       type: 'video',
       thumb: 'temp/thumb.jpg',
@@ -370,7 +370,7 @@ describe('useUpload', () => {
             fileType: 'video',
             tempFilePath: 'temp/video.mp4',
             thumbTempFilePath: 'temp/thumb.jpg',
-            size: 10240,
+            size: 10_240,
             duration: 15
           }
         ]
@@ -394,7 +394,7 @@ describe('useUpload', () => {
       type: 'video',
       path: 'temp/video.mp4',
       thumb: 'temp/thumb.jpg',
-      size: 10240,
+      size: 10_240,
       duration: 15
     })
   })

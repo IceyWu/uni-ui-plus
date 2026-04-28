@@ -83,14 +83,14 @@ export default defineConfig({
               link: '/component/waterfall',
               text: 'Waterfall 瀑布流'
             },
-             {
-              link:'/component/livephoto',
+            {
+              link: '/component/livephoto',
               text: 'LivePhoto 实况照片'
             },
-             {
-              link:'/component/swiper',
+            {
+              link: '/component/swiper',
               text: 'Swiper 轮播图'
-            },
+            }
           ]
         }
       ]

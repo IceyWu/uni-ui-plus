@@ -59,7 +59,7 @@ function showHelp(): void {
  */
 function checkTestFilesExist(components: string[]): boolean {
   for (const component of components) {
-    const testFile = path.join(__dirname, '..', 'tests', 'components', `${component}.test.ts`)
+    const testFile = path.join(import.meta.dirname, '..', 'tests', 'components', `${component}.test.ts`)
     if (!fs.existsSync(testFile)) {
       console.error(`错误：找不到组件 ${component} 的测试文件：${testFile}`)
       return false

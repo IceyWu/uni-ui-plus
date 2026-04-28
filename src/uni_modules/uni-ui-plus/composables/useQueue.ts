@@ -1,13 +1,13 @@
-import { type Ref, provide, ref } from 'vue'
+import { provide, type Ref, ref } from 'vue'
 
 export const queueKey = '__QUEUE_KEY__'
 
 export interface Queue {
-  queue: Ref<any[]>
-  pushToQueue: (comp: any) => void
-  removeFromQueue: (comp: any) => void
   closeOther: (comp: any) => void
   closeOutside: () => void
+  pushToQueue: (comp: any) => void
+  queue: Ref<any[]>
+  removeFromQueue: (comp: any) => void
 }
 
 export function useQueue() {
@@ -23,7 +23,9 @@ export function useQueue() {
 
   function closeOther(comp: any) {
     queue.value.forEach((item) => {
-      if (item.$.uid !== comp.$.uid) item.$.exposed.close()
+      if (item.$.uid !== comp.$.uid) {
+        item.$.exposed.close()
+      }
     })
   }
 

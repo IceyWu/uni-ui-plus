@@ -1,29 +1,27 @@
 <script lang="ts" setup>
-import type { CSSProperties } from 'vue'
-import { computed, defineComponent } from 'vue'
-import { PREFIX } from '../../common/event'
+  import type { CSSProperties } from 'vue'
+  import { computed, defineComponent } from 'vue'
+  import { PREFIX } from '../../common/event'
 </script>
 
 <script lang="ts">
-const componentName = `${PREFIX}-button`
+  const componentName = `${PREFIX}-button`
 
-export default defineComponent({
-  name: componentName,
-  options: {
-    virtualHost: true,
-    addGlobalClass: true,
-    // #ifndef H5
-    styleIsolation: 'shared'
-    // #endif
-  }
-})
+  export default defineComponent({
+    name: componentName,
+    options: {
+      virtualHost: true,
+      addGlobalClass: true,
+      // #ifndef H5
+      styleIsolation: 'shared'
+      // #endif
+    }
+  })
 </script>
 
 <template>
   <button>
-    <view class="up-button__wrap">
-      <slot>按钮</slot>
-    </view>
+    <view class="up-button__wrap"><slot>按钮</slot></view>
   </button>
 </template>
 

@@ -1,33 +1,34 @@
 <script lang="ts" setup>
-import { onMounted } from 'vue'
-import { skeletonProps } from './types'
-import { isString } from '../../common/util'
+  import { onMounted } from 'vue'
+  import { isString } from '../../common/util'
+  import { skeletonProps } from './types'
 
-defineProps(skeletonProps)
+  defineProps(skeletonProps)
 
-onMounted(() => {})
-function getStyleVal(target: number | string) {
-  if (isString(target)) {
-    return target
+  onMounted(() => {})
+  function getStyleVal(target: number | string) {
+    if (isString(target)) {
+      return target
+    }
+    return `${target}rpx`
   }
-  return `${target}rpx`
-}
 </script>
 
 <script lang="ts">
-import { PREFIX } from '../../common/event'
-const componentName = `${PREFIX}-skeleton`
+  import { PREFIX } from '../../common/event'
 
-export default {
-  name: componentName,
-  options: {
-    virtualHost: true,
-    addGlobalClass: true,
-    // #ifndef H5
-    styleIsolation: 'shared'
-    // #endif
+  const componentName = `${PREFIX}-skeleton`
+
+  export default {
+    name: componentName,
+    options: {
+      virtualHost: true,
+      addGlobalClass: true,
+      // #ifndef H5
+      styleIsolation: 'shared'
+      // #endif
+    }
   }
-}
 </script>
 
 <template>

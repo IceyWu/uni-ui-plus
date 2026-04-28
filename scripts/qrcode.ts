@@ -1,7 +1,7 @@
-import fs from 'fs'
-import path from 'path'
 import axios from 'axios'
+import fs from 'fs'
 import JSON5 from 'json5'
+import path from 'path'
 
 const appID = process.argv[process.argv.indexOf('--APP_ID') + 1]
 const appSecret = process.argv[process.argv.indexOf('--APP_SECRET') + 1]
@@ -18,7 +18,7 @@ async function getAccessToken(): Promise<string> {
   }
 }
 
-const pagesJsonPath = path.join(__dirname, '../src/pages.json')
+const pagesJsonPath = path.join(import.meta.dirname, '../src/pages.json')
 let pagesJson
 
 try {
@@ -67,7 +67,7 @@ async function generateMiniProgramCode(accessToken: string, pagePath: string, re
         responseType: 'arraybuffer'
       })
 
-      const outputDir = path.join(__dirname, '../docs/public/wxqrcode')
+      const outputDir = path.join(import.meta.dirname, '../docs/public/wxqrcode')
       if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir, { recursive: true })
       }
@@ -97,7 +97,7 @@ async function generateCodesForAllPages(accessToken: string) {
 }
 
 async function genrateQRCodeImage() {
-  const outputDir = path.join(__dirname, '../docs/public/wxqrcode')
+  const outputDir = path.join(import.meta.dirname, '../docs/public/wxqrcode')
   clearWxqrcodeDirectory(outputDir)
 
   try {

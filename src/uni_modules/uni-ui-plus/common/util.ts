@@ -25,9 +25,15 @@ export function isObject(val: any): val is Record<any, any> {
 }
 
 export function isEmpty<T = unknown>(val: T): val is T {
-  if (isArray(val) || isString(val)) return val.length === 0
-  if (val instanceof Map || val instanceof Set) return val.size === 0
-  if (isObject(val)) return Object.keys(val).length === 0
+  if (isArray(val) || isString(val)) {
+    return val.length === 0
+  }
+  if (val instanceof Map || val instanceof Set) {
+    return val.size === 0
+  }
+  if (isObject(val)) {
+    return Object.keys(val).length === 0
+  }
   return false
 }
 
@@ -91,7 +97,9 @@ export function isImageUrl(url: string): boolean {
 }
 
 export function isOdd(value: number): boolean {
-  if (typeof value !== 'number') throw new Error('输入必须为数字')
+  if (typeof value !== 'number') {
+    throw new Error('输入必须为数字')
+  }
   return value % 2 === 1
 }
 
@@ -111,9 +119,11 @@ export function camelCase(word: string): string {
   return word.replace(/-(\w)/g, (_, c) => c.toUpperCase())
 }
 
-export const padZero = (number: number | string, length: number = 2): string => {
+export const padZero = (number: number | string, length = 2): string => {
   let numStr = number.toString()
-  while (numStr.length < length) numStr = '0' + numStr
+  while (numStr.length < length) {
+    numStr = '0' + numStr
+  }
   return numStr
 }
 
@@ -131,27 +141,31 @@ export const range = (num: number, min: number, max: number): number => Math.min
 
 export const clamp = (num: number, min: number, max: number): number => Math.min(Math.max(num, min), max)
 
-export const checkNumRange = (num: number, label: string = 'value'): void => {
-  if (num < 0) throw new Error(`${label} shouldn't be less than zero`)
+export const checkNumRange = (num: number, label = 'value'): void => {
+  if (num < 0) {
+    throw new Error(`${label} shouldn't be less than zero`)
+  }
 }
 
-export const checkPixelRange = (num: number, label: string = 'value'): void => {
-  if (num <= 0) throw new Error(`${label} should be greater than zero`)
+export const checkPixelRange = (num: number, label = 'value'): void => {
+  if (num <= 0) {
+    throw new Error(`${label} should be greater than zero`)
+  }
 }
 
 export function closest(arr: number[], target: number) {
   return arr.reduce((prev, curr) => (Math.abs(curr - target) < Math.abs(prev - target) ? curr : prev))
 }
 
-export function easingFn(t: number = 0, b: number = 0, c: number = 0, d: number = 0): number {
-  return (c * (-Math.pow(2, (-10 * t) / d) + 1) * 1024) / 1023 + b
+export function easingFn(t = 0, b = 0, c = 0, d = 0): number {
+  return (c * (-(2 ** ((-10 * t) / d)) + 1) * 1024) / 1023 + b
 }
 
 // ==================== UUID / Random ====================
 
 export function uuid() {
   const s4 = () =>
-    Math.floor((1 + Math.random()) * 0x10000)
+    Math.floor((1 + Math.random()) * 0x1_00_00)
       .toString(16)
       .substring(1)
   return s4() + s4() + s4() + s4() + s4() + s4() + s4() + s4()
@@ -166,19 +180,27 @@ export const context = { id: 1000 }
 // ==================== Object Helpers ====================
 
 export function deepClone<T>(obj: T, cache: Map<any, any> = new Map()): T {
-  if (obj === null || typeof obj !== 'object') return obj
-  if (isDate(obj)) return new Date(obj.getTime()) as any
-  if (obj instanceof RegExp) return new RegExp(obj.source, obj.flags) as any
+  if (obj === null || typeof obj !== 'object') {
+    return obj
+  }
+  if (isDate(obj)) {
+    return new Date(obj.getTime()) as any
+  }
+  if (obj instanceof RegExp) {
+    return new RegExp(obj.source, obj.flags) as any
+  }
   if (obj instanceof Error) {
     const errorCopy = new Error(obj.message) as any
     errorCopy.stack = obj.stack
     return errorCopy
   }
-  if (cache.has(obj)) return cache.get(obj)
+  if (cache.has(obj)) {
+    return cache.get(obj)
+  }
   const copy: any = Array.isArray(obj) ? [] : {}
   cache.set(obj, copy)
   for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+    if (Object.hasOwn(obj, key)) {
       copy[key] = deepClone(obj[key], cache)
     }
   }
@@ -191,7 +213,9 @@ export function deepMerge<T extends Record<string, any>>(target: T, source: Reco
     throw new Error('Both target and source must be objects.')
   }
   for (const prop in source) {
-    if (!Object.prototype.hasOwnProperty.call(source, prop)) continue
+    if (!Object.hasOwn(source, prop)) {
+      continue
+    }
     ;(target as Record<string, any>)[prop] = source[prop]
   }
   return target
@@ -211,17 +235,27 @@ export function deepAssign(target: Record<string, any>, source: Record<string, a
 }
 
 export const isEqual = (value1: any, value2: any): boolean => {
-  if (value1 === value2) return true
-  if (!Array.isArray(value1) || !Array.isArray(value2)) return false
-  if (value1.length !== value2.length) return false
+  if (value1 === value2) {
+    return true
+  }
+  if (!Array.isArray(value1) || !Array.isArray(value2)) {
+    return false
+  }
+  if (value1.length !== value2.length) {
+    return false
+  }
   for (let i = 0; i < value1.length; ++i) {
-    if (value1[i] !== value2[i]) return false
+    if (value1[i] !== value2[i]) {
+      return false
+    }
   }
   return true
 }
 
 export function hasFields(obj: unknown): boolean {
-  if (!isObj(obj) || obj === null) return false
+  if (!isObj(obj) || obj === null) {
+    return false
+  }
   return Object.keys(obj).length > 0
 }
 
@@ -233,7 +267,7 @@ export const getPropByPath = (obj: any, path: string): any => {
   try {
     return path.split('.').reduce((acc, key) => (acc !== undefined && acc !== null ? acc[key] : undefined), obj)
   } catch {
-    return undefined
+    return
   }
 }
 
@@ -244,7 +278,9 @@ export function omitBy<O extends Record<string, any>>(obj: O, predicate: (value:
 }
 
 export function toArray<T>(value?: T | T[]): T[] {
-  if (!value) return []
+  if (!value) {
+    return []
+  }
   return Array.isArray(value) ? value : [value]
 }
 
@@ -260,12 +296,12 @@ export function rgbToHex(r: number, g: number, b: number): string {
 export function hexToRgb(hex: string): number[] {
   const rgb: number[] = []
   for (let i = 1; i < 7; i += 2) {
-    rgb.push(parseInt('0x' + hex.slice(i, i + 2), 16))
+    rgb.push(Number.parseInt('0x' + hex.slice(i, i + 2), 16))
   }
   return rgb
 }
 
-export const gradient = (startColor: string, endColor: string, step: number = 2): string[] => {
+export const gradient = (startColor: string, endColor: string, step = 2): string[] => {
   const sColor = hexToRgb(startColor)
   const eColor = hexToRgb(endColor)
   const rStep = (eColor[0] - sColor[0]) / step
@@ -274,7 +310,11 @@ export const gradient = (startColor: string, endColor: string, step: number = 2)
   const gradientColorArr: string[] = []
   for (let i = 0; i < step; i++) {
     gradientColorArr.push(
-      rgbToHex(parseInt(String(rStep * i + sColor[0])), parseInt(String(gStep * i + sColor[1])), parseInt(String(bStep * i + sColor[2])))
+      rgbToHex(
+        Number.parseInt(String(rStep * i + sColor[0]), 10),
+        Number.parseInt(String(gStep * i + sColor[1]), 10),
+        Number.parseInt(String(bStep * i + sColor[2]), 10)
+      )
     )
   }
   return gradientColorArr
@@ -335,24 +375,22 @@ export function getRect<T extends boolean>(selector: string, all: T, scope?: any
 
 // ==================== Async Helpers ====================
 
-export const requestAnimationFrame = (cb = () => {}) => {
-  return new AbortablePromise((resolve) => {
+export const requestAnimationFrame = (cb = () => {}) =>
+  new AbortablePromise((resolve) => {
     const timer = setInterval(() => {
       clearInterval(timer)
       resolve(true)
       cb()
     }, 1000 / 30)
   })
-}
 
-export const pause = (ms: number = 1000 / 30) => {
-  return new AbortablePromise((resolve) => {
+export const pause = (ms: number = 1000 / 30) =>
+  new AbortablePromise((resolve) => {
     const timer = setTimeout(() => {
       clearTimeout(timer)
       resolve(true)
     }, ms)
   })
-}
 
 // ==================== Function Helpers ====================
 
@@ -379,7 +417,9 @@ export function debounce<T extends (...args: any[]) => any>(func: T, wait: numbe
   function startTimer() {
     timeoutId = setTimeout(() => {
       timeoutId = null
-      if (trailing) invokeFunc()
+      if (trailing) {
+        invokeFunc()
+      }
     }, wait)
   }
 
@@ -394,7 +434,9 @@ export function debounce<T extends (...args: any[]) => any>(func: T, wait: numbe
     lastArgs = args
     lastThis = this
     if (timeoutId === null) {
-      if (leading) invokeFunc()
+      if (leading) {
+        invokeFunc()
+      }
       startTimer()
     } else if (trailing) {
       cancelTimer()
@@ -408,7 +450,7 @@ export function debounce<T extends (...args: any[]) => any>(func: T, wait: numbe
 
 export function throttle(func: (...args: any[]) => any, wait: number) {
   let timeout: ReturnType<typeof setTimeout> | null = null
-  let previous: number = 0
+  let previous = 0
 
   const throttled = function (this: any, ...args: any[]) {
     const now = Date.now()
@@ -440,9 +482,11 @@ export function buildUrlWithParams(baseUrl: string, params: Record<string, strin
   return `${baseUrl}${separator}${queryString}`
 }
 
-export const defaultDisplayFormat = function (items: any[] | Record<string, any>, kv?: { labelKey?: string }): string {
+export const defaultDisplayFormat = (items: any[] | Record<string, any>, kv?: { labelKey?: string }): string => {
   const labelKey = kv?.labelKey || 'value'
-  if (Array.isArray(items)) return items.map((item) => item[labelKey]).join(', ')
+  if (Array.isArray(items)) {
+    return items.map((item) => item[labelKey]).join(', ')
+  }
   return items[labelKey]
 }
 
@@ -464,7 +508,9 @@ export function parseStringStyle(cssText: string): NormalizedStyle {
   for (const item of cssText.replace(styleCommentRE, '').split(listDelimiterRE)) {
     if (item) {
       const tmp = item.split(propertyDelimiterRE)
-      if (tmp.length > 1) ret[tmp[0].trim()] = tmp[1].trim()
+      if (tmp.length > 1) {
+        ret[tmp[0].trim()] = tmp[1].trim()
+      }
     }
   }
   return ret
@@ -472,7 +518,9 @@ export function parseStringStyle(cssText: string): NormalizedStyle {
 
 export function stringifyStyle(styles: NormalizedStyle | string | undefined): string {
   let ret = ''
-  if (!styles || isString(styles)) return ret
+  if (!styles || isString(styles)) {
+    return ret
+  }
   for (const key in styles) {
     const value = styles[key]
     const normalizedKey = key.startsWith('--') ? key : kebabCase(key)
@@ -490,14 +538,20 @@ export function normalizeStyle(value: unknown): NormalizedStyle | string | undef
       const normalized = isString(item) ? parseStringStyle(item) : (normalizeStyle(item) as NormalizedStyle)
       if (normalized) {
         for (const key in normalized) {
-          if (!isEmpty(normalized[key])) res[key] = normalized[key]
+          if (!isEmpty(normalized[key])) {
+            res[key] = normalized[key]
+          }
         }
       }
     }
     return res
   }
-  if (isString(value)) return value
-  if (isObject(value)) return value
+  if (isString(value)) {
+    return value
+  }
+  if (isObject(value)) {
+    return value
+  }
 }
 
 export function normalizeClass(value: unknown): string {
@@ -507,11 +561,15 @@ export function normalizeClass(value: unknown): string {
   } else if (isArray(value)) {
     for (const element_ of value) {
       const normalized = normalizeClass(element_)
-      if (normalized) res += `${normalized} `
+      if (normalized) {
+        res += `${normalized} `
+      }
     }
   } else if (isObject(value)) {
     for (const name in value) {
-      if (value[name]) res += `${name} `
+      if (value[name]) {
+        res += `${name} `
+      }
     }
   }
   return res.trim()
@@ -526,8 +584,10 @@ export function getMainStyle(props: BaseProps, style?: CSSProperties) {
 }
 
 export function getPx(value: string | number, unit = false) {
-  if (isNumber(value)) return unit ? `${value}px` : Number(value)
-  return unit ? `${Number.parseInt(value)}px` : Number.parseInt(value)
+  if (isNumber(value)) {
+    return unit ? `${value}px` : Number(value)
+  }
+  return unit ? `${Number.parseInt(value, 10)}px` : Number.parseInt(value, 10)
 }
 
 // ==================== Platform Env ====================

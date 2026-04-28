@@ -150,8 +150,8 @@ export type baseThemeVars = {
   return tsContent
 }
 
-const tsFilePath = path.resolve(__dirname, '../src/uni_modules/uni-ui-plus/components/up-config-provider/types.ts')
-const scssFilePath = path.resolve(__dirname, '../src/uni_modules/uni-ui-plus/components/common/abstracts/variable.scss')
+const tsFilePath = path.resolve(import.meta.dirname, '../src/uni_modules/uni-ui-plus/components/up-config-provider/types.ts')
+const scssFilePath = path.resolve(import.meta.dirname, '../src/uni_modules/uni-ui-plus/components/common/abstracts/variable.scss')
 
 const variables = extractSCSSVariables(scssFilePath)
 const tsContent = generateTSFileContent(variables)

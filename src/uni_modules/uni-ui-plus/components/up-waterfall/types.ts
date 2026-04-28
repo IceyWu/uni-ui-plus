@@ -1,9 +1,9 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 
 export interface WaterfallItem {
-  [key: string]: any
-  index?: number
   id?: string | number
+  index?: number
+  [key: string]: any
 }
 
 export interface ColumnHeight {
@@ -12,9 +12,9 @@ export interface ColumnHeight {
 }
 
 export interface FlowData {
-  list: WaterfallItem[]
   column: number
   columnSpace: number
+  list: WaterfallItem[]
   [key: string]: any
 }
 
@@ -73,8 +73,7 @@ export type WaterfallProps = ExtractPropTypes<typeof waterfallProps>
 export interface WaterfallEmits {
   (e: 'load-complete'): void
   (e: 'item-click', item: WaterfallItem, index: number): void
-  (e: 'image-load', item: WaterfallItem): void
-  (e: 'image-error', item: WaterfallItem): void
+  (e: 'image-error' | 'image-load', item: WaterfallItem): void
 }
 
 export const waterfallEmits = ['load-complete', 'item-click', 'image-load', 'image-error'] as const

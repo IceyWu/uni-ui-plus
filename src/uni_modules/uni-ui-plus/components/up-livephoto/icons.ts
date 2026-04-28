@@ -24,7 +24,7 @@ export const errorIcon = `
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-linejoin="round" d="m3.5 3.5l9 9m2-4.5a6.5 6.5 0 1 1-13 0a6.5 6.5 0 0 1 13 0Z"/></svg>
  `
 
-export const createProgressLiveIcon = (progress: number, showSlash: boolean = false) => {
+export const createProgressLiveIcon = (progress: number, showSlash = false) => {
   // 图标尺寸常量
   const ICON_SIZE = 12 // SVG 整体尺寸
   const CENTER_DOT_RADIUS = 1 // 中心圆点半径

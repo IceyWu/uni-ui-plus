@@ -39,13 +39,17 @@
 
 :root {
   --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: -webkit-linear-gradient(120deg,
-      #4d80f0 30%,
-      #bd34fe);
+  --vp-home-hero-name-background: -webkit-linear-gradient(
+    120deg,
+    #4d80f0 30%,
+    #bd34fe
+  );
 
-  --vp-home-hero-image-background-image: linear-gradient(-45deg,
-      #bd34fe 50%,
-      #4d80f0 50%);
+  --vp-home-hero-image-background-image: linear-gradient(
+    -45deg,
+    #bd34fe 50%,
+    #4d80f0 50%
+  );
   --vp-home-hero-image-filter: blur(40px);
 }
 
@@ -95,7 +99,7 @@
   over scoped class data attribute.
 */
 .dark .vp-doc a,
-.dark .vp-doc a>code,
+.dark .vp-doc a > code,
 .dark .VPNavBarMenuLink.VPNavBarMenuLink:hover,
 .dark .VPNavBarMenuLink.VPNavBarMenuLink.active,
 .dark .link.link:hover,
@@ -106,7 +110,7 @@
 }
 
 .dark .vp-doc a:hover,
-.dark .vp-doc a>code:hover {
+.dark .vp-doc a > code:hover {
   color: var(--vp-c-brand-lightest);
   opacity: 1;
 }
@@ -120,8 +124,6 @@
   max-width: 124px;
 }
 
-
-
 /* side bar */
 
 :root {
@@ -129,7 +131,6 @@
   --vp-sidebar-bg-color: var(--vp-c-bg);
 }
 
-
 .dark {
-  --vp-sidebar-bg-color:var(--vp-c-bg-alt)
+  --vp-sidebar-bg-color: var(--vp-c-bg-alt);
 }
