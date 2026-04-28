@@ -1,0 +1,16 @@
+@use './base/index.scss'as *;
+@use './light.scss'as light;
+@use './dark.scss'as dark;
+
+page,
+.wot-theme-dark,
+.wot-theme-dark .wd-root-portal {
+  @include dark.dark-theme-vars;
+}
+
+
+page,
+.wot-theme-light,
+.wot-theme-light .wd-root-portal {
+  @include light.light-theme-vars;
+}

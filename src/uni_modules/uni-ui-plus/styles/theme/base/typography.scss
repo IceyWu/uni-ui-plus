@@ -1,0 +1,44 @@
+:root,
+page,
+.wd-root-portal {
+  /* title */
+  --up-typography-title-font-family: PingFang SC;
+  --up-typography-title-size-main: var(--up-n-18);
+  --up-typography-title-size-large: var(--up-n-20);
+  --up-typography-title-size-extra-large: var(--up-n-24);
+  --up-typography-title-font-weight-light: var(--up-font-weight-regular);
+  --up-typography-title-font-weight-main: var(--up-font-weight-medium);
+  --up-typography-title-font-weight-strong: var(--up-font-weight-semibold);
+  --up-typography-title-line-height-size-main: var(--up-n-26);
+  --up-typography-title-line-height-size-large: var(--up-n-28);
+  --up-typography-title-line-height-size-extra-large: var(--up-n-34);
+  /* body */
+  --up-typography-body-font-family: PingFang SC;
+  --up-typography-body-size-main: var(--up-n-14);
+  --up-typography-body-size-large: var(--up-n-15);
+  --up-typography-body-size-extra-large: var(--up-n-16);
+  --up-typography-body-size-super-large: var(--up-n-17);
+  --up-typography-body-size-ultra-large: var(--up-n-18);
+  --up-typography-body-font-weight-main: var(--up-font-weight-regular);
+  --up-typography-body-font-weight-strong: var(--up-font-weight-medium);
+  --up-typography-body-font-weight-extra-strong: var(--up-font-weight-semibold);
+  --up-typography-body-line-height-size-main: var(--up-n-20);
+  --up-typography-body-line-height-size-large: var(--up-n-22);
+  --up-typography-body-line-height-size-extra-large: var(--up-n-24);
+  --up-typography-body-line-height-size-super-large: var(--up-n-24);
+  --up-typography-body-line-height-size-ultra-large: var(--up-n-26);
+  /* label */
+  --up-typography-label-font-family: PingFang SC;
+  --up-typography-label-size-super-small: var(--up-n-9);
+  --up-typography-label-size-extra-small: var(--up-n-10);
+  --up-typography-label-size-small: var(--up-n-11);
+  --up-typography-label-size-main: var(--up-n-12);
+  --up-typography-label-size-large: var(--up-n-14);
+  --up-typography-label-font-weight-main: var(--up-font-weight-regular);
+  --up-typography-label-font-weight-strong: var(--up-font-weight-medium);
+  --up-typography-label-line-height-size-super-small: var(--up-n-14);
+  --up-typography-label-line-height-size-extra-small: var(--up-n-16);
+  --up-typography-label-line-height-size-small:  var(--up-n-16);
+  --up-typography-label-line-height-size-main: var(--up-n-18);
+  --up-typography-label-line-height-size-large: var(--up-n-18);
+}

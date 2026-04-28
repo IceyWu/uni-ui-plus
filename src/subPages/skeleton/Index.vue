@@ -1,46 +1,57 @@
 <template>
   <page-wraper>
-    <demo-block :title="$t('jiBenYongFa')">
-      <up-skeleton />
-    </demo-block>
-    <demo-block :title="$t('skeleton-animate')">
-      <view class="demo-skeleton">
-        <view class="demo-item">
-          <switch checked @change="switchChange" />
-        </view>
-        <view class="demo-item">
-          <up-skeleton :animate="isShowLoading" />
-        </view>
-        <view class="demo-item">
-          <up-skeleton :animate="isShowLoading" type="avatar" :avatarSize="80" avatarShape="circle" />
-        </view>
-      </view>
-    </demo-block>
-    <demo-block :title="$t('skeleton-title-rows')">
-      <up-skeleton :rows="1" />
-    </demo-block>
-    <demo-block :title="$t('skeleton-title-width')">
-      <up-skeleton titleWidth="50%" />
-    </demo-block>
-    <demo-block :title="$t('skeleton-avatar')">
-      <up-skeleton type="avatar" :avatarSize="80" avatarShape="circle" />
-    </demo-block>
+    <view class="page-skeleton">
+      <demo-group title="组件类型">
+        <demo-group-item title="基本使用">
+          <up-skeleton />
+        </demo-group-item>
+
+        <demo-group-item title="头像骨架">
+          <up-skeleton type="avatar" :avatarSize="80" avatarShape="circle" />
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="组件样式">
+        <demo-group-item title="动画效果">
+          <view class="page-skeleton__switch">
+            <text>动画开关</text>
+            <switch :checked="isAnimate" @change="switchChange" />
+          </view>
+          <up-skeleton :animate="isAnimate" />
+          <view style="margin-top: 24rpx">
+            <up-skeleton :animate="isAnimate" type="avatar" :avatarSize="80" avatarShape="circle" />
+          </view>
+        </demo-group-item>
+
+        <demo-group-item title="自定义行数">
+          <up-skeleton :rows="1" />
+        </demo-group-item>
+
+        <demo-group-item title="自定义宽度">
+          <up-skeleton titleWidth="50%" />
+        </demo-group-item>
+      </demo-group>
+    </view>
   </page-wraper>
 </template>
+
 <script lang="ts" setup>
 import { ref } from 'vue'
-import UpSkeleton from '@/uni_modules/uni-ui-plus/components/skeleton/skeleton.vue'
-const isShowLoading = ref(true)
+import UpSkeleton from '@/uni_modules/uni-ui-plus/components/up-skeleton/up-skeleton.vue'
+
+const isAnimate = ref(true)
 const switchChange = (e: any) => {
-  isShowLoading.value = e.detail.value
+  isAnimate.value = e.detail.value
 }
 </script>
 
 <style lang="scss" scoped>
-.demo-item {
-  margin-bottom: 20rpx;
-  &:last-child {
-    margin-bottom: 0;
+.page-skeleton {
+  &__switch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24rpx;
   }
 }
 </style>

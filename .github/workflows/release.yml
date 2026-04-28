@@ -1,0 +1,108 @@
+name: Release and Publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build web types
+        run: pnpm build:web-types
+
+      - name: Build lib package
+        run: pnpm build:lib
+
+      - name: Build vitepress theme package
+        run: pnpm --filter @uni-ui-plus/vitepress-theme build
+
+      - name: Check npm version
+        run: npm -v
+
+      - name: Resolve npm dist-tag
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+
+          if [[ "$VERSION" =~ -([0-9A-Za-z]+)\.[0-9]+$ ]]; then
+            echo "NPM_DIST_TAG=${BASH_REMATCH[1]}" >> "$GITHUB_ENV"
+          else
+            echo "NPM_DIST_TAG=latest" >> "$GITHUB_ENV"
+          fi
+
+      - name: Resolve npm publish args
+        shell: bash
+        run: |
+          if [[ "${{ github.event.repository.private }}" == "true" ]]; then
+            echo "NPM_PUBLISH_ARGS=--access public --tag $NPM_DIST_TAG" >> "$GITHUB_ENV"
+            echo "NPM_PROVENANCE_ENABLED=false" >> "$GITHUB_ENV"
+          else
+            echo "NPM_PUBLISH_ARGS=--provenance --access public --tag $NPM_DIST_TAG" >> "$GITHUB_ENV"
+            echo "NPM_PROVENANCE_ENABLED=true" >> "$GITHUB_ENV"
+          fi
+
+      - name: Publish uni-ui-plus package
+        run: |
+          cd lib
+          npm publish $NPM_PUBLISH_ARGS
+
+      - name: Publish vitepress-theme package
+        run: |
+          cd packages/vitepress-theme
+          npm publish $NPM_PUBLISH_ARGS
+
+      - name: Generate GitHub changelog
+        run: pnpx changelogithub
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Release summary
+        run: |
+          echo "## Release Summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "### Version: ${{ github.ref_name }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "### npm dist-tag: $NPM_DIST_TAG" >> "$GITHUB_STEP_SUMMARY"
+          echo "### npm provenance: $NPM_PROVENANCE_ENABLED" >> "$GITHUB_STEP_SUMMARY"
+          echo "### Published Packages" >> "$GITHUB_STEP_SUMMARY"
+          echo "- ✅ uni-ui-plus" >> "$GITHUB_STEP_SUMMARY"
+          echo "- ✅ @uni-ui-plus/vitepress-theme" >> "$GITHUB_STEP_SUMMARY"
+          echo "### Build Results" >> "$GITHUB_STEP_SUMMARY"
+          echo "✅ Build and publish completed" >> "$GITHUB_STEP_SUMMARY"
+

@@ -1,5 +1,5 @@
 import { useUpload } from '@/uni_modules/uni-ui-plus/components/composables/useUpload'
-import type { UploadFileItem } from '@/uni_modules/uni-ui-plus/components/wd-upload/types'
+import type { UploadFileItem } from '@/uni_modules/uni-ui-plus/components/up-upload/types'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 // Mock uni API

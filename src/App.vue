@@ -6,7 +6,7 @@ import { useIframeMessage } from './hooks/useIframeMessage'
 
 // 初始化国际化
 const darkMode = useDark()
-const { setLocale } = useI18nSync() // 禁用内置的iframe消息监听，使用专门的hook处理
+const { setLocale } = useI18nSync()
 
 // 使用专门的iframe消息处理hook
 useIframeMessage({
@@ -34,7 +34,9 @@ onHide(() => {
 })
 </script>
 <style lang="scss">
-@import '@/iconfont/index.css';
+@use '@/iconfont/index.css';
+@use '@/uni_modules/uni-ui-plus/styles/theme/index.scss' as *;
+@use './theme/presets.scss' as *;
 
 ::-webkit-scrollbar {
   width: 0;
@@ -47,7 +49,6 @@ page {
   font-family: San Francisco, Rotobo, arial, PingFang SC, Noto SansCJK, Microsoft Yahei, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 13px;
-  background: #f8f9fa;
+  background: $filled-bottom;
 }
 </style>

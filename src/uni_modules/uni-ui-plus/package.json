@@ -1,73 +1,78 @@
 {
+  "id": "uni-ui-plus",
   "name": "uni-ui-plus",
   "displayName": "uni-ui-plus",
   "version": "0.0.69",
-  "description": "🦄 现代化的 uni-app 组件库，提供丰富的高质量组件",
+  "description": "uni-ui-plus 一个现代化的 uni-app 组件库",
   "author": "Icey Wu <3128006406@qq.com>",
   "license": "MIT",
   "homepage": "https://github.com/iceywu/uni-ui-plus#readme",
-  "repository": "https://github.com/iceywu/uni-ui-plus.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iceywu/uni-ui-plus.git"
+  },
   "bugs": "https://github.com/iceywu/uni-ui-plus/issues",
   "keywords": [
-    "uni-ui",
-    "uniapp",
-    "小程序",
+    "uni-ui-plus",
+    "组件库",
     "vue3",
-    "vue3 component"
+    "uniapp",
+    "暗黑模式",
+    "国际化"
   ],
+  "main": "index.ts",
   "sideEffects": [
     "*.scss",
     "*/components/**/*.vue"
   ],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
-    },
-    "./*": "./*",
-    "./composables": "./components/composables.ts",
-    "./locale": "./locale/index.ts",
-    "./package.json": "./package.json"
-  },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "web-types": "./web-types.json",
   "vetur": {
-    "tags": "./tags.json",
-    "attributes": "./attributes.json"
+    "tags": "tags.json",
+    "attributes": "attributes.json"
   },
-  "files": [
-    "README.md",
-    "attributes.json",
-    "components",
-    "components/composables.ts",
-    "dist",
-    "global.d.ts",
-    "locale/**",
-    "styles",
-    "tags.json",
-    "web-types.json"
-  ],
-  "scripts": {
-    "build": "unbuild",
-    "stub": "unbuild --stub",
-    "type-check": "vue-tsc --noEmit",
-    "lint": "eslint . && prettier -c .",
-    "lint:fix": "automd && eslint . --fix && prettier -w .",
-    "prepack": "pnpm build",
-    "release": "unbuild && changelogen --release && npm publish --registry https://registry.npmjs.org && git push --follow-tags",
-    "test": "pnpm lint && pnpm test:types"
+  "web-types": "web-types.json",
+  "uni_modules": {
+    "dependencies": [],
+    "encrypt": [],
+    "platforms": {
+      "cloud": {
+        "tcb": "y",
+        "aliyun": "y",
+        "alipay": "n"
+      },
+      "client": {
+        "Vue": { "vue2": "n", "vue3": "y" },
+        "App": { "app-vue": "y", "app-nvue": "n", "app-uvue": "n" },
+        "H5-mobile": {
+          "Safari": "y",
+          "Android Browser": "y",
+          "微信浏览器(Android)": "y",
+          "QQ浏览器(Android)": "y"
+        },
+        "H5-pc": {
+          "Chrome": "y",
+          "IE": "u",
+          "Edge": "y",
+          "Firefox": "y",
+          "Safari": "y"
+        },
+        "小程序": {
+          "微信": "y",
+          "阿里": "y",
+          "百度": "u",
+          "字节跳动": "u",
+          "QQ": "y",
+          "钉钉": "y",
+          "快手": "u",
+          "飞书": "u",
+          "京东": "u"
+        }
+      }
+    }
   },
   "peerDependencies": {
-    "@uni-helper/uni-app-types": "^1.0.0-alpha.6",
     "vue": ">=3.2.0"
   },
   "dependencies": {
     "@uni-helper/vite-plugin-uni-components": "^0.2.0"
-  },
-  "lint-staged": {
-    "*.ts": "eslint --fix"
   }
 }

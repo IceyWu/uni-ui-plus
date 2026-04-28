@@ -2,9 +2,9 @@ import { createI18n } from 'vue-i18n'
 import zhCN from './zh-CN.json'
 import enUS from './en-US.json'
 import Locale from '../uni_modules/uni-ui-plus/locale'
-import WotEnUS from '../uni_modules/uni-ui-plus/locale/lang/en-US'
+import UpEnUS from '../uni_modules/uni-ui-plus/locale/lang/en-US'
 
-Locale.add({ 'en-US': WotEnUS })
+Locale.add({ 'en-US': UpEnUS })
 
 const messages = {
   'zh-CN': {

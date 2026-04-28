@@ -1,236 +1,80 @@
 <template>
-  <view class="page">
-    <view class="page__hd">
-      <view class="page__title">{{ $t('guanYuWoMen') }}</view>
-      <view class="page__desc">
-        {{ $t('woShiBuRuMoYuQuYiGeQianDuanDaGongZiWoHeWoDeXiaoHuoBanMenZhengZaiZhiLiYuKaiFaQingLiangGaoXiaoDeUniappZuJianKu') }}
+  <page-wraper>
+    <view class="page-about">
+      <view class="page-about__header">
+        <image class="page-about__logo" src="/static/icon/logo.png" mode="aspectFit" />
+        <text class="page-about__name">uni-ui-plus</text>
+        <text class="page-about__version">v0.0.69</text>
+        <text class="page-about__desc">基于 Vue3+TS 的 uni-app 组件库</text>
       </view>
-    </view>
-    <view class="page__bd">
-      <view class="core-team">
-        <view class="core-team__title">{{ $t('heXinTuanDui') }}</view>
-        <view class="core-team__list">
-          <view v-for="(collaborator, index) in githubData.collaborators" :key="index" class="core-team__member">
-            <image :src="collaborator.avatar_url" class="core-team__avatar" />
-            <view class="core-team__name" :title="collaborator.login">{{ collaborator.login }}</view>
-          </view>
+
+      <view class="page-about__links">
+        <view class="page-about__link-item" @click="copyLink('https://github.com/iceywu/uni-ui-plus')">
+          <text class="page-about__link-label">GitHub</text>
+          <text class="page-about__link-value">github.com/iceywu/uni-ui-plus</text>
         </view>
       </view>
-
-      <view class="additional-links">
-        <view class="additional-links__title">{{ $t('gengDuoXinXi') }}</view>
-        <wd-cell-group border>
-          <wd-cell
-            :title="$t('yuYanQieHuan')"
-            title-width="200px"
-            :label="$t('dangQianYuYan') + ': ' + (currentLang === 'zh-CN' ? '中文' : 'English')"
-            is-link
-            @click="showLanguageSwitch = true"
-          ></wd-cell>
-          <!-- #ifndef MP-ALIPAY -->
-
-          <wd-cell
-            :title="$t('guanZhuGongZhongHao')"
-            title-width="200px"
-            :label="$t('uniappJiaoChengZuJianKuXunXiYiShouZhangWo')"
-            @click="openWeChat"
-            is-link
-          ></wd-cell>
-          <wd-cell
-            :title="$t('juanZeng')"
-            title-width="200px"
-            :label="$t('meiYiFenJuanZengDuShiDuiWoMenMoDaDeGuLi')"
-            @click="donate"
-            is-link
-          ></wd-cell>
-          <!-- #ifdef MP-WEIXIN -->
-          <wd-cell
-            :title="$t('guanKanJiLiGuangGao')"
-            title-width="200px"
-            :label="$t('meiCiGuanKanDuShiDuiWoMenDeZhiChiXieXie')"
-            @click="watchAd"
-            is-link
-          ></wd-cell>
-          <!-- #endif -->
-          <!-- #endif -->
-        </wd-cell-group>
-      </view>
     </view>
-    <wd-action-sheet
-      v-model="showLanguageSwitch"
-      :actions="languageActions"
-      :cancel-text="$t('qu-xiao')"
-      :title="$t('yuYanQieHuan')"
-      @select="handleLanguageSelect"
-    />
-  </view>
+  </page-wraper>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
-import { useI18nSync } from '../../hooks/useI18nSync'
-
-// 使用国际化钩子
-const { setLocale, currentLang } = useI18nSync()
-
-// 控制语言切换弹出层的显示
-const showLanguageSwitch = ref(false)
-
-// 语言切换选项
-const languageActions = computed(() => [
-  {
-    name: '中文 🇨🇳',
-    color: currentLang.value === 'zh-CN' ? '#0083ff' : ''
-  },
-  {
-    name: 'English 🇺🇸',
-    color: currentLang.value === 'en-US' ? '#0083ff' : ''
-  }
-])
-
-// 处理语言选择
-const handleLanguageSelect = ({ index }: { index: number }) => {
-  const locale = index === 0 ? 'zh-CN' : 'en-US'
-  switchLanguage(locale)
-}
-
-const githubData = ref<any>({
-  collaborators: [
-    {
-      login: 'IceyWu',
-      avatar_url: 'https://avatars.githubusercontent.com/u/66096254?v=4'
-    }
-  ],
-  contributors: [
-    {
-      login: 'IceyWu',
-      avatar_url: 'https://avatars.githubusercontent.com/u/66096254?v=4'
-    }
-  ]
-})
-
-// 切换语言
-const switchLanguage = (locale: string) => {
-  setLocale(locale)
-}
-
-// 打开公众号二维码
-const openWeChat = () => {
-  uni.previewImage({
-    urls: ['']
-  })
-}
-
-// 打开捐赠二维码
-const donate = () => {
-  uni.previewImage({
-    urls: ['']
-  })
-  // 打开捐赠页面
-}
-
-const watchAd = () => {
-  uni.navigateTo({
-    url: '/subPages/wxRewardAd/Index'
-  })
+function copyLink(url: string) {
+  uni.setClipboardData({ data: url })
 }
 </script>
 
 <style lang="scss" scoped>
-.page__hd {
-  padding: 15px 15px 0 20px;
-}
-
-.page__title {
-  text-align: left;
-  font-size: 24px;
-  font-weight: 600;
-}
-
-.page__desc {
-  margin-top: 20px;
-  text-align: left;
-  font-size: 14px;
-}
-
-.page__intro {
-  margin-top: 10px;
-  color: #333;
-  text-align: left;
-  font-size: 14px;
-}
-
-.page__bd {
-  padding: 0 15px 30px 20px;
-  user-select: none;
-  background: #f9f9f9;
-  border-radius: 10px;
-}
-
-.core-team {
-  margin-top: 20px;
-}
-
-.core-team__title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.core-team__list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.core-team__member {
-  flex: 1 1 25%;
-  max-width: 25%;
-  box-sizing: border-box;
-  margin-bottom: 10px;
-  text-align: center;
-  transition: transform 0.3s;
-}
-
-.core-team__member:hover {
-  transform: scale(1.05);
-}
-
-.core-team__avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  margin: 0 auto;
-  border: 2px solid #0083ff;
-}
-
-.core-team__name {
-  margin-top: 5px;
-  font-size: 14px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0 auto;
-  color: #333;
-}
-
-// 移除了不再需要的language-switch相关样式
-
-.additional-links {
-  margin-top: 20px;
-}
-
-.additional-links__title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.additional-links__icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
+.page-about {
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60rpx 0 40rpx;
+  }
+  &__logo {
+    width: 120rpx;
+    height: 120rpx;
+    margin-bottom: 20rpx;
+  }
+  &__name {
+    font-size: 36rpx;
+    font-weight: 600;
+    color: $text-main;
+  }
+  &__version {
+    font-size: 24rpx;
+    color: $text-secondary;
+    margin-top: 8rpx;
+  }
+  &__desc {
+    font-size: 26rpx;
+    color: $text-secondary;
+    margin-top: 16rpx;
+  }
+  &__links {
+    margin: 40rpx 24rpx;
+    background: $filled-oppo;
+    border-radius: 16rpx;
+    overflow: hidden;
+  }
+  &__link-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24rpx 32rpx;
+    border-bottom: 1rpx solid $border-light;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  &__link-label {
+    font-size: 28rpx;
+    color: $text-main;
+  }
+  &__link-value {
+    font-size: 24rpx;
+    color: $text-secondary;
+  }
 }
 </style>

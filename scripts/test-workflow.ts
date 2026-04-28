@@ -4,11 +4,11 @@
  * 本地测试组件测试工作流 (仅 H5 平台)
  *
  * 用法:
- * - 测试单个组件: pnpm test:workflow wd-button
- * - 测试多个组件: pnpm test:workflow wd-button wd-input
+ * - 测试单个组件: pnpm test:workflow up-button
+ * - 测试多个组件: pnpm test:workflow up-button up-input
  * - 测试所有组件: pnpm test:workflow --all
- * - 跳过 lint: pnpm test:workflow wd-button --skip-lint
- * - 生成覆盖率报告: pnpm test:workflow wd-button --coverage
+ * - 跳过 lint: pnpm test:workflow up-button --skip-lint
+ * - 生成覆盖率报告: pnpm test:workflow up-button --coverage
  */
 
 import { execSync } from 'child_process'
@@ -72,11 +72,11 @@ function showHelp(): void {
 本地测试组件测试工作流 (仅 H5 平台)
 
 用法:
-  - 测试单个组件: pnpm test:workflow wd-button
-  - 测试多个组件: pnpm test:workflow wd-button wd-input
+  - 测试单个组件: pnpm test:workflow up-button
+  - 测试多个组件: pnpm test:workflow up-button up-input
   - 测试所有组件: pnpm test:workflow --all
-  - 跳过 lint: pnpm test:workflow wd-button --skip-lint
-  - 生成覆盖率报告: pnpm test:workflow wd-button --coverage
+  - 跳过 lint: pnpm test:workflow up-button --skip-lint
+  - 生成覆盖率报告: pnpm test:workflow up-button --coverage
   `)
 }
 

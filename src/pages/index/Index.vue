@@ -12,7 +12,7 @@
         <view class="page__desc">
           {{
             $t(
-              'wot-design-uni-shi-yi-ge-ji-yu-vue3ts-kai-fa-de-uniapp-zu-jian-ku-ti-gong-70-gao-zhi-liang-zu-jian-zhi-chi-an-hei-mo-shi-guo-ji-hua-he-zi-ding-yi-zhu-ti'
+              'uni-ui-plus-shi-yi-ge-ji-yu-vue3ts-kai-fa-de-uniapp-zu-jian-ku-ti-gong-70-gao-zhi-liang-zu-jian-zhi-chi-an-hei-mo-shi-guo-ji-hua-he-zi-ding-yi-zhu-ti'
             )
           }}
         </view>
@@ -133,18 +133,18 @@ onShareTimeline(() => {
 </script>
 
 <style lang="scss" scoped>
-.wot-theme-dark {
+.up-theme-dark {
   .page__hd,
   .kind-list__item {
-    background: $-dark-background2;
+    background: #1b1b1b;
   }
 
   .title {
-    color: $-dark-color;
+    color: #ffffff;
   }
 
   :deep(.up-cell__label) {
-    color: $-dark-color3 !important;
+    color: rgba(232, 230, 227, 0.8) !important;
   }
 
   .kind-list__img {

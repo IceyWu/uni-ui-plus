@@ -3,9 +3,9 @@
 /**
  * 组件测试脚本 (仅 H5 平台)
  * 用法：
- * - 测试单个组件：pnpm test:component wd-button
- * - 测试多个组件：pnpm test:component wd-button wd-input
- * - 生成覆盖率报告：pnpm test:component wd-button --coverage
+ * - 测试单个组件：pnpm test:component up-button
+ * - 测试多个组件：pnpm test:component up-button up-input
+ * - 生成覆盖率报告：pnpm test:component up-button --coverage
  */
 
 import { execSync } from 'child_process'
@@ -46,9 +46,9 @@ function showHelp(): void {
   console.log(`
 组件测试脚本 (仅 H5 平台)
 用法：
-  - 测试单个组件：pnpm test:component wd-button
-  - 测试多个组件：pnpm test:component wd-button wd-input
-  - 生成覆盖率报告：pnpm test:component wd-button --coverage
+  - 测试单个组件：pnpm test:component up-button
+  - 测试多个组件：pnpm test:component up-button up-input
+  - 生成覆盖率报告：pnpm test:component up-button --coverage
   `)
 }
 

@@ -4,6 +4,51 @@ import './suppress-warnings'
 
 // 全局设置 uni 相关 API 的 mock
 vi.stubGlobal('uni', {
+  getDeviceInfo: vi.fn().mockReturnValue({
+    deviceBrand: 'apple',
+    deviceModel: 'iPhone',
+    devicePixelRatio: 2,
+    osName: 'ios',
+    osVersion: '17.0',
+    platform: 'ios'
+  }),
+  getWindowInfo: vi.fn().mockReturnValue({
+    pixelRatio: 2,
+    screenWidth: 375,
+    screenHeight: 800,
+    windowWidth: 375,
+    windowHeight: 667,
+    windowTop: 0,
+    statusBarHeight: 20,
+    safeArea: {
+      bottom: 780,
+      height: 667,
+      left: 0,
+      right: 375,
+      top: 20,
+      width: 375
+    },
+    safeAreaInsets: {
+      bottom: 20,
+      left: 0,
+      right: 0,
+      top: 20
+    }
+  }),
+  getAppBaseInfo: vi.fn().mockReturnValue({
+    language: 'zh-CN',
+    version: '1.0.0',
+    theme: 'light'
+  }),
+  // 模拟微信胶囊按钮信息 API
+  getMenuButtonBoundingClientRect: vi.fn().mockReturnValue({
+    width: 87,
+    height: 32,
+    top: 4,
+    right: 375,
+    bottom: 36,
+    left: 288
+  }),
   // 设置 getSystemInfoSync 方法
   getSystemInfoSync: vi.fn().mockReturnValue({
     brand: 'devtools',
@@ -92,7 +137,7 @@ vi.stubGlobal('uni', {
       scrollLeft: 0
     }
 
-    const mockQuery = {
+    const mockQuery: any = {
       // 支持 in 方法，用于组件内查询
       in: vi.fn((scope) => {
         currentScope = scope
@@ -147,7 +192,7 @@ vi.stubGlobal('uni', {
         let nodeInfo = { ...mockNodeInfo, id }
 
         // 为特定选择器提供特定的模拟数据
-        if (currentSelector.includes('wd-tabs') || currentSelector.includes('wd-tab')) {
+        if (currentSelector.includes('up-tabs') || currentSelector.includes('up-tab')) {
           nodeInfo = {
             ...nodeInfo,
             width: 375,
@@ -157,7 +202,7 @@ vi.stubGlobal('uni', {
             right: 375,
             bottom: 44
           }
-        } else if (currentSelector.includes('wd-segmented')) {
+        } else if (currentSelector.includes('up-segmented')) {
           nodeInfo = {
             ...nodeInfo,
             width: 300,
@@ -167,7 +212,17 @@ vi.stubGlobal('uni', {
             right: 300,
             bottom: 40
           }
-        } else if (currentSelector.includes('wd-index-bar')) {
+        } else if (currentSelector.includes('up-slide-verify')) {
+          nodeInfo = {
+            ...nodeInfo,
+            width: 300,
+            height: 40,
+            top: 0,
+            left: 0,
+            right: 300,
+            bottom: 40
+          }
+        } else if (currentSelector.includes('up-index-bar')) {
           nodeInfo = {
             ...nodeInfo,
             width: 375,
@@ -183,11 +238,11 @@ vi.stubGlobal('uni', {
         if (isSelectAll) {
           // 为不同的选择器创建不同数量的项目
           let count = 2
-          if (currentSelector.includes('wd-segmented__item')) {
+          if (currentSelector.includes('up-segmented__item')) {
             count = 3
-          } else if (currentSelector.includes('wd-tab')) {
+          } else if (currentSelector.includes('up-tab')) {
             count = 4
-          } else if (currentSelector.includes('wd-index-anchor')) {
+          } else if (currentSelector.includes('up-index-anchor')) {
             count = 5
           }
 
@@ -235,7 +290,7 @@ vi.stubGlobal('uni', {
     let relativeToOptions: any = null
     let relativeToViewportOptions: any = null
 
-    const mockObserver = {
+    const mockObserver: any = {
       relativeTo: vi.fn((selector, margins) => {
         relativeToOptions = { selector, margins }
         return mockObserver
@@ -323,6 +378,35 @@ vi.stubGlobal('uni', {
     return Promise.resolve({
       tempFilePaths: ['https://example.com/image.jpg'],
       tempFiles: [{ path: 'https://example.com/image.jpg', size: 1024 }]
+    })
+  }),
+  chooseMedia: vi.fn().mockImplementation((options) => {
+    if (options.success) {
+      options.success({
+        tempFiles: [
+          {
+            tempFilePath: 'https://example.com/image.jpg',
+            thumbTempFilePath: 'https://example.com/image.jpg',
+            fileType: 'image',
+            size: 1024,
+            duration: 0
+          }
+        ],
+        type: 'image'
+      })
+    }
+    if (options.complete) options.complete()
+    return Promise.resolve({
+      tempFiles: [
+        {
+          tempFilePath: 'https://example.com/image.jpg',
+          thumbTempFilePath: 'https://example.com/image.jpg',
+          fileType: 'image',
+          size: 1024,
+          duration: 0
+        }
+      ],
+      type: 'image'
     })
   }),
   // 模拟保存图片相关 API

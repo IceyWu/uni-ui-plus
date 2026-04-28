@@ -1,20 +1,19 @@
 import { defineConfig } from 'vite'
-// #ifdef H5
-import viteCompression from 'vite-plugin-compression'
-// #endif
 
 import uni from '@dcloudio/vite-plugin-uni'
 import Components from '@uni-helper/vite-plugin-uni-components'
 
 export default defineConfig({
   base: './',
-  plugins: [
-    Components(),
-    uni(),
-    // #ifdef H5
-    viteCompression()
-    // #endif
-  ],
+  plugins: [Components(), uni()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+        silenceDeprecations: ['legacy-js-api']
+      }
+    }
+  },
   build: {
     target: 'es2015',
     //   关闭生成map文件 可以达到缩小打包体积

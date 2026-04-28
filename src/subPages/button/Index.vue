@@ -1,36 +1,29 @@
 <template>
   <page-wraper>
     <view class="page-button">
-      <demo-block :title="$t('jiBenYongFa')">
-        <up-button>{{ $t('zhu-yao-an-niu') }}</up-button>
-        <up-button>{{ $t('zhu-yao-an-niu') }}</up-button>
-        <up-button type="success">{{ $t('cheng-gong-an-niu-0') }}</up-button>
-        <up-button type="info">{{ $t('xin-xi-an-niu') }}</up-button>
-        <up-button type="warning">{{ $t('jing-gao-an-niu-0') }}</up-button>
-        <up-button type="error">{{ $t('wei-xian-an-niu') }}</up-button>
-      </demo-block>
+      <demo-group title="组件类型">
+        <demo-group-item title="基本使用">
+          <view class="page-button__grid">
+            <up-button>默认按钮</up-button>
+            <up-button type="success">成功按钮</up-button>
+            <up-button type="info">信息按钮</up-button>
+            <up-button type="warning">警告按钮</up-button>
+            <up-button type="error">危险按钮</up-button>
+          </view>
+        </demo-group-item>
+      </demo-group>
     </view>
   </page-wraper>
 </template>
-<script lang="ts" setup>
-function handleGetuserinfo(event: any) {
-  // TODO
-  console.log(event)
-}
-</script>
+
+<script lang="ts" setup></script>
+
 <style lang="scss" scoped>
 .page-button {
-  :deep(button) {
-    margin: 0 10px 10px 0;
-  }
-
-  :deep() {
-    .custom-shadow {
-      box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
-    }
-  }
-  .button-block {
-    margin-right: 0;
+  &__grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16rpx;
   }
 }
 </style>
