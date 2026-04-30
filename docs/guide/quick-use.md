@@ -55,36 +55,13 @@ pnpm add sass -D
 pnpm add @uni-helper/vite-plugin-uni-components -D
 ```
 
-创建 resolver 文件：
-
-```ts
-// src/resolvers/up-resolver.ts
-import type { ComponentResolver } from '@uni-helper/vite-plugin-uni-components'
-import { kebabCase } from '@uni-helper/vite-plugin-uni-components'
-
-export function UpResolver(): ComponentResolver {
-  return {
-    type: 'component',
-    resolve: (name: string) => {
-      if (name.match(/^Up[A-Z]/)) {
-        const compName = kebabCase(name)
-        return {
-          name,
-          from: `uni-ui-plus/components/${compName}/${compName}.vue`,
-        }
-      }
-    },
-  }
-}
-```
-
 配置 `vite.config.ts`：
 
 ```ts
 import { defineConfig } from "vite";
 import uni from "@dcloudio/vite-plugin-uni";
 import Components from '@uni-helper/vite-plugin-uni-components'
-import { UpResolver } from '@/resolvers/up-resolver'
+import { UpResolver } from 'uni-ui-plus'
 
 export default defineConfig({
   plugins: [
@@ -116,6 +93,30 @@ public-hoist-pattern[]=@vue*
 }
 ```
 
+## 引入主题样式
+
+`uni-ui-plus` 使用 CSS 自定义属性实现主题系统，需要在 `App.vue` 中全局引入主题样式：
+
+```vue
+<!-- App.vue -->
+<style lang="scss">
+@use 'uni-ui-plus/styles/theme/index.scss';
+</style>
+```
+
+如果使用 `uni_modules` 安装方式：
+
+```vue
+<!-- App.vue -->
+<style lang="scss">
+@use '@/uni_modules/uni-ui-plus/styles/theme/index.scss';
+</style>
+```
+
+::: warning 注意
+不引入主题样式会导致组件的间距、颜色、圆角等 CSS 变量无法生效，组件样式会异常。
+:::
+
 ## Volar 支持
 
 在 `tsconfig.json` 中配置全局组件类型：
@@ -134,7 +135,6 @@ public-hoist-pattern[]=@vue*
 
 ```html
 <template>
-  <up-button type="primary">主要按钮</up-button>
   <up-image src="https://example.com/a.jpg" width="100" height="100" />
   <up-empty description="暂无数据" />
 </template>

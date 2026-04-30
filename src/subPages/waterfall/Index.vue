@@ -1,25 +1,27 @@
 <template>
   <page-wraper>
     <view class="page-waterfall">
-      <demo-group title="组件类型">
-        <demo-group-item title="基本使用" :no-padding="true">
+      <demo-group title="基础用法">
+        <demo-group-item title="基础用法" :no-padding="true">
           <view class="page-waterfall__box"><up-waterfall :list="basicList" :column="2" @item-click="handleItemClick" /></view>
         </demo-group-item>
       </demo-group>
 
-      <demo-group title="组件样式">
-        <demo-group-item title="三列布局" :no-padding="true">
+      <demo-group title="自定义列数">
+        <demo-group-item title="自定义列数" :no-padding="true">
           <view class="page-waterfall__box"><up-waterfall :list="threeColumnList" :column="3" :column-space="1" :sortByImgInfo="false" /></view>
         </demo-group-item>
+      </demo-group>
 
-        <demo-group-item title="自定义内容" :no-padding="true">
+      <demo-group title="自定义渲染">
+        <demo-group-item title="自定义渲染" :no-padding="true">
           <view class="page-waterfall__box">
             <up-waterfall :list="customList" :column="2">
               <template #default="{ item, onLoad, onError }">
                 <image :src="item.imgUrl" mode="aspectFill" class="page-waterfall__img" @load="onLoad" @error="onError" />
                 <view class="page-waterfall__info">
                   <text class="page-waterfall__title">{{ item.title }}</text>
-                  <text class="page-waterfall__price">{{ item.price }}</text>
+                  <text class="page-waterfall__price">¥{{ item.price }}</text>
                 </view>
               </template>
             </up-waterfall>
@@ -66,29 +68,10 @@
 
 <style lang="scss" scoped>
 .page-waterfall {
-  &__box {
-    min-height: 400rpx;
-    padding: 0 24rpx;
-  }
-  &__img {
-    width: 100%;
-    height: 200rpx;
-  }
-  &__info {
-    padding: 16rpx;
-  }
-  &__title {
-    font-size: 28rpx;
-    font-weight: 500;
-    color: #333;
-    display: block;
-    margin-bottom: 8rpx;
-  }
-  &__price {
-    font-size: 32rpx;
-    font-weight: 600;
-    color: #ff4757;
-    display: block;
-  }
+  &__box { min-height: 400rpx; padding: 0 24rpx; }
+  &__img { width: 100%; height: 200rpx; }
+  &__info { padding: 16rpx; }
+  &__title { font-size: 28rpx; font-weight: 500; color: #333; display: block; margin-bottom: 8rpx; }
+  &__price { font-size: 32rpx; font-weight: 600; color: #ff4757; display: block; }
 }
 </style>

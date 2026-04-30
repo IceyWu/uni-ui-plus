@@ -25,7 +25,7 @@
 <script setup lang="ts">
   import { Expand, Fold } from '@element-plus/icons-vue'
   import { useData, useRoute } from 'vitepress'
-  import { computed, onMounted, ref, watch } from 'vue'
+  import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
   import QrCode from './QrCode.vue'
 
   interface Props {
@@ -112,6 +112,19 @@
     }
   }
 
+  // 发送滚动指令给 iframe，让 demo 滚动到对应标题
+  function sendScrollMessage(hash: string) {
+    if (iframe.value?.contentWindow && hash) {
+      const title = decodeURIComponent(hash.replace(/^#/, ''))
+      iframe.value.contentWindow.postMessage({ type: 'scroll-to', title }, '*')
+    }
+  }
+
+  // 监听文档页面的 hash 变化（点击 "On this page" 目录项）
+  function onHashChange() {
+    sendScrollMessage(window.location.hash)
+  }
+
   onMounted(() => {
     baseUrl.value =
       process.env.NODE_ENV === 'production' ? `https://uni-ui-plus-docs.netlify.app/demo/?timestamp=${Date.now()}#/` : 'http://localhost:5173/demo/#/'
@@ -120,7 +133,18 @@
     iframe.value?.addEventListener('load', () => {
       sendMessage()
       sendLanguageMessage()
+      // iframe 加载完成后，如果当前有 hash 则发送滚动指令
+      if (window.location.hash) {
+        sendScrollMessage(window.location.hash)
+      }
     })
+
+    window.addEventListener('hashchange', onHashChange)
+  })
+
+  // 组件卸载时移除监听
+  onUnmounted(() => {
+    window.removeEventListener('hashchange', onHashChange)
   })
 
   watch(() => vitepressData.isDark.value, sendMessage)

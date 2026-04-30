@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import { makeStringProp } from '../../common/props'
+import { makeStringProp } from '../../common/props.ts'
 
 export type SkeletonType = 'title' | 'avatar' | 'paragraph' | 'image'
 export type AvatarShapeType = 'circle' | 'square'

@@ -26,8 +26,12 @@
     const systemInfo = uni.getSystemInfoSync()
     darkMode.setDark(systemInfo.theme === 'dark')
   })
-  onShow(() => {})
-  onHide(() => {})
+  onShow(() => {
+    /* placeholder */
+  })
+  onHide(() => {
+    /* placeholder */
+  })
 </script>
 <style lang="scss">
 @use '@/iconfont/index.css';

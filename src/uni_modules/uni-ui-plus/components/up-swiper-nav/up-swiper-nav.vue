@@ -19,6 +19,13 @@
         :class="`up-swiper-nav__item--${type} ${current === index ? 'is-active' : ''} is-${direction}`"
       ></view>
     </block>
+    <block v-else-if="type === 'line'">
+      <view
+        v-for="(_, index) in total"
+        :key="index"
+        :class="`up-swiper-nav__item--line ${index <= current ? 'is-active' : ''} is-${direction}`"
+      ></view>
+    </block>
     <block v-if="type === 'fraction'">{{ current + 1 }}/{{ total }}</block>
   </view>
 </template>

@@ -1,8 +1,8 @@
 <template>
   <page-wraper>
     <view class="page-list">
-      <demo-group title="组件类型">
-        <demo-group-item title="基本使用" :no-padding="true">
+      <demo-group title="基本用法">
+        <demo-group-item title="基本用法" :no-padding="true">
           <view class="page-list__box">
             <up-list
               v-model:list-obj="result"

@@ -36,21 +36,6 @@
       "root": "subPages",
       "pages": [
         {
-          "path": "button/Index",
-          "name": "button",
-          "style": {
-            "mp-alipay": {
-              "allowsBounceVertical": "NO"
-            },
-            // #ifdef MP
-            "navigationBarTitleText": "Button 按钮",
-            // #endif
-            // #ifndef MP
-            "navigationBarTitleText": "%button-title%"
-            // #endif
-          }
-        },
-        {
           "path": "img/Index",
           "name": "img",
           "style": {

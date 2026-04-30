@@ -62,14 +62,6 @@ const categories: CatalogCategory[] = [
     includeInDocsNav: true,
     items: [
       {
-        id: 'button',
-        titleKey: 'button-an-niu',
-        docs: {
-          'zh-CN': { slug: 'button', text: 'Button 按钮' },
-          'en-US': { slug: 'button', text: 'Button' }
-        }
-      },
-      {
         id: 'icon',
         titleKey: 'icon-tu-biao',
         docs: {

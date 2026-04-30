@@ -1,6 +1,6 @@
 import type { ImageMode } from '@uni-helper/uni-app-types'
 import type { ExtractPropTypes, PropType } from 'vue'
-import { makeNumericProp } from '../../common/props'
+import { makeNumericProp } from '../../common/props.ts'
 
 // 定义 props
 export const imageProps = {

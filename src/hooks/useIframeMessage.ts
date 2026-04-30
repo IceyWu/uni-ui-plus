@@ -42,6 +42,36 @@ export function useIframeMessage(options: IframeMessageOptions = {}) {
     if (typeof data === 'boolean') {
       onThemeChange?.(data)
     }
+
+    // 处理滚动联动消息
+    if (typeof data === 'object' && data?.type === 'scroll-to' && data?.title) {
+      scrollToTitle(data.title)
+    }
+  }
+
+  /**
+   * 根据标题文字滚动到对应的 demo-group 或 demo-group-item
+   * 优先精确匹配，其次模糊匹配（包含关系）
+   */
+  function scrollToTitle(title: string) {
+    // #ifdef H5
+    const titleElements = document.querySelectorAll('.demo-group__title, .demo-group-item__title')
+    // 精确匹配
+    for (const el of titleElements) {
+      if (el.textContent?.trim() === title) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        return
+      }
+    }
+    // 模糊匹配：标题包含目标文字，或目标文字包含标题
+    for (const el of titleElements) {
+      const text = el.textContent?.trim() || ''
+      if (text.includes(title) || title.includes(text)) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        return
+      }
+    }
+    // #endif
   }
 
   // 设置消息监听

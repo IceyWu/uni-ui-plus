@@ -165,6 +165,8 @@
 | custom-class           | 根节点自定义类名                                   | string          | -                                                                                                                                                                                  | ''            | -        |
 | enable-preview         | 是否支持点击预览                                   | boolean         | -                                                                                                                                                                                  | false         | -        |
 | preview-src            | 预览图片链接                                       | string          | -                                                                                                                                                                                  | -             | -        |
+| loading-text           | 加载中提示文字                                     | string          | -                                                                                                                                                                                  | '加载中...'   | 0.0.70   |
+| error-text             | 加载失败提示文字                                   | string          | -                                                                                                                                                                                  | '加载异常'    | 0.0.70   |
 
 ## Events
 

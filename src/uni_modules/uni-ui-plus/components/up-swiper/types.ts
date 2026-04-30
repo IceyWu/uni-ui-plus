@@ -1,7 +1,7 @@
 import type { ImageMode } from '@uni-helper/uni-app-types'
 import type { ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeNumericProp, makeStringProp } from '../../common/props'
-import type { SwiperNavProps } from '../up-swiper-nav/types'
+import { baseProps, makeBooleanProp, makeNumberProp, makeNumericProp, makeStringProp } from '../../common/props.ts'
+import type { SwiperNavProps } from '../up-swiper-nav/types.ts'
 
 /**
  * 轮播滑动方向

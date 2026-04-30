@@ -1,5 +1,5 @@
 import type { ExtractPropTypes } from 'vue'
-import { baseProps, makeNumericProp, makeStringProp } from '../../common/props'
+import { baseProps, makeNumericProp, makeStringProp } from '../../common/props.ts'
 
 export type EmptyImageMap = Record<string, string>
 

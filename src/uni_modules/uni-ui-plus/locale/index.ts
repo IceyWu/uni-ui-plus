@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import zhCN from './lang/zh-CN'
+import zhCN from './lang/zh-CN.ts'
 
 type Message = Record<string, unknown>
 type Messages = Record<string, Message>

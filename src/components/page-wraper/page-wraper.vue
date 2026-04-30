@@ -19,7 +19,9 @@
     safeAreaInsetBottom: true
   })
 
-  function handleClick() {}
+  function handleClick() {
+    /* placeholder */
+  }
 </script>
 <style lang="scss" scoped>
 .page-wraper {

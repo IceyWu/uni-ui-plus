@@ -1,4 +1,4 @@
-import type { BaseProps } from './props'
+import type { BaseProps } from './props.ts'
 
 // ==================== Type Guards ====================
 
@@ -57,6 +57,10 @@ export function isImageUrl(url: string): boolean {
 
 export function kebabCase(word: string): string {
   return word.replace(/[A-Z]/g, (match) => `-${match}`).toLowerCase()
+}
+
+export function camelCase(word: string): string {
+  return word.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
 }
 
 // ==================== Number Helpers ====================

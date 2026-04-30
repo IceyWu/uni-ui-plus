@@ -186,8 +186,8 @@
 
 | 事件名 | 说明 | 回调参数 |
 |--------|------|----------|
-| click | 点击轮播项时触发 | `(item: any, index: number)` |
-| change | 轮播切换时触发 | `(current: number, source: string)` |
+| click | 点击轮播项时触发 | `{ index: number, item: any }` |
+| change | 轮播切换时触发 | `{ current: number, source: string }` |
 
 ## Slots
 

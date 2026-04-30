@@ -31,16 +31,16 @@
   "linter": {
     "rules": {
       "suspicious": {
-        "noExplicitAny": "warn",
+        "noExplicitAny": "off",
         "noConsole": "off",
         "noDebugger": "warn",
         "noDuplicateObjectKeys": "off",
         "useAwait": "off",
-        "noEmptyBlockStatements": "warn",
+        "noEmptyBlockStatements": "off",
         "noUnusedExpressions": "off",
         "noBitwiseOperators": "off",
         "noEvolvingTypes": "off",
-        "noImplicitAnyLet": "warn",
+        "noImplicitAnyLet": "off",
         "noAssignInExpressions": "off",
         "useGuardForIn": "off",
         "noDoubleEquals": "off",
@@ -71,7 +71,8 @@
         "noNegationElse": "off",
         "noUnusedTemplateLiteral": "off",
         "useCollapsedIf": "off",
-        "useForOf": "off"
+        "useForOf": "off",
+        "useUnifiedTypeSignatures": "off"
       },
       "performance": {
         "useTopLevelRegex": "off",
@@ -98,10 +99,7 @@
       "includes": ["tests/**", "vitest.config.ts"],
       "linter": {
         "rules": {
-          "suspicious": {
-            "noExplicitAny": "off",
-            "noImplicitAnyLet": "off"
-          }
+          "suspicious": {}
         }
       }
     }

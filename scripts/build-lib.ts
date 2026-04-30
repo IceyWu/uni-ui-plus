@@ -1,11 +1,21 @@
 import fs from 'fs'
 import path from 'path'
+import { fileURLToPath } from 'url'
 
-const src = path.resolve(import.meta.dirname, '../src/uni_modules/uni-ui-plus')
-const libDir = path.resolve(import.meta.dirname, '../lib')
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+const src = path.resolve(__dirname, '../src/uni_modules/uni-ui-plus')
+const libDir = path.resolve(__dirname, '../lib')
+
+// 构建前先清空 lib 目录，避免残留旧产物
+if (fs.existsSync(libDir)) {
+  fs.rmSync(libDir, { recursive: true })
+}
 
 const copyComponents = (srcPath: string, tarPath: string, filter: string[] = []) => {
-  fs.mkdir(tarPath, (_err) => {})
+  fs.mkdir(tarPath, () => {
+    /* ignore */
+  })
   fs.readdir(srcPath, (err, files) => {
     if (err === null) {
       files.forEach((filename) => {
@@ -16,7 +26,9 @@ const copyComponents = (srcPath: string, tarPath: string, filter: string[] = [])
             const isFile = stats.isFile()
             if (isFile) {
               const destPath = path.join(tarPath, filename)
-              fs.copyFile(filedir, destPath, (_err) => {})
+              fs.copyFile(filedir, destPath, () => {
+                /* ignore */
+              })
             } else {
               const tarFiledir = path.join(tarPath, filename)
               copyComponents(filedir, tarFiledir, filter)
@@ -35,11 +47,13 @@ copyComponents(src, libDir, ['.md'])
 const copyFile = (srcPath: string, tarPath: string) => {
   const isFile = fs.statSync(srcPath).isFile()
   if (isFile) {
-    fs.copyFile(srcPath, tarPath, (_err) => {})
+    fs.copyFile(srcPath, tarPath, () => {
+      /* ignore */
+    })
   }
 }
 
-const readme = path.resolve(import.meta.dirname, '../README.md')
-const license = path.resolve(import.meta.dirname, '../LICENSE')
+const readme = path.resolve(__dirname, '../README.md')
+const license = path.resolve(__dirname, '../LICENSE')
 copyFile(readme, path.join(libDir, 'README.md'))
 copyFile(license, path.join(libDir, 'LICENSE'))

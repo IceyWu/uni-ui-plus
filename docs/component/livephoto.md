@@ -186,6 +186,7 @@ function resetComponent() {
 | autoplay          | 是否自动播放             | boolean           | false            | -      |
 | enable-vibration  | 是否启用振动反馈         | boolean           | true             | -      |
 | muted             | 是否静音播放             | boolean           | true             | -      |
+| show-mute-button  | 是否显示静音控制按钮     | boolean           | true             | -      |
 | display-only      | 是否仅展示模式           | boolean           | false            | -      |
 | indicator-left    | 指示器距左边距离         | string \| number  | '20rpx'          | -      |
 | indicator-top     | 指示器距顶部距离         | string \| number  | '20rpx'          | -      |
@@ -241,12 +242,13 @@ function resetComponent() {
 | 方法名      | 说明           | 参数 | 返回值  |
 |------------|----------------|------|---------|
 | stopVideo  | 停止视频播放   | -    | -       |
+| toggleMute | 切换静音状态   | -    | -       |
 | isPlaying  | 是否正在播放   | -    | boolean |
-| reset      | 重置组件状态   | -    | -       |
+| isMuted    | 是否静音       | -    | boolean |
 
 ## 注意事项
 
-1. 组件需要同时提供 `video-src` 和 `image-src` 属性
+1. 组件需要同时提供 `video-src` 和 `src` 属性
 2. 视频建议使用较短的循环视频，以获得更好的 Live Photo 效果
 3. 在小程序平台，视频播放可能受到平台限制
 4. 建议为视频和图片提供相同的宽高比，以保证显示效果
