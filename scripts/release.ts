@@ -2,8 +2,11 @@ import { execSync } from 'child_process'
 import { readdirSync, readFileSync, statSync, writeFileSync } from 'fs'
 import inquirer from 'inquirer'
 import path from 'path'
+import { fileURLToPath } from 'url'
 
-const src = path.resolve(import.meta.dirname, '../src/uni_modules/uni-ui-plus')
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+const src = path.resolve(__dirname, '../src/uni_modules/uni-ui-plus')
 const oldVersion = require('../package.json').version
 const LOWEST_VERSION = '$LOWEST_VERSION$'
 
@@ -54,32 +57,45 @@ inquirer
     // 项目版本更新
     switch (answers.version) {
       case '🐛 patch 小版本':
-        execSync('pnpm release:patch')
+        execSync('pnpm release-patch')
         break
       case '✨ minor 中版本':
-        execSync('pnpm release:minor')
+        execSync('pnpm release-minor')
         break
       case '🚀 major 大版本':
-        execSync('pnpm release:major')
+        execSync('pnpm release-major')
         break
       default:
-        execSync('pnpm release:minor')
+        execSync('pnpm release-minor')
         break
     }
     // 更新版本
-    const file = readFileSync(path.resolve(import.meta.dirname, '../package.json'))
+    const file = readFileSync(path.resolve(__dirname, '../package.json'))
     const packageJson = JSON.parse(file.toString())
     const newVersion = packageJson.version
 
     console.log(`√ bumping version in package.json from ${oldVersion} to ${newVersion}`)
 
     // 同步版本号到 uni_modules
-    const tarfetPackageJson = require('../src/uni_modules/uni-ui-plus/package.json')
-    tarfetPackageJson.version = newVersion
-    writeFileSync(path.resolve(src, 'package.json'), JSON.stringify(tarfetPackageJson, null, 2))
+    const targetPkgPath = path.resolve(src, 'package.json')
+    const targetPkgJson = JSON.parse(readFileSync(targetPkgPath, 'utf-8'))
+    targetPkgJson.version = newVersion
+    writeFileSync(targetPkgPath, JSON.stringify(targetPkgJson, null, 2))
+
+    // 同步版本号到 docs/package.json
+    const docsPkgPath = path.resolve(__dirname, '../docs/package.json')
+    const docsPkgJson = JSON.parse(readFileSync(docsPkgPath, 'utf-8'))
+    docsPkgJson.version = newVersion
+    writeFileSync(docsPkgPath, JSON.stringify(docsPkgJson, null, 2))
+
+    // 同步版本号到 about 页面
+    const aboutPath = path.resolve(__dirname, '../src/pages/about/Index.vue')
+    let aboutContent = readFileSync(aboutPath, 'utf-8')
+    aboutContent = aboutContent.replace(/v\d+\.\d+\.\d+/, `v${newVersion}`)
+    writeFileSync(aboutPath, aboutContent)
 
     // 处理文档中的最低版本标识
-    handleLowestVersion(path.resolve(import.meta.dirname, '../docs'), newVersion)
+    handleLowestVersion(path.resolve(__dirname, '../docs'), newVersion)
 
     // 同步 changelog 到各个目录
     execSync('pnpm build:changelog')

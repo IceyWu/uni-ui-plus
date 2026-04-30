@@ -1,5 +1,55 @@
 # Changelog
 
+## v0.0.70
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.68...v0.0.70)
+
+### 🚀 Enhancements
+
+- **livephoto:** Add indicator loading animation & code cleanup ([ee4d57b](https://github.com/iceywu/uni-ui-plus/commit/ee4d57b))
+- Livephoto loading animation, docs sync, CI fixes & code cleanup ([83c71e5](https://github.com/iceywu/uni-ui-plus/commit/83c71e5))
+
+### 🩹 Fixes
+
+- 结构调整 ([881ff9b](https://github.com/iceywu/uni-ui-plus/commit/881ff9b))
+- 格式化调整 ([5b75718](https://github.com/iceywu/uni-ui-plus/commit/5b75718))
+- 优化变量 ([cf5fb69](https://github.com/iceywu/uni-ui-plus/commit/cf5fb69))
+- Add shebang to husky hooks for Windows compatibility ([36e3155](https://github.com/iceywu/uni-ui-plus/commit/36e3155))
+- Add @vue/test-utils dep, remove broken composable tests ([24d4b73](https://github.com/iceywu/uni-ui-plus/commit/24d4b73))
+- 优化构建 ([5f81ff8](https://github.com/iceywu/uni-ui-plus/commit/5f81ff8))
+- Lint fixes and VPIframe use relative demo URL for production ([53fbaab](https://github.com/iceywu/uni-ui-plus/commit/53fbaab))
+
+### 📖 Documentation
+
+- Update README and installation guides ([834c108](https://github.com/iceywu/uni-ui-plus/commit/834c108))
+
+### 🏡 Chore
+
+- Release v0.0.68 ([21f6687](https://github.com/iceywu/uni-ui-plus/commit/21f6687))
+- **release:** V0.0.69 ([bc978bd](https://github.com/iceywu/uni-ui-plus/commit/bc978bd))
+- **release:** 更新版本至 v0.0.69，更新变更日志 ([2a86e16](https://github.com/iceywu/uni-ui-plus/commit/2a86e16))
+- 更新版本至 v0.0.69 ([9846672](https://github.com/iceywu/uni-ui-plus/commit/9846672))
+- Upgrade deps, clean up unused code, optimize component library design ([0c363c4](https://github.com/iceywu/uni-ui-plus/commit/0c363c4))
+- Regenerate pnpm-lock.yaml ([a47dc68](https://github.com/iceywu/uni-ui-plus/commit/a47dc68))
+- Add LICENSE file ([cf56355](https://github.com/iceywu/uni-ui-plus/commit/cf56355))
+
+### ❤️ Contributors
+
+- IceyWu ([@Life-Palette](https://github.com/Life-Palette))
+- Icey Wu ([@IceyWu](https://github.com/IceyWu))
+
+## v0.0.69
+
+[compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.68...v0.0.69)
+
+### 🏡 Chore
+
+- Release v0.0.68 ([21f6687](https://github.com/iceywu/uni-ui-plus/commit/21f6687))
+
+### ❤️ Contributors
+
+- IceyWu <3128006406@qq.com>
+
 ## v0.0.67
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.66...v0.0.67)

@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "version": "0.0.69",
+  "version": "0.0.70",
   "private": true,
   "scripts": {
     "dev": "vitepress dev --port 5174",

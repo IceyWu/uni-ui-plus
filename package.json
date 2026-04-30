@@ -123,7 +123,7 @@
     "test:component": "esno ./scripts/test-component.ts",
     "test:workflow": "esno ./scripts/test-workflow.ts"
   },
-  "version": "0.0.69",
+  "version": "0.0.70",
   "license": "MIT",
   "repository": {
     "type": "git",
