@@ -40,21 +40,21 @@
   &__name {
     font-size: 36rpx;
     font-weight: 600;
-    color: $text-main;
+    color: var(--up-text-main, #18181B);
   }
   &__version {
     font-size: 24rpx;
-    color: $text-secondary;
+    color: var(--up-text-secondary, #71717A);
     margin-top: 8rpx;
   }
   &__desc {
     font-size: 26rpx;
-    color: $text-secondary;
+    color: var(--up-text-secondary, #71717A);
     margin-top: 16rpx;
   }
   &__links {
     margin: 40rpx 24rpx;
-    background: $filled-oppo;
+    background: var(--up-filled-oppo, #ffffff);
     border-radius: 16rpx;
     overflow: hidden;
   }
@@ -63,18 +63,18 @@
     justify-content: space-between;
     align-items: center;
     padding: 24rpx 32rpx;
-    border-bottom: 1rpx solid $border-light;
+    border-bottom: 1rpx solid var(--up-border-light, #F4F4F5);
     &:last-child {
       border-bottom: none;
     }
   }
   &__link-label {
     font-size: 28rpx;
-    color: $text-main;
+    color: var(--up-text-main, #18181B);
   }
   &__link-value {
     font-size: 24rpx;
-    color: $text-secondary;
+    color: var(--up-text-secondary, #71717A);
   }
 }
 </style>
