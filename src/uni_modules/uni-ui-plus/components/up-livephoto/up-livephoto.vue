@@ -1,30 +1,46 @@
 <script setup lang="ts">
   import { computed, getCurrentInstance, nextTick, onUnmounted, ref, watch } from 'vue'
   import { addUnit, isDef, objToStyle } from '../../common/util'
+  import { t } from '../../locale'
   import UpImage from '../up-image/up-image.vue'
-  import type { LivePhotoEmits, LivePhotoProps } from './types'
+  import { indicatorBrightSvg, indicatorDimSvg, muteOffSvg, muteOnSvg } from './icons'
+  import type { LivePhotoEmits } from './types'
   import { livePhotoProps } from './types'
 
-  // Props 定义
   const props = defineProps(livePhotoProps)
-
-  // Emits 定义
   const emit = defineEmits<LivePhotoEmits>()
 
-  // 生成唯一的组件实例ID
-  const componentId = ref(Math.random().toString(36).substring(2, 15))
+  // 唯一 ID（不会变化，无需响应式）
+  const componentId = Math.random().toString(36).substring(2, 15)
 
-  // 状态管理
+  // 状态
   const isPressed = ref(false)
   const isVideoPlaying = ref(false)
   const isTransitioning = ref(false)
   const videoLoadProgress = ref(0)
   const isVideoLoaded = ref(false)
   const isVideoLoading = ref(false)
+  const isMuted = ref(props.muted)
+  // 标记组件是否已卸载，防止卸载后 setTimeout 回调操作已销毁的上下文
+  let isUnmounted = false
 
   const instance = getCurrentInstance()
 
-  // 计算传递给 up-image 的 props
+  // 定时器引用，统一管理生命周期
+  let progressTimer: ReturnType<typeof setInterval> | null = null
+  let progressTimeout: ReturnType<typeof setTimeout> | null = null
+  let transitionTimer: ReturnType<typeof setTimeout> | null = null
+  let pressTimer: ReturnType<typeof setTimeout> | null = null
+
+  // 同步外部 muted prop
+  watch(
+    () => props.muted,
+    (val) => {
+      isMuted.value = val
+    }
+  )
+
+  // 传递给 up-image 的 props（排除 livephoto 特有的）
   const imageProps = computed(() => {
     const {
       videoSrc,
@@ -32,7 +48,11 @@
       autoplay,
       enableVibration,
       muted,
-      // 排除样式相关的 props，这些由 LivePhoto 组件自己控制
+      showMuteButton,
+      displayOnly,
+      indicatorLeft,
+      indicatorTop,
+      longPressDelay,
       width,
       height,
       radius,
@@ -40,91 +60,73 @@
       customClass,
       ...restProps
     } = props
-
     return {
       ...restProps,
-      // 强制图片填充容器
       width: '100%',
       height: '100%',
-      radius: 0, // 圆角由容器控制
+      radius: 0,
       customStyle: '',
       customClass: ''
     }
   })
 
-  // 计算容器样式
+  // 容器样式
   const containerStyle = computed(() => {
-    const styles: Record<string, any> = {}
-
+    const styles: Record<string, string> = {}
     if (isDef(props.width)) {
       styles.width = addUnit(props.width)
     }
-
     if (isDef(props.height)) {
       styles.height = addUnit(props.height)
     }
-
     if (props.radius) {
       styles.borderRadius = addUnit(props.radius)
       styles.overflow = 'hidden'
     }
-
     return `${objToStyle(styles)}${props.customStyle}`
   })
 
-  // 计算根样式类
   const rootClass = computed(() => `up-live-photo ${props.customClass}`)
 
-  // 计算是否为展示模式
-  const isDisplayOnly = computed(() => (props as any).displayOnly || false)
-
-  // 计算指示器位置样式
+  // 指示器位置
   const indicatorPositionStyle = computed(() => {
-    const styles: Record<string, any> = {}
-
-    if (isDef((props as any).indicatorLeft)) {
-      styles.left = addUnit((props as any).indicatorLeft)
+    const styles: Record<string, string> = {}
+    if (isDef(props.indicatorLeft)) {
+      styles.left = addUnit(props.indicatorLeft)
     }
-
-    if (isDef((props as any).indicatorTop)) {
-      styles.top = addUnit((props as any).indicatorTop)
+    if (isDef(props.indicatorTop)) {
+      styles.top = addUnit(props.indicatorTop)
     }
-
     return objToStyle(styles)
   })
 
-  // 计算圆点位置
-  function getDotPosition(index: number) {
-    const angle = (index * 30 - 90) * (Math.PI / 180) // 从顶部开始，转换为弧度
-    const radius = 20 // 圆点到中心的距离
-    const centerX = 24 // 容器中心 X (48/2)
-    const centerY = 24 // 容器中心 Y (48/2)
-
-    const x = centerX + radius * Math.cos(angle)
-    const y = centerY + radius * Math.sin(angle)
-
-    return {
-      left: `${x - 2.5}rpx`, // 减去圆点半径（5rpx/2）
-      top: `${y - 2.5}rpx` // 减去圆点半径（5rpx/2）
+  // 亮图层的裁剪高度百分比（从顶部往下露出）
+  const brightClipHeight = computed(() => {
+    if (isVideoLoaded.value) {
+      return '100%'
     }
-  }
+    if (!isVideoLoading.value) {
+      return '0%'
+    }
+    return `${Math.min(videoLoadProgress.value, 100)}%`
+  })
 
   // 监听视频源变化，重置加载状态
   watch(
     () => props.videoSrc,
     () => {
+      clearLoadTimers()
       isVideoLoaded.value = false
       isVideoLoading.value = false
       videoLoadProgress.value = 0
     }
   )
 
-  // 监听自动播放属性 - 只在组件初始化时触发
+  // 自动播放
   watch(
     () => props.autoplay,
     (newAutoplay) => {
       if (newAutoplay && !isVideoLoaded.value && !isVideoLoading.value && !isPressed.value) {
-        // 只在没有用户交互的情况下自动播放
         startVideoLoad()
         nextTick(() => {
           const videoCtx = getVideoContext()
@@ -134,7 +136,6 @@
           }
         })
       } else if (!newAutoplay && isVideoPlaying.value && !isPressed.value) {
-        // 只在没有用户长按的情况下停止自动播放
         const videoCtx = getVideoContext()
         if (videoCtx) {
           videoCtx.pause()
@@ -146,13 +147,35 @@
     { immediate: true }
   )
 
-  // 获取视频上下文
   function getVideoContext() {
-    const videoId = `live-photo-video-${componentId.value}`
-    return uni.createVideoContext(videoId, instance)
+    return uni.createVideoContext(`live-photo-video-${componentId}`, instance)
   }
 
-  // 开始视频加载
+  /** 清理模拟进度的定时器 */
+  function clearLoadTimers() {
+    if (progressTimer) {
+      clearInterval(progressTimer)
+      progressTimer = null
+    }
+    if (progressTimeout) {
+      clearTimeout(progressTimeout)
+      progressTimeout = null
+    }
+  }
+
+  /** 清理过渡动画定时器 */
+  function clearTransitionTimer() {
+    if (transitionTimer) {
+      clearTimeout(transitionTimer)
+      transitionTimer = null
+    }
+  }
+
+  /**
+   * 开始模拟视频加载进度。
+   * 小程序 video 的 progress 事件不可靠，这里用模拟进度兜底，
+   * 真正加载完成由 onVideoLoadedData 触发。
+   */
   function startVideoLoad() {
     if (isVideoLoading.value || isVideoLoaded.value) {
       return
@@ -161,21 +184,19 @@
     isVideoLoading.value = true
     videoLoadProgress.value = 0
 
-    // 模拟进度增长，直到视频真正加载完成
-    const progressTimer = setInterval(() => {
+    progressTimer = setInterval(() => {
       if (isVideoLoaded.value) {
-        clearInterval(progressTimer)
+        clearLoadTimers()
         return
       }
-
       if (videoLoadProgress.value < 90) {
         videoLoadProgress.value += Math.random() * 10 + 5
       }
     }, 200)
 
-    // 防止无限等待，5秒后强制完成
-    setTimeout(() => {
-      clearInterval(progressTimer)
+    // 兜底：5 秒后如果还没加载完，强制标记完成
+    progressTimeout = setTimeout(() => {
+      clearLoadTimers()
       if (!isVideoLoaded.value) {
         isVideoLoaded.value = true
         isVideoLoading.value = false
@@ -184,70 +205,84 @@
     }, 5000)
   }
 
-  // 视频加载完成
+  // 静音切换
+  function toggleMute() {
+    isMuted.value = !isMuted.value
+    emit('update:muted', isMuted.value)
+  }
+
+  // 视频事件
   function onVideoLoadedData() {
+    clearLoadTimers()
     isVideoLoaded.value = true
     isVideoLoading.value = false
     videoLoadProgress.value = 100
     emit('video-loaded')
   }
 
-  // 视频加载错误
   function onVideoError() {
+    clearLoadTimers()
     isVideoLoading.value = false
     isVideoLoaded.value = false
     videoLoadProgress.value = 0
-    console.warn('视频加载失败')
   }
 
-  // 视频加载进度 - 简化处理
-  function onVideoProgress(e: any) {
-    // uni-app 的视频进度事件可能数据结构不同，暂时依赖模拟进度
-    if (isVideoLoading.value && e.detail) {
-      emit('video-progress', e)
+  function onVideoProgress(e: unknown) {
+    if (isVideoLoading.value) {
+      emit('video-progress', e as Event)
     }
   }
 
-  // Interaction handling: distinguish short tap (click) and long press
-  let pressTimer: ReturnType<typeof setTimeout> | null = null
+  function onVideoEnded() {
+    if (isPressed.value) {
+      const videoCtx = getVideoContext()
+      if (videoCtx) {
+        videoCtx.seek(0)
+        videoCtx.play()
+      }
+    } else {
+      isVideoPlaying.value = false
+    }
+    emit('video-ended')
+  }
 
+  // 长按交互
   function onLongPressStart() {
-    // 原来的长按开始逻辑（在定时器触发时调用）
-    // 如果是展示模式，不响应交互
-    if (isDisplayOnly.value || isPressed.value) {
+    if (props.displayOnly || isPressed.value) {
       return
     }
 
     isPressed.value = true
     isTransitioning.value = true
+    clearTransitionTimer()
 
-    // 添加振动反馈
     if (props.enableVibration) {
       try {
-        uni.vibrateShort({
-          type: 'light'
-        })
-      } catch (error) {
-        console.log('振动反馈不可用:', error)
+        uni.vibrateShort({ type: 'light' })
+      } catch {
+        // 振动反馈不可用
       }
     }
 
-    // 长按时才开始加载视频（如果还未加载）
     if (!isVideoLoaded.value) {
       startVideoLoad()
     }
 
     nextTick(() => {
+      if (isUnmounted) {
+        return
+      }
       const videoCtx = getVideoContext()
       if (videoCtx) {
         videoCtx.play()
-        // 给视频一些时间准备播放，然后开始过渡
         setTimeout(() => {
+          if (isUnmounted) {
+            return
+          }
           isVideoPlaying.value = true
-          // 过渡完成后重置状态
-          setTimeout(() => {
+          transitionTimer = setTimeout(() => {
             isTransitioning.value = false
-          }, 300) // 与 CSS 过渡时间一致
+          }, 300)
         }, 50)
       }
     })
@@ -257,40 +292,35 @@
   }
 
   function onLongPressEnd() {
-    // 如果是展示模式，不响应交互
-    if (isDisplayOnly.value || !isPressed.value) {
+    if (props.displayOnly || !isPressed.value) {
       return
     }
 
     isPressed.value = false
     isTransitioning.value = true
+    clearTransitionTimer()
 
-    // 先开始过渡，然后暂停视频
     setTimeout(() => {
+      if (isUnmounted) {
+        return
+      }
       isVideoPlaying.value = false
       const videoCtx = getVideoContext()
       if (videoCtx) {
         videoCtx.pause()
-        // 重置到开始位置
         videoCtx.seek(0)
       }
-      // 过渡完成后重置状态
-      setTimeout(() => {
+      transitionTimer = setTimeout(() => {
         isTransitioning.value = false
-      }, 300) // 与 CSS 过渡时间一致
+      }, 300)
     }, 50)
 
     emit('press-end')
     emit('video-pause')
   }
 
-  // 当交互开始（touchstart）时，启动定时器，超过一定时间认定为长按
-  function onInteractionStart(_e: any) {
-    if (isDisplayOnly.value) {
-      return
-    }
-    // 防止重复启动
-    if (pressTimer) {
+  function onInteractionStart() {
+    if (props.displayOnly || pressTimer) {
       return
     }
 
@@ -300,87 +330,43 @@
     }, props.longPressDelay)
   }
 
-  // 当交互结束（touchend / touchcancel）时，根据定时器是否触发判断短按还是长按
-  function onInteractionEnd(e: any) {
-    if (isDisplayOnly.value) {
+  function onInteractionEnd(e: Event) {
+    if (props.displayOnly) {
       return
     }
 
     if (pressTimer) {
-      // 定时器尚未触发，视为短按 -> 触发 click
       clearTimeout(pressTimer)
       pressTimer = null
-      // 发出 click 事件给父组件
       emit('click', e)
     } else {
-      // 定时器已触发，表示是长按，调用长按结束逻辑
       onLongPressEnd()
     }
   }
 
-  // 视频播放事件
-  function onVideoPlay() {
-    isVideoPlaying.value = true
-    emit('video-play')
-  }
-
-  // 视频暂停事件
-  function onVideoPause() {
-    isVideoPlaying.value = false
-    emit('video-pause')
-  }
-
-  // 视频结束事件
-  function onVideoEnded() {
-    if (isPressed.value) {
-      // 如果还在长按，重新播放
-      const videoCtx = getVideoContext()
-      if (videoCtx) {
-        videoCtx.seek(0)
-        videoCtx.play()
-      }
-    } else if (props.autoplay) {
-      // 自动播放模式下，视频结束后停止播放，但保持可交互状态
-      isVideoPlaying.value = false
-    } else {
-      // 手动模式下，视频结束后停止播放
-      isVideoPlaying.value = false
-    }
-    emit('video-ended')
-  }
-
-  // 图片加载成功 - 转发给父组件
-  function onImageLoad(event: any) {
+  // 图片事件转发
+  function onImageLoad(event: Event) {
     emit('load', event)
   }
-
-  // 图片加载失败 - 转发给父组件
-  function onImageError(event: any) {
+  function onImageError(event: Event) {
     emit('error', event)
   }
 
-  // 图片点击事件 - 转发给父组件
-  function onImageClick(event: any) {
-    emit('click', event)
-  }
-
-  // 获取视频封面
-  function getVideoPoster() {
-    return props.src
-  }
-
-  // 暴露给父组件的方法
   defineExpose({
     stopVideo: onLongPressEnd,
+    toggleMute,
     isPlaying: () => isVideoPlaying.value,
-    reset: () => {
-      onLongPressEnd()
-    }
+    isMuted: () => isMuted.value
   })
 
-  // 组件卸载时清理
   onUnmounted(() => {
-    onLongPressEnd()
+    isUnmounted = true
+    clearLoadTimers()
+    clearTransitionTimer()
+    if (pressTimer) {
+      clearTimeout(pressTimer)
+      pressTimer = null
+    }
   })
 </script>
 
@@ -402,39 +388,16 @@
 
 <template>
   <view :class="rootClass" :style="containerStyle">
-    <!-- 静态图片层 - 默认显示，支持插槽自定义 -->
+    <!-- 静态图片层 -->
     <view
       class="up-live-photo__image-layer"
       :class="{
-        'up-live-photo__image-layer--hidden': !isDisplayOnly.value && isPressed && isVideoPlaying,
-        'up-live-photo__image-layer--transitioning': !isDisplayOnly.value && isTransitioning
+        'up-live-photo__image-layer--hidden': !props.displayOnly && isPressed && isVideoPlaying,
+        'up-live-photo__image-layer--transitioning': !props.displayOnly && isTransitioning,
       }"
     >
-      <!-- 图片插槽，优先使用插槽内容 -->
       <slot name="image" :src="props.src" :image-props="imageProps">
-        <!-- 默认使用 up-image 组件 -->
-        <up-image
-          :src="imageProps.src"
-          :mode="imageProps.mode"
-          :width="imageProps.width"
-          :height="imageProps.height"
-          :radius="imageProps.radius"
-          :round="imageProps.round"
-          :lazy-load="imageProps.lazyLoad"
-          :enable-preview="imageProps.enablePreview"
-          :preview-src="imageProps.previewSrc"
-          :placeholder-src="imageProps.placeholderSrc"
-          :filter="imageProps.filter"
-          :delay="imageProps.delay"
-          :min-height="imageProps.minHeight"
-          :custom-style="imageProps.customStyle"
-          :custom-class="imageProps.customClass"
-          class="up-live-photo__image"
-          @load="onImageLoad"
-          @error="onImageError"
-          @click="onImageClick"
-        >
-          <!-- 转发所有插槽 -->
+        <up-image v-bind="imageProps" class="up-live-photo__image" @load="onImageLoad" @error="onImageError">
           <template #loading>
             <slot name="loading">
               <view class="up-live-photo__loading">
@@ -442,18 +405,18 @@
               </view>
             </slot>
           </template>
-          <template #error> <slot name="error"></slot> </template>
+          <template #error> <slot name="error" /> </template>
         </up-image>
       </slot>
     </view>
 
-    <!-- 视频层 - 仅在非展示模式下显示 -->
+    <!-- 视频层 -->
     <view
-      v-if="!isDisplayOnly.value"
+      v-if="!props.displayOnly"
       class="up-live-photo__video-layer"
       :class="{
         'up-live-photo__video-layer--visible': (isPressed && isVideoPlaying) || (props.autoplay && isVideoPlaying),
-        'up-live-photo__video-layer--transitioning': isTransitioning
+        'up-live-photo__video-layer--transitioning': isTransitioning,
       }"
     >
       <video
@@ -466,11 +429,11 @@
         :show-progress="false"
         :show-center-play-btn="false"
         :show-loading="false"
-        :muted="props.muted"
-        :poster="getVideoPoster()"
+        :muted="isMuted"
+        :poster="props.src"
         object-fit="cover"
-        @play="onVideoPlay"
-        @pause="onVideoPause"
+        @play="() => { isVideoPlaying = true; emit('video-play') }"
+        @pause="() => { isVideoPlaying = false; emit('video-pause') }"
         @ended="onVideoEnded"
         @loadeddata="onVideoLoadedData"
         @error="onVideoError"
@@ -479,47 +442,40 @@
       />
     </view>
 
-    <!-- Live Photo 指示器 - 根据showIndicator控制显示 -->
+    <!-- Live Photo 指示器 -->
     <view
       v-if="props.showIndicator"
       class="up-live-photo__indicator"
-      :class="{ 'up-live-photo__indicator--active': !isDisplayOnly.value && isPressed }"
+      :class="{ 'up-live-photo__indicator--active': !props.displayOnly && isPressed }"
       :style="indicatorPositionStyle"
     >
       <view class="up-live-photo__indicator-icon">
-        <!-- 纯 CSS 图标 - 兼容所有平台 -->
-        <view class="up-live-photo__indicator-css">
-          <!-- 中心圆点 -->
-          <view class="up-live-photo__indicator-center"></view>
-          <!-- 内圆环 -->
-          <view class="up-live-photo__indicator-inner-ring"></view>
-          <!-- 外围进度圆点 -->
-          <view class="up-live-photo__indicator-dots">
-            <view
-              v-for="(dot, index) in 12"
-              :key="index"
-              class="up-live-photo__indicator-progress-dot"
-              :class="{
-                'up-live-photo__indicator-progress-dot--active':
-                  !isDisplayOnly.value && ((isVideoLoading && index / 12 <= videoLoadProgress / 100) || isVideoLoaded)
-              }"
-              :style="getDotPosition(index)"
-            ></view>
+        <view class="up-live-photo__indicator-svg-wrap">
+          <!-- 底层：暗淡版图标 -->
+          <image class="up-live-photo__indicator-svg" :src="indicatorDimSvg" />
+          <!-- 上层：全亮版图标，通过 height 裁剪显示加载进度 -->
+          <view class="up-live-photo__indicator-svg-bright" :style="`height:${brightClipHeight}`">
+            <image class="up-live-photo__indicator-svg" :src="indicatorBrightSvg" />
           </view>
         </view>
-        <!-- LIVE 文字 -->
-        <text class="up-live-photo__indicator-text">LIVE</text>
+        <text class="up-live-photo__indicator-text">{{ t('livephoto.indicator') }}</text>
       </view>
     </view>
 
-    <!-- 交互层 - 仅在非展示模式下显示和响应事件 -->
+    <!-- 静音按钮 -->
+    <view v-if="props.showMuteButton && !props.displayOnly" class="up-live-photo__mute-btn" @touchstart.stop="toggleMute">
+      <image class="up-live-photo__mute-btn-img" :src="isMuted ? muteOnSvg : muteOffSvg" />
+    </view>
+
+    <!-- 交互层 -->
     <view
-      v-if="!isDisplayOnly.value"
+      v-if="!props.displayOnly"
       class="up-live-photo__interaction"
       :class="{ 'up-live-photo__interaction--pressing': isPressed }"
-      @touchstart="onInteractionStart"
-      @touchend="onInteractionEnd"
+      @touchstart.prevent="onInteractionStart"
+      @touchend.prevent="onInteractionEnd"
       @touchcancel="onInteractionEnd"
+      @contextmenu.prevent
     />
   </view>
 </template>

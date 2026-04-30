@@ -1,59 +1,11 @@
-export const liveIcon = `
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="live-icon">
-    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-    <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-    <path d="M12 12m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
-    <path d="M15.9 20.11l0 .01" />
-    <path d="M19.04 17.61l0 .01" />
-    <path d="M20.77 14l0 .01" />
-    <path d="M20.77 10l0 .01" />
-    <path d="M19.04 6.39l0 .01" />
-    <path d="M15.9 3.89l0 .01" />
-    <path d="M12 3l0 .01" />
-    <path d="M8.1 3.89l0 .01" />
-    <path d="M4.96 6.39l0 .01" />
-    <path d="M3.23 10l0 .01" />
-    <path d="M3.23 14l0 .01" />
-    <path d="M4.96 17.61l0 .01" />
-    <path d="M8.1 20.11l0 .01" />
-    <path d="M12 21l0 .01" />
-  </svg>
-`
+// 指示器图标 - 暗淡版（未加载，外圈点 opacity=0.3）
+export const indicatorDimSvg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none'%3E%3Ccircle cx='8' cy='8' r='1.5' fill='white'/%3E%3Ccircle cx='8' cy='8' r='3.5' stroke='white' stroke-width='1'/%3E%3Ccircle cx='8' cy='2' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='11.5' cy='3.2' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='13.8' cy='6.5' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='13.8' cy='9.5' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='11.5' cy='12.8' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='8' cy='14' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='4.5' cy='12.8' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='2.2' cy='9.5' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='2.2' cy='6.5' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='4.5' cy='3.2' r='.8' fill='white' opacity='.3'/%3E%3C/svg%3E`
 
-export const errorIcon = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-linejoin="round" d="m3.5 3.5l9 9m2-4.5a6.5 6.5 0 1 1-13 0a6.5 6.5 0 0 1 13 0Z"/></svg>
- `
+// 指示器图标 - 全亮版（已加载）
+export const indicatorBrightSvg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none'%3E%3Ccircle cx='8' cy='8' r='1.5' fill='white'/%3E%3Ccircle cx='8' cy='8' r='3.5' stroke='white' stroke-width='1'/%3E%3Ccircle cx='8' cy='2' r='.8' fill='white'/%3E%3Ccircle cx='11.5' cy='3.2' r='.8' fill='white'/%3E%3Ccircle cx='13.8' cy='6.5' r='.8' fill='white'/%3E%3Ccircle cx='13.8' cy='9.5' r='.8' fill='white'/%3E%3Ccircle cx='11.5' cy='12.8' r='.8' fill='white'/%3E%3Ccircle cx='8' cy='14' r='.8' fill='white'/%3E%3Ccircle cx='4.5' cy='12.8' r='.8' fill='white'/%3E%3Ccircle cx='2.2' cy='9.5' r='.8' fill='white'/%3E%3Ccircle cx='2.2' cy='6.5' r='.8' fill='white'/%3E%3Ccircle cx='4.5' cy='3.2' r='.8' fill='white'/%3E%3C/svg%3E`
 
-export const createProgressLiveIcon = (progress: number, showSlash = false) => {
-  // 图标尺寸常量
-  const ICON_SIZE = 12 // SVG 整体尺寸
-  const CENTER_DOT_RADIUS = 1 // 中心圆点半径
-  const INNER_CIRCLE_RADIUS = 3 // 内圈半径
-  const INNER_CIRCLE_STROKE = 1 // 内圈线宽
-  const OUTER_CIRCLE_RADIUS = 5 // 外圈圆点分布半径
-  const OUTER_DOT_RADIUS = 0.3 // 外圈圆点大小
-  const TOTAL_DOTS = 12 // 外圈圆点数量
-  // 计算外圈圆点的数量和位置
-  const center = ICON_SIZE / 2 // 中心点坐标
-  const dots = Array.from({ length: TOTAL_DOTS }, (_, i) => {
-    const angle = (i * 2 * Math.PI) / TOTAL_DOTS
-    const x = center + OUTER_CIRCLE_RADIUS * Math.sin(angle)
-    const y = center - OUTER_CIRCLE_RADIUS * Math.cos(angle)
-    const opacity = i / TOTAL_DOTS <= progress / 100 ? '1' : '0.2'
-    return `<circle cx="${x}" cy="${y}" r="${OUTER_DOT_RADIUS}" fill="currentColor" opacity="${opacity}" />`
-  }).join('')
+// 静音按钮 - 非静音（喇叭 + 声波）
+export const muteOffSvg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='11 5 6 9 2 9 2 15 6 15 11 19 11 5'/%3E%3Cpath d='M15.54 8.46a5 5 0 0 1 0 7.07'/%3E%3Cpath d='M19.07 4.93a10 10 0 0 1 0 14.14'/%3E%3C/svg%3E`
 
-  // 添加斜杠的SVG路径
-  const slash = showSlash ? '<path d="M1 11L11 1" stroke="currentColor" stroke-width="1.5"/>' : ''
-
-  return `
-  <svg xmlns="http://www.w3.org/2000/svg" width="${ICON_SIZE}" height="${ICON_SIZE}" viewBox="0 0 ${ICON_SIZE} ${ICON_SIZE}">
-    <g fill="none" stroke="currentColor" stroke-width="${INNER_CIRCLE_STROKE}">
-      <circle cx="${center}" cy="${center}" r="${CENTER_DOT_RADIUS}" fill="currentColor"/>
-      <circle cx="${center}" cy="${center}" r="${INNER_CIRCLE_RADIUS}" />
-      ${dots}
-      ${slash}
-    </g>
-  </svg>
-`
-}
+// 静音按钮 - 静音（喇叭 + 斜线）
+export const muteOnSvg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='11 5 6 9 2 9 2 15 6 15 11 19 11 5'/%3E%3Cline x1='23' y1='9' x2='17' y2='15'/%3E%3Cline x1='17' y1='9' x2='23' y2='15'/%3E%3C/svg%3E`

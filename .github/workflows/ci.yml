@@ -17,7 +17,7 @@ jobs:
           node-version: 20
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm lint:check
+      - run: pnpm lint
 
   type-check:
     runs-on: ubuntu-latest

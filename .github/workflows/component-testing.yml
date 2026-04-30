@@ -110,9 +110,9 @@ jobs:
             echo "components=$COMPONENTS" >> $GITHUB_OUTPUT
           fi
 
-  # 运行 ESLint 检查
+  # 运行 Lint 检查
   lint:
-    name: ESLint Check
+    name: Lint Check
     runs-on: ubuntu-latest
 
     steps:
@@ -131,7 +131,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run ESLint
+      - name: Run Lint
         run: pnpm lint
 
   # 运行组件测试

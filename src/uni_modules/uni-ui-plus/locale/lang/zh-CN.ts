@@ -1,4 +1,7 @@
 export default {
+  livephoto: {
+    indicator: '实况'
+  },
   loadmore: {
     loading: '正在努力加载中...',
     finished: '已加载完毕',

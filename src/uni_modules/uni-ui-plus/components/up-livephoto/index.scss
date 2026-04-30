@@ -16,7 +16,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: center center;
     will-change: transform, opacity;
     backface-visibility: hidden;
@@ -26,6 +25,8 @@
     z-index: 1;
     opacity: var(--up-opacity-main);
     transform: scale(1);
+    // 默认无过渡，仅在切换时启用
+    transition: none;
 
     &--transitioning {
       transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -41,6 +42,7 @@
     z-index: 2;
     opacity: 0;
     transform: scale(1.02);
+    transition: none;
 
     &--transitioning {
       transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -57,14 +59,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-
-  &__fallback {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
   }
 
   &__loading {
@@ -91,7 +85,10 @@
     width: 100%;
     height: 100%;
     z-index: 3;
-    transition: all 0.2s ease-out;
+    transition: transform 0.2s ease-out;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
 
     &--pressing {
       transform: scale(0.98);
@@ -99,18 +96,17 @@
   }
 
   &__indicator {
-    display: flex;
-    justify-content: center;
+    display: inline-flex;
     align-items: center;
     position: absolute;
     left: var(--up-padding-main);
     top: var(--up-padding-main);
     z-index: 20;
     background: var(--up-opacfilled-light-cover);
-    border-radius: var(--up-radius-extra-large);
+    border-radius: 20rpx;
     color: var(--up-text-white);
-    height: 48rpx;
-    padding: 0 var(--up-padding-extra-loose);
+    height: 40rpx;
+    padding: 0 12rpx;
     box-sizing: border-box;
     transition: background-color 0.3s ease-out;
     transform: none !important;
@@ -122,87 +118,64 @@
   }
 
   &__indicator-icon {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: var(--up-spacing-tight);
+    gap: 6rpx;
   }
 
-  &__indicator-css {
+  &__indicator-svg-wrap {
     position: relative;
-    width: 48rpx;
-    height: 48rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: scale(0.6);
+    width: 26rpx;
+    height: 26rpx;
+    flex-shrink: 0;
   }
 
-  &__indicator-center {
-    position: absolute;
-    width: 8rpx;
-    height: 8rpx;
-    background-color: var(--up-base-white);
-    border-radius: 50%;
-    z-index: 3;
+  &__indicator-svg {
+    width: 26rpx;
+    height: 26rpx;
+    display: block;
   }
 
-  &__indicator-inner-ring {
+  &__indicator-svg-bright {
     position: absolute;
-    width: 20rpx;
-    height: 20rpx;
-    border: 3rpx solid var(--up-base-white);
-    border-radius: 50%;
-    z-index: 2;
-  }
-
-  &__indicator-dots {
-    position: absolute;
-    width: 48rpx;
-    height: 48rpx;
-  }
-
-  &__indicator-progress-dot {
-    position: absolute;
-    width: 5rpx;
-    height: 5rpx;
-    background-color: var(--up-opacwhite-3_08);
-    border-radius: 50%;
-    transition: background-color 0.3s ease-out;
-
-    &--active {
-      background-color: var(--up-base-white);
-    }
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    overflow: hidden;
+    transition: height 0.3s ease-out;
   }
 
   &__indicator-text {
-    font-size: var(--up-typography-label-size-main);
+    font-size: 20rpx;
     font-weight: var(--up-font-weight-medium);
     color: var(--up-text-white);
     letter-spacing: 0.5rpx;
     line-height: 1;
   }
 
-  &__hint {
+  &__mute-btn {
     position: absolute;
-    bottom: 30rpx;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--up-opacfilled-main-cover);
-    border-radius: var(--up-radius-ultra-large);
-    padding: var(--up-padding-extra-tight) var(--up-padding-extra-loose);
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease-out;
+    right: var(--up-padding-main);
+    bottom: var(--up-padding-main);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 50%;
+    background: var(--up-opacfilled-light-cover);
+    transition: background-color 0.2s ease-out;
+    pointer-events: auto;
 
-    &--hiding {
-      opacity: 0;
-      transform: translateX(-50%) translateY(10rpx);
+    &:active {
+      background: var(--up-opacfilled-main-cover);
     }
   }
 
-  &__hint-text {
-    font-size: var(--up-typography-body-size-main);
-    font-weight: var(--up-font-weight-regular);
-    color: var(--up-text-white);
+  &__mute-btn-img {
+    width: 32rpx;
+    height: 32rpx;
   }
 }

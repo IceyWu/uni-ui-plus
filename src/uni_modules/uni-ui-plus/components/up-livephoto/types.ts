@@ -3,52 +3,79 @@ import { imageProps } from '../up-image/types'
 
 // 定义 LivePhoto 特有的 props
 const livePhotoSpecificProps = {
-  // 视频源
+  /**
+   * @description 视频源地址
+   */
   videoSrc: {
     type: String,
     required: true
   },
-  // 静态图片源 - 重命名为 src 以与 image 组件保持一致
+  /**
+   * @description 静态图片源地址
+   */
   src: {
     type: String,
     required: true
   },
-  // 是否显示 Live Photo 指示器
+  /**
+   * @description 是否显示 Live Photo 指示器
+   */
   showIndicator: {
     type: Boolean,
     default: true
   },
-  // 是否自动播放视频
+  /**
+   * @description 是否自动播放视频
+   */
   autoplay: {
     type: Boolean,
     default: false
   },
-  // 是否启用振动反馈
+  /**
+   * @description 是否启用振动反馈
+   */
   enableVibration: {
     type: Boolean,
     default: true
   },
-  // 是否静音播放
+  /**
+   * @description 是否静音播放
+   */
   muted: {
     type: Boolean,
     default: true
   },
-  // 是否仅展示模式（只显示图片和指示器，不支持交互和视频播放）
+  /**
+   * @description 是否显示静音控制按钮
+   */
+  showMuteButton: {
+    type: Boolean,
+    default: true
+  },
+  /**
+   * @description 是否仅展示模式（只显示图片和指示器，不支持交互和视频播放）
+   */
   displayOnly: {
     type: Boolean,
     default: false
   },
-  // 指示器水平位置（距离左边的距离）
+  /**
+   * @description 指示器水平位置（距离左边的距离）
+   */
   indicatorLeft: {
     type: [String, Number] as PropType<string | number>,
     default: '20rpx'
   },
-  // 指示器垂直位置（距离顶部的距离）
+  /**
+   * @description 指示器垂直位置（距离顶部的距离）
+   */
   indicatorTop: {
     type: [String, Number] as PropType<string | number>,
     default: '20rpx'
   },
-  // 长按触发延迟时间（单位 ms），区分短按（点击）与长按
+  /**
+   * @description 长按触发延迟时间（单位 ms），区分短按（点击）与长按
+   */
   longPressDelay: {
     type: Number,
     default: 150
@@ -59,20 +86,16 @@ const livePhotoSpecificProps = {
 export const livePhotoProps = {
   ...imageProps,
   ...livePhotoSpecificProps,
-  // 覆盖一些默认值以适应 LivePhoto 的需求
   enablePreview: {
     type: Boolean,
-    default: false // LivePhoto 不应该启用预览
+    default: false
   }
 } as const
 
 export type LivePhotoProps = ExtractPropTypes<typeof livePhotoProps>
 
-// 定义 emits - 包含 image 组件的 emits 和 LivePhoto 特有的 emits
 export interface LivePhotoEmits {
-  // 继承自 image 组件的事件
-  (e: 'click' | ('error' | 'load'), event: any): void
-  // LivePhoto 特有的事件
-  (e: 'video-loaded' | ('video-ended' | ('press-end' | ('press-start' | ('video-pause' | 'video-play'))))): void
-  (e: 'video-progress', progress: number): void
+  (e: 'error' | 'load' | 'click' | 'video-progress', event: Event): void
+  (e: 'video-loaded' | 'video-ended' | 'press-end' | 'press-start' | 'video-pause' | 'video-play'): void
+  (e: 'update:muted', value: boolean): void
 }
