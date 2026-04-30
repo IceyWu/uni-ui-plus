@@ -1,5 +1,4 @@
 @use '../../styles/mixin/mixin.scss' as *;
-@use '../../styles/variable.scss' as *;
 
 .up-live-photo {
   position: relative;
@@ -25,7 +24,7 @@
 
   &__image-layer {
     z-index: 1;
-    opacity: 1;
+    opacity: var(--up-opacity-main);
     transform: scale(1);
 
     &--transitioning {
@@ -48,7 +47,7 @@
     }
 
     &--visible {
-      opacity: 1;
+      opacity: var(--up-opacity-main);
       transform: scale(1.05);
     }
   }
@@ -82,7 +81,7 @@
   &__loading-bg {
     width: 100%;
     height: 100%;
-    background-color: #f5f7fa;
+    background-color: var(--up-filled-bottom);
   }
 
   &__interaction {
@@ -104,21 +103,21 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    left: 20rpx;
-    top: 20rpx;
-    z-index: 20; /* 提高层级，确保在交互层之上 */
-    background: rgba(64, 64, 64, 0.5);
-    border-radius: 24rpx;
-    color: #fff;
+    left: var(--up-padding-main);
+    top: var(--up-padding-main);
+    z-index: 20;
+    background: var(--up-opacfilled-light-cover);
+    border-radius: var(--up-radius-extra-large);
+    color: var(--up-text-white);
     height: 48rpx;
-    padding: 0 16rpx;
+    padding: 0 var(--up-padding-extra-loose);
     box-sizing: border-box;
     transition: background-color 0.3s ease-out;
-    transform: none !important; /* 防止被父元素的动画影响 */
-    pointer-events: none; /* 让指示器不阻止下层的触摸事件 */
+    transform: none !important;
+    pointer-events: none;
 
     &--active {
-      background: rgba(64, 64, 64, 0.7);
+      background: var(--up-opacfilled-main-cover);
     }
   }
 
@@ -126,10 +125,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8rpx;
+    gap: var(--up-spacing-tight);
   }
 
-  // 纯 CSS 图标 - 兼容所有平台
   &__indicator-css {
     position: relative;
     width: 48rpx;
@@ -137,14 +135,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: scale(0.6); // 缩小到更小的显示尺寸
+    transform: scale(0.6);
   }
 
   &__indicator-center {
     position: absolute;
     width: 8rpx;
     height: 8rpx;
-    background-color: #ffffff;
+    background-color: var(--up-base-white);
     border-radius: 50%;
     z-index: 3;
   }
@@ -153,7 +151,7 @@
     position: absolute;
     width: 20rpx;
     height: 20rpx;
-    border: 3rpx solid #ffffff; // 增加边框粗细
+    border: 3rpx solid var(--up-base-white);
     border-radius: 50%;
     z-index: 2;
   }
@@ -166,21 +164,21 @@
 
   &__indicator-progress-dot {
     position: absolute;
-    width: 5rpx; // 增加圆点大小
-    height: 5rpx; // 增加圆点大小
-    background-color: rgba(255, 255, 255, 0.3);
+    width: 5rpx;
+    height: 5rpx;
+    background-color: var(--up-opacwhite-3_08);
     border-radius: 50%;
     transition: background-color 0.3s ease-out;
 
     &--active {
-      background-color: #ffffff;
+      background-color: var(--up-base-white);
     }
   }
 
   &__indicator-text {
-    font-size: 24rpx;
-    font-weight: 500;
-    color: #ffffff;
+    font-size: var(--up-typography-label-size-main);
+    font-weight: var(--up-font-weight-medium);
+    color: var(--up-text-white);
     letter-spacing: 0.5rpx;
     line-height: 1;
   }
@@ -190,9 +188,9 @@
     bottom: 30rpx;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 20rpx;
-    padding: 12rpx 24rpx;
+    background: var(--up-opacfilled-main-cover);
+    border-radius: var(--up-radius-ultra-large);
+    padding: var(--up-padding-extra-tight) var(--up-padding-extra-loose);
     backdrop-filter: blur(10px);
     transition: all 0.3s ease-out;
 
@@ -203,8 +201,8 @@
   }
 
   &__hint-text {
-    font-size: 28rpx;
-    font-weight: 400;
-    color: #ffffff;
+    font-size: var(--up-typography-body-size-main);
+    font-weight: var(--up-font-weight-regular);
+    color: var(--up-text-white);
   }
 }

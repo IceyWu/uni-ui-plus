@@ -1,5 +1,4 @@
 import { reactive, ref } from 'vue'
-import { deepAssign } from '../common/util'
 import zhCN from './lang/zh-CN'
 
 type Message = Record<string, any>
@@ -18,12 +17,12 @@ export const Locale = {
   use(newLang: string, newMessage?: Message) {
     lang.value = newLang
     if (newMessage) {
-      this.add({ [newLang]: newMessage })
+      Object.assign(messages, { [newLang]: newMessage })
     }
   },
 
   add(newMessages: Messages = {}) {
-    deepAssign(messages, newMessages)
+    Object.assign(messages, newMessages)
   }
 }
 

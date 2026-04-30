@@ -10,6 +10,5 @@ declare module 'vue' {
     DemoGroup: typeof import('./src/components/demo-group/demo-group.vue')['default']
     DemoGroupItem: typeof import('./src/components/demo-group-item/demo-group-item.vue')['default']
     PageWraper: typeof import('./src/components/page-wraper/page-wraper.vue')['default']
-    WdPrivacyPopup: typeof import('./src/components/wd-privacy-popup/wd-privacy-popup.vue')['default']
   }
 }

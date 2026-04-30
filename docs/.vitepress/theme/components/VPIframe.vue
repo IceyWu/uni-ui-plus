@@ -72,7 +72,7 @@
 
   // 工具函数：转换 kebab-case 为 camelCase
   function kebabToCamel(input: string): string {
-    return input.replace(/-([a-z])/g, (match, group) => group.toUpperCase())
+    return input.replace(/-([a-z])/g, (_match, group) => group.toUpperCase())
   }
 
   // 监听 props.expanded 变化

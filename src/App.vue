@@ -26,12 +26,8 @@
     const systemInfo = uni.getSystemInfoSync()
     darkMode.setDark(systemInfo.theme === 'dark')
   })
-  onShow(() => {
-    console.log('App Show')
-  })
-  onHide(() => {
-    console.log('App Hide')
-  })
+  onShow(() => {})
+  onHide(() => {})
 </script>
 <style lang="scss">
 @use '@/iconfont/index.css';
@@ -46,7 +42,7 @@
 page {
   margin: 0;
   padding: 0;
-  font-family: San Francisco, Rotobo, arial, PingFang SC, Noto SansCJK, Microsoft Yahei, sans-serif;
+  font-family: var(--up-typography-body-font-family, PingFang SC), San Francisco, Roboto, arial, Noto Sans CJK, Microsoft Yahei, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--up-filled-bottom, #ffffff);

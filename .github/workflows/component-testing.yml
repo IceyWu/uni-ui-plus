@@ -4,7 +4,7 @@ on:
   # 在推送到主分支时运行测试
   push:
     branches:
-      - master
+      - main
     paths:
       - 'src/uni_modules/uni-ui-plus/components/**'
       - 'tests/**'
@@ -15,7 +15,7 @@ on:
   # 在创建 Pull Request 时运行测试
   pull_request:
     branches:
-      - master
+      - main
     paths:
       - 'src/uni_modules/uni-ui-plus/components/**'
       - 'tests/**'

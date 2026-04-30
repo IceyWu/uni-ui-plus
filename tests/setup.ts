@@ -120,8 +120,8 @@ vi.stubGlobal('uni', {
     let boundingClientRectCallback: ((rect: any) => void) | null = null
     let scrollOffsetCallback: ((rect: any) => void) | null = null
     let fieldsCallback: ((rect: any) => void) | null = null
-    let fieldsOptions: any = null
-    let currentScope: any = null
+    let _fieldsOptions: any = null
+    let _currentScope: any = null
 
     // 默认的节点信息模板
     const mockNodeInfo = {
@@ -140,7 +140,7 @@ vi.stubGlobal('uni', {
     const mockQuery: any = {
       // 支持 in 方法，用于组件内查询
       in: vi.fn((scope) => {
-        currentScope = scope
+        _currentScope = scope
         return mockQuery
       }),
 
@@ -173,7 +173,7 @@ vi.stubGlobal('uni', {
       }),
 
       fields: vi.fn((fields, callback) => {
-        fieldsOptions = fields
+        _fieldsOptions = fields
         fieldsCallback = callback
         return mockQuery
       }),
@@ -285,17 +285,17 @@ vi.stubGlobal('uni', {
   }),
   // 模拟 IntersectionObserver 相关 API
   createIntersectionObserver: vi.fn().mockImplementation(() => {
-    let relativeToOptions: any = null
-    let relativeToViewportOptions: any = null
+    let _relativeToOptions: any = null
+    let _relativeToViewportOptions: any = null
 
     const mockObserver: any = {
       relativeTo: vi.fn((selector, margins) => {
-        relativeToOptions = { selector, margins }
+        _relativeToOptions = { selector, margins }
         return mockObserver
       }),
 
       relativeToViewport: vi.fn((margins) => {
-        relativeToViewportOptions = margins
+        _relativeToViewportOptions = margins
         return mockObserver
       }),
 

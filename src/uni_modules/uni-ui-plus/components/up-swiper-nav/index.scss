@@ -1,16 +1,16 @@
 @use '../../styles/mixin/mixin' as *;
 
-$-swiper-nav-btn-size: 60rpx !default;
-$-swiper-nav-btn-bg-color: rgba(0, 0, 0, 0.3) !default;
-$-swiper-nav-btn-color: #ffffff !default;
-$-swiper-nav-dot-size: 16rpx !default;
-$-swiper-nav-dot-color: rgba(255, 255, 255, 0.5) !default;
-$-swiper-nav-dot-active-color: #ffffff !default;
-$-swiper-nav-dots-bar-active-width: 40rpx !default;
-$-swiper-nav-fraction-height: 48rpx !default;
-$-swiper-nav-fraction-bg-color: rgba(0, 0, 0, 0.3) !default;
-$-swiper-nav-fraction-color: #ffffff !default;
-$-swiper-nav-fraction-font-size: 24rpx !default;
+$-swiper-nav-btn-size: var(--up-swiper-nav-btn-size, 60rpx) !default;
+$-swiper-nav-btn-bg-color: var(--up-swiper-nav-btn-bg-color, var(--up-opacfilled-light-cover)) !default;
+$-swiper-nav-btn-color: var(--up-swiper-nav-btn-color, var(--up-text-white)) !default;
+$-swiper-nav-dot-size: var(--up-swiper-nav-dot-size, 16rpx) !default;
+$-swiper-nav-dot-color: var(--up-swiper-nav-dot-color, var(--up-opacwhite-5_20)) !default;
+$-swiper-nav-dot-active-color: var(--up-swiper-nav-dot-active-color, var(--up-base-white)) !default;
+$-swiper-nav-dots-bar-active-width: var(--up-swiper-nav-dots-bar-active-width, 40rpx) !default;
+$-swiper-nav-fraction-height: var(--up-swiper-nav-fraction-height, 48rpx) !default;
+$-swiper-nav-fraction-bg-color: var(--up-swiper-nav-fraction-bg-color, var(--up-opacfilled-light-cover)) !default;
+$-swiper-nav-fraction-color: var(--up-swiper-nav-fraction-color, var(--up-text-white)) !default;
+$-swiper-nav-fraction-font-size: var(--up-swiper-nav-fraction-font-size, var(--up-typography-label-size-main)) !default;
 
 @include b(swiper-nav) {
   @include e(btn) {
@@ -20,7 +20,7 @@ $-swiper-nav-fraction-font-size: 24rpx !default;
       transform: translateY(-50%);
       width: $-swiper-nav-btn-size;
       height: $-swiper-nav-btn-size;
-      border-radius: 50%;
+      border-radius: var(--up-radius-full);
       background: $-swiper-nav-btn-bg-color;
       &::after {
         position: absolute;
@@ -52,9 +52,9 @@ $-swiper-nav-fraction-font-size: 24rpx !default;
     }
   }
   @include m(dots, dots-bar, line) { display: flex; flex-direction: row; }
-  @include m(line) { width: 100%; padding: 0 24rpx; }
+  @include m(line) { width: 100%; padding: 0 var(--up-padding-extra-loose); }
   @include m(fraction) {
-    padding: 0 16rpx;
+    padding: 0 var(--up-padding-extra-loose);
     height: $-swiper-nav-fraction-height;
     line-height: $-swiper-nav-fraction-height;
     border-radius: calc($-swiper-nav-fraction-height / 2);
@@ -68,9 +68,9 @@ $-swiper-nav-fraction-font-size: 24rpx !default;
       height: $-swiper-nav-dot-size;
       background: $-swiper-nav-dot-color;
       border-radius: 50%;
-      margin: 0 10rpx;
+      margin: 0 var(--up-spacing-main);
       transition: all 0.4s ease-in;
-      @include when(vertical) { margin: 10rpx 0; }
+      @include when(vertical) { margin: var(--up-spacing-main) 0; }
       @include when(active) { background-color: $-swiper-nav-dot-active-color; }
     }
     @include m(dots-bar) {
@@ -84,18 +84,18 @@ $-swiper-nav-fraction-font-size: 24rpx !default;
       }
     }
     @include m(line) {
-      flex: 1; height: 4rpx; background: rgba(255, 255, 255, 0.3); margin: 0 4rpx; border-radius: 4rpx; transition: all 0.3s ease;
+      flex: 1; height: 4rpx; background: var(--up-opacwhite-3_08); margin: 0 4rpx; border-radius: 4rpx; transition: all 0.3s ease;
       @include when(vertical) { width: 4rpx; height: auto; flex: 1; margin: 4rpx 0; }
-      @include when(active) { background: rgba(255, 255, 255, 0.9); }
+      @include when(active) { background: var(--up-opacwhite-9_75); }
     }
   }
-  @include m(left) { position: absolute; left: 24rpx; top: 50%; transform: translateY(-50%); }
-  @include m(right) { position: absolute; right: 24rpx; top: 50%; transform: translateY(-50%); }
-  @include m(top-left) { position: absolute; top: 24rpx; left: 24rpx; }
-  @include m(top) { position: absolute; left: 50%; top: 24rpx; transform: translateX(-50%); }
-  @include m(top-right) { position: absolute; top: 24rpx; right: 24rpx; }
-  @include m(bottom-left) { position: absolute; left: 24rpx; bottom: 24rpx; }
-  @include m(bottom) { position: absolute; left: 50%; bottom: 24rpx; transform: translateX(-50%); }
-  @include m(bottom-right) { position: absolute; right: 24rpx; bottom: 24rpx; }
+  @include m(left) { position: absolute; left: var(--up-padding-extra-loose); top: 50%; transform: translateY(-50%); }
+  @include m(right) { position: absolute; right: var(--up-padding-extra-loose); top: 50%; transform: translateY(-50%); }
+  @include m(top-left) { position: absolute; top: var(--up-padding-extra-loose); left: var(--up-padding-extra-loose); }
+  @include m(top) { position: absolute; left: 50%; top: var(--up-padding-extra-loose); transform: translateX(-50%); }
+  @include m(top-right) { position: absolute; top: var(--up-padding-extra-loose); right: var(--up-padding-extra-loose); }
+  @include m(bottom-left) { position: absolute; left: var(--up-padding-extra-loose); bottom: var(--up-padding-extra-loose); }
+  @include m(bottom) { position: absolute; left: 50%; bottom: var(--up-padding-extra-loose); transform: translateX(-50%); }
+  @include m(bottom-right) { position: absolute; right: var(--up-padding-extra-loose); bottom: var(--up-padding-extra-loose); }
   @include m(vertical) { flex-direction: column; }
 }

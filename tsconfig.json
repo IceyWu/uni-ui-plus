@@ -8,7 +8,6 @@
       "@/*": ["./src/*"]
     },
     "types": [
-      "node",
       "@dcloudio/types",
       "mini-types",
       "@uni-helper/uni-types",

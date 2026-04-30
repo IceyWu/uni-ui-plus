@@ -1,10 +1,14 @@
 <script lang="ts" setup>
-  import type { CSSProperties } from 'vue'
-  import { computed, defineComponent } from 'vue'
-  import { PREFIX } from '../../common/event'
+  import { buttonEmits, buttonProps } from './types'
+
+  defineProps(buttonProps)
+  defineEmits(buttonEmits)
 </script>
 
 <script lang="ts">
+  import { defineComponent } from 'vue'
+  import { PREFIX } from '../../common/event'
+
   const componentName = `${PREFIX}-button`
 
   export default defineComponent({

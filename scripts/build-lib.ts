@@ -5,18 +5,18 @@ const src = path.resolve(import.meta.dirname, '../src/uni_modules/uni-ui-plus')
 const libDir = path.resolve(import.meta.dirname, '../lib')
 
 const copyComponents = (srcPath: string, tarPath: string, filter: string[] = []) => {
-  fs.mkdir(tarPath, (err) => {})
+  fs.mkdir(tarPath, (_err) => {})
   fs.readdir(srcPath, (err, files) => {
     if (err === null) {
       files.forEach((filename) => {
         const filedir = path.join(srcPath, filename)
         const filterFlag = filter.some((item) => path.extname(filename).toLowerCase() === item && filename !== 'changelog.md')
         if (!filterFlag) {
-          fs.stat(filedir, (errs, stats) => {
+          fs.stat(filedir, (_errs, stats) => {
             const isFile = stats.isFile()
             if (isFile) {
               const destPath = path.join(tarPath, filename)
-              fs.copyFile(filedir, destPath, (err) => {})
+              fs.copyFile(filedir, destPath, (_err) => {})
             } else {
               const tarFiledir = path.join(tarPath, filename)
               copyComponents(filedir, tarFiledir, filter)
@@ -35,7 +35,7 @@ copyComponents(src, libDir, ['.md'])
 const copyFile = (srcPath: string, tarPath: string) => {
   const isFile = fs.statSync(srcPath).isFile()
   if (isFile) {
-    fs.copyFile(srcPath, tarPath, (err) => {})
+    fs.copyFile(srcPath, tarPath, (_err) => {})
   }
 }
 

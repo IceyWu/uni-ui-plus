@@ -27,6 +27,9 @@ yarn-error.log*
 *.sln
 *.sw*
 .history
+
+# Generated files
 tags.json
 attributes.json
 web-types.json
+*.tgz

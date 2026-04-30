@@ -74,7 +74,7 @@ const findModule = (type: string) => {
 const toKebabCase = (str: string) => str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 
 // 重新定义属性名称的函数
-const reAttribute: ReAttribute = (value, key, row, title) => {
+const reAttribute: ReAttribute = (value, key, _row, title) => {
   if (title.includes('Attributes')) {
     if (key === '参数') {
       if (value.includes('v-model:')) {

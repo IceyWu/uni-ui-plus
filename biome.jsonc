@@ -31,16 +31,16 @@
   "linter": {
     "rules": {
       "suspicious": {
-        "noExplicitAny": "off",
+        "noExplicitAny": "warn",
         "noConsole": "off",
-        "noDebugger": "off",
+        "noDebugger": "warn",
         "noDuplicateObjectKeys": "off",
         "useAwait": "off",
-        "noEmptyBlockStatements": "off",
+        "noEmptyBlockStatements": "warn",
         "noUnusedExpressions": "off",
         "noBitwiseOperators": "off",
         "noEvolvingTypes": "off",
-        "noImplicitAnyLet": "off",
+        "noImplicitAnyLet": "warn",
         "noAssignInExpressions": "off",
         "useGuardForIn": "off",
         "noDoubleEquals": "off",
@@ -49,10 +49,10 @@
         "useIterableCallbackReturn": "off"
       },
       "correctness": {
-        "noUnusedVariables": "off",
+        "noUnusedVariables": "warn",
         "noUnusedImports": "warn",
         "noUndeclaredVariables": "off",
-        "noUnusedFunctionParameters": "off",
+        "noUnusedFunctionParameters": "warn",
         "noVueDuplicateKeys": "off",
         "noUnknownPseudoClass": "off"
       },
@@ -93,5 +93,17 @@
       }
     }
   },
-  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json"
+  "overrides": [
+    {
+      "includes": ["tests/**", "vitest.config.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noExplicitAny": "off",
+            "noImplicitAnyLet": "off"
+          }
+        }
+      }
+    }
+  ]
 }

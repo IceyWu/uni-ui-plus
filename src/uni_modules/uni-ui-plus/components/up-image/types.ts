@@ -59,10 +59,27 @@ export const imageProps = {
   filter: {
     type: [Number, String] as PropType<number | string>,
     default: ''
+  },
+  /**
+   * @description 加载中提示文字
+   */
+  loadingText: {
+    type: String,
+    default: '加载中...'
+  },
+  /**
+   * @description 加载失败提示文字
+   */
+  errorText: {
+    type: String,
+    default: '加载异常'
   }
 } as const
 
 export type ImageProps = ExtractPropTypes<typeof imageProps>
 
-// 定义 emits
-export type ImageEmits = (e: 'onRefresh') => any
+export interface ImageEmits {
+  (e: 'load', event: Event): void
+  (e: 'error', event: Event): void
+  (e: 'click', event: MouseEvent): void
+}

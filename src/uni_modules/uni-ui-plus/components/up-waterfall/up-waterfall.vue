@@ -11,7 +11,7 @@
         v-for="(item, j) in flowData[`column_${index + 1}`]"
         :key="item.id || `${item.index}-${j}`"
         class="up-waterfall__item"
-        @click="handleItemClick(item, j)"
+        @click="handleItemClick(item, Number(j))"
       >
         <slot :item="item" :index="j" :on-load="() => handleImageLoad(item)" :on-error="() => handleImageError(item)">
           <template v-if="getImageSrcForItem(item)">

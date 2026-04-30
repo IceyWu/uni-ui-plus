@@ -1,10 +1,10 @@
 <script lang="ts" setup>
   import { computed, ref } from 'vue'
   import { addUnit, isDef, objToStyle } from '../../common/util'
-  import { imageProps } from './types'
+  import { type ImageEmits, imageProps } from './types'
 
   const props = defineProps(imageProps)
-  const emit = defineEmits(['load', 'error', 'click'])
+  const emit = defineEmits<ImageEmits>()
 
   const status = ref<'loading' | 'error' | 'success'>('loading')
 
@@ -90,13 +90,13 @@
     <!-- loading 占位插槽 -->
     <slot v-if="status === 'loading'" name="loading">
       <view class="up-img--loading">
-        <template v-if="!placeholderSrc">加载中...</template>
+        <template v-if="!placeholderSrc">{{ loadingText }}</template>
         <image class="up-img--placeholder" :src="placeholderSrc" :style="filterStyle" :mode="mode" />
       </view>
     </slot>
 
     <!-- error 插槽 -->
-    <slot v-if="status === 'error'" name="error"> <view class="up-img--error">加载异常</view> </slot>
+    <slot v-if="status === 'error'" name="error"> <view class="up-img--error">{{ errorText }}</view> </slot>
   </view>
 </template>
 

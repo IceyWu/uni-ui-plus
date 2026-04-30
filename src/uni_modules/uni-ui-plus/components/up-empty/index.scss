@@ -1,18 +1,17 @@
 @use '../../styles/mixin/mixin.scss' as *;
-@use '../../styles/variable.scss' as *;
 
-// empty
-$empty-padding: var(--up-empty-padding, 32px 0) !default;
+// empty - 使用组件级 CSS 变量，fallback 引用主题 token
+$empty-padding: var(--up-empty-padding, var(--up-padding-super-spacious) 0) !default;
 $empty-image-size: var(--up-empty-image-size, 170px) !default;
-$empty-description-margin-top: var(--up-empty-description-margin-top, 4px) !default;
-$empty-description-color: var(--up-empty-description-color, #666) !default;
-$empty-description-font-size: var(--up-empty-description-font-size, 14px) !default;
-$empty-description-line-height: var(--up-empty-description-line-height, 20px) !default;
-$empty-description-padding: var(--up-empty-description-padding, 0 40px) !default;
-$dark-background: var(--up-dark-background, #131313) !default;
+$empty-description-margin-top: var(--up-empty-description-margin-top, var(--up-spacing-main)) !default;
+$empty-description-color: var(--up-empty-description-color, var(--up-text-auxiliary)) !default;
+$empty-description-font-size: var(--up-empty-description-font-size, var(--up-typography-body-size-main)) !default;
+$empty-description-line-height: var(--up-empty-description-line-height, var(--up-typography-body-line-height-size-main)) !default;
+$empty-description-padding: var(--up-empty-description-padding, 0 var(--up-padding-super-spacious)) !default;
+
 .up-theme-dark {
   .up-empty {
-    background: $dark-background;
+    background: var(--up-filled-bottom);
   }
 }
 

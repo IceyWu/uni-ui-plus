@@ -1,9 +1,9 @@
 @use '../../styles/mixin/mixin' as *;
 
-$-swiper-radius: 0 !default;
-$-swiper-item-padding: 0 !default;
-$-swiper-item-text-color: #ffffff !default;
-$-swiper-item-text-fs: 28rpx !default;
+$-swiper-radius: var(--up-swiper-radius, var(--up-radius-zero)) !default;
+$-swiper-item-padding: var(--up-swiper-item-padding, 0) !default;
+$-swiper-item-text-color: var(--up-swiper-item-text-color, var(--up-text-white)) !default;
+$-swiper-item-text-fs: var(--up-swiper-item-text-fs, var(--up-typography-body-size-main)) !default;
 
 @include b(swiper) {
   position: relative;
@@ -47,8 +47,8 @@ $-swiper-item-text-fs: 28rpx !default;
 
   @include e(text) {
     position: absolute;
-    right: 24rpx;
-    top: 24rpx;
+    right: var(--up-padding-extra-loose);
+    top: var(--up-padding-extra-loose);
     color: $-swiper-item-text-color;
     font-size: $-swiper-item-text-fs;
   }

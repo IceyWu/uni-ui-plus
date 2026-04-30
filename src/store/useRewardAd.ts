@@ -82,7 +82,7 @@ export function useRewardAd() {
                 closeLoading()
               })
             )
-            .catch((err) => {
+            .catch((_err) => {
               closeLoading()
               console.log('激励视频 广告显示失败')
             })

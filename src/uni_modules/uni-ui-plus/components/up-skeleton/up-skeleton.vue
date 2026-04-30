@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-  import { onMounted } from 'vue'
   import { isString } from '../../common/util'
   import { skeletonProps } from './types'
 
   defineProps(skeletonProps)
 
-  onMounted(() => {})
   function getStyleVal(target: number | string) {
     if (isString(target)) {
       return target

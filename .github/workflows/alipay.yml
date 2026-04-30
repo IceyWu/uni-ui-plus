@@ -86,6 +86,6 @@ jobs:
 
     - name: upload
       run: |
-        npm i uni-mini-ci less@4.5.1 -g
+        npx uni-mini-ci --version
         pnpm install
         pnpm upload:mp-alipay

@@ -1,6 +1,7 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import type { ExtractPropTypes } from 'vue'
 import { baseProps, makeNumericProp, makeStringProp } from '../../common/props'
+
+export type EmptyImageMap = Record<string, string>
 
 export const emptyProps = {
   ...baseProps,

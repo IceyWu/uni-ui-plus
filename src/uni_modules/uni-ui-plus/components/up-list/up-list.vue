@@ -54,7 +54,7 @@
   )
 
   // 普通列表相关
-  const onRefresh: ScrollViewOnRefresherrefresh = (event) => {
+  const onRefresh: ScrollViewOnRefresherrefresh = (_event) => {
     const tempData = { ...props.listObj }
     tempData.finished = false
     setTriggered(true)
@@ -62,7 +62,7 @@
     emit('onRefresh')
   }
   const listRef = ref<any>(null)
-  const onLowerBottom: ScrollViewOnScrolltolower = (event) => {
+  const onLowerBottom: ScrollViewOnScrolltolower = (_event) => {
     emit('onLoad')
   }
   const triggered = ref<any>(false)
@@ -73,7 +73,9 @@
   function onRestore() {
     setTriggered('restore')
   }
-  function onAbort() {}
+  function onAbort() {
+    // 下拉刷新被中止时的回调，预留扩展
+  }
 
   watch(
     () => props.listObj,
@@ -150,9 +152,9 @@
     </template>
     <template v-else-if="listObj?.list?.length">
       <template v-if="virtualListProps.enabled">
-        <div class="up-list-phantom" :style="{ height: `${phantomHeight}px` }" />
-        <div class="up-list-container" :style="{ transform: getTransform }">
-          <div
+        <view class="up-list-phantom" :style="{ height: `${phantomHeight}px` }" />
+        <view class="up-list-container" :style="{ transform: getTransform }">
+          <view
             v-for="(item, index) in visibleData"
             :id="`list-item-${Number(index + state.start)}`"
             :key="index"
@@ -160,10 +162,10 @@
             class="up-list-item"
           >
             <slot :item="item" :index="index + state.start" />
-          </div>
-        </div>
+          </view>
+        </view>
         <!-- 虚拟列表模式下的底部 loading -->
-        <div
+        <view
           v-if="listObj?.loading"
           class="up-virtual-loading-box"
           :style="{
@@ -176,11 +178,11 @@
           }"
         >
           <slot name="loading"> <UpSkeleton /> </slot>
-        </div>
+        </view>
       </template>
       <template v-else>
         <template v-if="isListMode">
-          <div v-for="(item, index) in listObj.list" :key="index" class="up-list-item"><slot :item="item" :index="index + state.start" /></div>
+          <view v-for="(item, index) in listObj.list" :key="index" class="up-list-item"><slot :item="item" :index="index + state.start" /></view>
         </template>
         <template v-else> <slot :data="listObj" /> </template>
       </template>

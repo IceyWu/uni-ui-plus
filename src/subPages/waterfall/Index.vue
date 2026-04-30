@@ -59,7 +59,7 @@
     { id: 4, imgUrl: 'https://picsum.photos/300/220?random=24', title: '特价商品 4', price: 399.9 }
   ])
 
-  function handleItemClick(item: any, index: number) {
+  function handleItemClick(item: any, _index: number) {
     uni.showToast({ title: `点击了 ${item.title}`, icon: 'none' })
   }
 </script>

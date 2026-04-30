@@ -1,4 +1,5 @@
 export type * from './up-button/types'
+export type * from './up-config-provider/types'
 export type * from './up-empty/types'
 export type * from './up-image/types'
 export type * from './up-list/types'

@@ -285,7 +285,7 @@
   }
 
   // 当交互开始（touchstart）时，启动定时器，超过一定时间认定为长按
-  function onInteractionStart(e: any) {
+  function onInteractionStart(_e: any) {
     if (isDisplayOnly.value) {
       return
     }

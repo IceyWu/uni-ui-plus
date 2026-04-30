@@ -72,7 +72,7 @@
     { id: 3, title: '自定义卡片 3', description: '支持插槽展示', color: '#45B7D1' }
   ])
 
-  function handleClick(item: any, index: number) {
+  function handleClick(_item: any, index: number) {
     uni.showToast({ title: `点击了第 ${index + 1} 项`, icon: 'none' })
   }
 

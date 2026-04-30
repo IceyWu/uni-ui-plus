@@ -18,7 +18,7 @@ const extractSCSSVariables = (scssFilePath: string): Record<string, string> => {
 
   let match
   while ((match = variableRegex.exec(scssContentToProcess)) !== null) {
-    const keyComment = match[1].replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())
+    const keyComment = match[1].replace(/-([a-z])/g, (_match, letter) => letter.toUpperCase())
     const value = match[2].trim()
 
     variables[keyComment] = value
@@ -126,7 +126,7 @@ export type baseThemeVars = {
         line = line.trim()
         if (line.split(':').length === 2) {
           const parts = line.split(':')
-          const propertyName = parts[0].replace(/^\$-/, '').replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())
+          const propertyName = parts[0].replace(/^\$-/, '').replace(/-([a-z])/g, (_match, letter) => letter.toUpperCase())
           tsContent += `  ${propertyName}?: string\n`
         }
       })
@@ -134,7 +134,7 @@ export type baseThemeVars = {
       const line = variables[key]
       if (line.split(':').length === 2) {
         const parts = line.split(':')
-        const propertyName = parts[0].replace(/^\$-/, '').replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())
+        const propertyName = parts[0].replace(/^\$-/, '').replace(/-([a-z])/g, (_match, letter) => letter.toUpperCase())
         tsContent += `  ${propertyName}?: string\n`
       }
     }
