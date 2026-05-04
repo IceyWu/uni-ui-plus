@@ -22,29 +22,37 @@
 pnpm add uni-ui-plus
 ```
 
-### 引入主题样式
-
-在 `App.vue` 中全局引入主题样式，否则组件的间距、颜色等 CSS 变量无法生效：
-
-```vue
-<!-- App.vue -->
-<style lang="scss">
-@use 'uni-ui-plus/styles/theme/index.scss';
-</style>
-```
-
 ### 配置
 
 #### 方案 1：vite 自动引入
 
-```bash
-pnpm add @uni-helper/vite-plugin-uni-components -D
+```ts
+// src/resolvers/up-resolver.ts
+import type { ComponentResolver } from '@uni-helper/vite-plugin-uni-components'
+import { kebabCase } from '@uni-helper/vite-plugin-uni-components'
+
+export function UpResolver(): ComponentResolver {
+  return {
+    type: 'component',
+    resolve: (name: string) => {
+      if (name.match(/^Up[A-Z]/)) {
+        const compName = kebabCase(name)
+        return {
+          name,
+          from: `uni-ui-plus/components/${compName}/${compName}.vue`,
+        }
+      }
+    },
+  }
+}
 ```
 
 ```ts
 // vite.config.ts
+import { defineConfig } from "vite";
+import uni from "@dcloudio/vite-plugin-uni";
 import Components from '@uni-helper/vite-plugin-uni-components'
-import { UpResolver } from 'uni-ui-plus'
+import { UpResolver } from '@/resolvers/up-resolver'
 
 export default defineConfig({
   plugins: [

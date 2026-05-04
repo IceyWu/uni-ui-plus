@@ -49,25 +49,37 @@ pnpm add sass -D
 
 #### 基于 vite 配置自动引入组件（方案 1）
 
-安装 `@uni-helper/vite-plugin-uni-components`：
+```ts
+// src/resolvers/up-resolver.ts
+import type { ComponentResolver } from '@uni-helper/vite-plugin-uni-components'
+import { kebabCase } from '@uni-helper/vite-plugin-uni-components'
 
-```bash
-pnpm add @uni-helper/vite-plugin-uni-components -D
+export function UpResolver(): ComponentResolver {
+  return {
+    type: 'component',
+    resolve: (name: string) => {
+      if (name.match(/^Up[A-Z]/)) {
+        const compName = kebabCase(name)
+        return {
+          name,
+          from: `uni-ui-plus/components/${compName}/${compName}.vue`,
+        }
+      }
+    },
+  }
+}
 ```
 
-配置 `vite.config.ts`：
-
 ```ts
+// vite.config.ts
 import { defineConfig } from "vite";
 import uni from "@dcloudio/vite-plugin-uni";
 import Components from '@uni-helper/vite-plugin-uni-components'
-import { UpResolver } from 'uni-ui-plus'
+import { UpResolver } from '@/resolvers/up-resolver'
 
 export default defineConfig({
   plugins: [
-    Components({
-      resolvers: [UpResolver()]
-    }),
+    Components({ resolvers: [UpResolver()] }),
     uni()
   ],
 });
