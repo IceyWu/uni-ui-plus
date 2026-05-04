@@ -3,6 +3,19 @@
 </p>
 <h1 align="center">uni-ui-plus</h1>
 <p align="center">一个现代化的 uni-app 组件库</p>
+<p align="center">
+<a href="https://github.com/iceywu/uni-ui-plus">
+  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/iceywu/uni-ui-plus?logo=github&color=%234d80f0&link=https%3A%2F%2Fgithub.com%2iceywu%2Funi-ui-plus">
+ </a>
+<a href="https://www.npmjs.com/package/uni-ui-plus">
+  <img alt="npm" src="https://img.shields.io/npm/v/uni-ui-plus?logo=npm&color=%234d80f0&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Funi-ui-plus">
+</a>
+<a href="https://www.npmjs.com/package/uni-ui-plus">
+  <img alt="npm" src="https://img.shields.io/npm/dw/uni-ui-plus?logo=npm&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Funi-ui-plus">
+</a>
+<a href="https://www.npmjs.com/package/uni-ui-plus">
+  <img src="https://img.shields.io/npm/dt/uni-ui-plus?style=flat-square" alt="downloads">
+</a>
 
 ## 特性
 
