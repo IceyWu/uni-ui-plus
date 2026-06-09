@@ -71,44 +71,47 @@ jobs:
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.event.inputs.component }}" != "" ]]; then
             # 如果是手动触发并指定了组件，则只测试该组件
-            echo "components=[\"${{ github.event.inputs.component }}\"]" >> $GITHUB_OUTPUT
+            COMPONENTS="[\"${{ github.event.inputs.component }}\"]"
           elif [[ "${{ steps.changed-files.outputs.all_changed_files }}" == "" || "${{ github.event_name }}" == "schedule" ]]; then
             # 如果是定时任务或没有变更文件，则测试所有组件
-            COMPONENTS=$(find tests/components -name "*.test.ts" | sed -e 's/tests\/components\///' -e 's/\.test\.ts//' | jq -R -s -c 'split("\n") | map(select(length > 0))')
-            echo "components=$COMPONENTS" >> $GITHUB_OUTPUT
+            COMPONENTS=$(find tests/components -name "*.test.ts" 2>/dev/null | sed -e 's/tests\/components\///' -e 's/\.test\.ts//' | jq -R -s -c 'split("\n") | map(select(length > 0))')
           else
             # 根据变更文件确定要测试的组件
-            COMPONENTS=()
+            CHANGED_COMPONENTS=()
             for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
               if [[ $file == src/uni_modules/uni-ui-plus/components/* ]]; then
                 COMPONENT_NAME=$(echo $file | sed -n 's/.*components\/\([^\/]*\)\/.*/\1/p')
-                if [[ ! -z "$COMPONENT_NAME" && ! " ${COMPONENTS[@]} " =~ " ${COMPONENT_NAME} " ]]; then
-                  COMPONENTS+=("$COMPONENT_NAME")
+                if [[ ! -z "$COMPONENT_NAME" && ! " ${CHANGED_COMPONENTS[@]} " =~ " ${COMPONENT_NAME} " ]]; then
+                  CHANGED_COMPONENTS+=("$COMPONENT_NAME")
                 fi
               elif [[ $file == tests/components/*.test.ts ]]; then
                 COMPONENT_NAME=$(echo $file | sed -n 's/tests\/components\/\(.*\)\.test\.ts/\1/p')
-                if [[ ! -z "$COMPONENT_NAME" && ! " ${COMPONENTS[@]} " =~ " ${COMPONENT_NAME} " ]]; then
-                  COMPONENTS+=("$COMPONENT_NAME")
+                if [[ ! -z "$COMPONENT_NAME" && ! " ${CHANGED_COMPONENTS[@]} " =~ " ${COMPONENT_NAME} " ]]; then
+                  CHANGED_COMPONENTS+=("$COMPONENT_NAME")
                 fi
               elif [[ $file == tests/* ]]; then
                 # 如果是 tests 目录下的其他文件变化，则测试所有组件
                 echo "检测到 tests 目录下的文件变化，将测试所有组件"
-                COMPONENTS=$(find tests/components -name "*.test.ts" | sed -e 's/tests\/components\///' -e 's/\.test\.ts//' | jq -R -s -c 'split("\n") | map(select(length > 0))')
-                echo "components=$COMPONENTS" >> $GITHUB_OUTPUT
+                COMPONENTS=$(find tests/components -name "*.test.ts" 2>/dev/null | sed -e 's/tests\/components\///' -e 's/\.test\.ts//' | jq -R -s -c 'split("\n") | map(select(length > 0))')
+                echo "components=${COMPONENTS:-[]}" >> $GITHUB_OUTPUT
                 exit 0
               fi
             done
 
-            if [[ ${#COMPONENTS[@]} -eq 0 ]]; then
+            if [[ ${#CHANGED_COMPONENTS[@]} -eq 0 ]]; then
               # 如果没有找到组件，则测试所有组件
-              COMPONENTS=$(find tests/components -name "*.test.ts" | sed -e 's/tests\/components\///' -e 's/\.test\.ts//' | jq -R -s -c 'split("\n") | map(select(length > 0))')
+              COMPONENTS=$(find tests/components -name "*.test.ts" 2>/dev/null | sed -e 's/tests\/components\///' -e 's/\.test\.ts//' | jq -R -s -c 'split("\n") | map(select(length > 0))')
             else
               # 将数组转换为 JSON
-              COMPONENTS_JSON=$(printf '%s\n' "${COMPONENTS[@]}" | jq -R -s -c 'split("\n") | map(select(length > 0))')
-              COMPONENTS="$COMPONENTS_JSON"
+              COMPONENTS=$(printf '%s\n' "${CHANGED_COMPONENTS[@]}" | jq -R -s -c 'split("\n") | map(select(length > 0))')
             fi
-            echo "components=$COMPONENTS" >> $GITHUB_OUTPUT
           fi
+
+          # 确保输出有效的 JSON 数组，空结果时输出 []
+          if [[ -z "$COMPONENTS" || "$COMPONENTS" == "[]" || "$COMPONENTS" == "null" ]]; then
+            COMPONENTS="[]"
+          fi
+          echo "components=$COMPONENTS" >> $GITHUB_OUTPUT
 
   # 运行 Lint 检查
   lint:
@@ -138,12 +141,13 @@ jobs:
   test-components:
     name: Test Components
     needs: [determine-test-matrix, lint]
+    if: ${{ needs.determine-test-matrix.outputs.components != '' && needs.determine-test-matrix.outputs.components != '[]' && needs.determine-test-matrix.outputs.components != 'null' }}
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
-        component: ${{ fromJson(needs.determine-test-matrix.outputs.components) }}
+        component: ${{ fromJson(needs.determine-test-matrix.outputs.components || '["__skip__"]') }}
 
     steps:
       - name: Checkout code
