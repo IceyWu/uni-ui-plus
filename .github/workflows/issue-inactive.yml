@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: '0 16 * * *'
 
+permissions:
+  issues: write
+
 jobs:
   close-issues:
     runs-on: ubuntu-latest
@@ -35,4 +38,3 @@ jobs:
           inactive-day: 30
           body: |
             此 issue 已被自动锁定，因为关闭后没有任何近期活动。如果有相关 bug，请重新创建一个新 issue。
-
