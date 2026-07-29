@@ -1,19 +1,40 @@
 name: Issue Remove Inactive
 
+# 暂时停用：仅保留手动触发。恢复自动执行时取消下方 issues / issue_comment 触发的注释即可
 on:
-  issues:
-    types: [edited]
-  issue_comment:
-    types: [created, edited]
+  workflow_dispatch:
+  # issues:
+  #   types: [edited]
+  # issue_comment:
+  #   types: [created, edited]
+
+permissions:
+  contents: read
+  issues: write
 
 jobs:
   issue-remove-inactive:
     runs-on: ubuntu-latest
+    if: github.event.issue.state == 'open' && github.actor == github.event.issue.user.login
     steps:
-      - name: remove inactive
-        if: github.event.issue.state == 'open' && github.actor == github.event.issue.user.login
-        uses: actions-cool/issues-helper@v3
+      # 作者补充信息后，移除等待回应类标签
+      - name: Remove inactive labels
+        uses: actions/github-script@v8
         with:
-          actions: 'remove-labels'
-          issue-number: ${{ github.event.issue.number }}
-          labels: 'need reproduce, pending'
+          script: |
+            const labels = ['need reproduce', 'pending']
+
+            for (const name of labels) {
+              try {
+                await github.rest.issues.removeLabel({
+                  ...context.repo,
+                  issue_number: context.payload.issue.number,
+                  name,
+                })
+                core.info(`removed label "${name}"`)
+              }
+              catch (error) {
+                // 标签不存在时返回 404，忽略即可
+                if (error.status !== 404) throw error
+              }
+            }
