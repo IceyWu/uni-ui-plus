@@ -10,7 +10,7 @@ type SyncConfig = {
 }
 
 /**
- * 同步 changelog 到目标路径
+ * 同步 Changesets 生成的 changelog 到目标路径
  * @param config - 同步配置
  */
 const syncChangelog = (config: SyncConfig): void => {

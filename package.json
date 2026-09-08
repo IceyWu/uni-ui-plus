@@ -31,6 +31,7 @@
     "build:quickapp-webview": "uni build -p quickapp-webview",
     "build:theme-vars": "esno ./scripts/buildThemeVars.ts",
     "build:web-types": "esno ./scripts/build-web-types.ts",
+    "changeset": "changeset",
     "commit": "git-cz",
     "coverage": "vitest run --coverage",
     "coverage:h5": "cross-env UNI_PLATFORM=h5 vitest run --coverage",
@@ -56,10 +57,8 @@
     "lint:fix": "ultracite fix",
     "lint:unsafe": "ultracite fix --unsafe",
     "prepare": "husky",
-    "release-major": "changelogen --release --major",
-    "release-minor": "changelogen --release --minor",
-    "release-patch": "changelogen --release --patch",
-    "release-tag": "esno ./scripts/release.ts",
+    "release": "pnpm build:web-types && pnpm build:lib && npm publish ./lib --registry=https://registry.npmjs.org --access public",
+    "sync:version": "esno ./scripts/sync-version.ts",
     "test": "vitest",
     "test:all": "pnpm run test:h5 && pnpm run test:mp-weixin",
     "test:component": "esno ./scripts/test-component.ts",
@@ -69,7 +68,8 @@
     "type-check": "vue-tsc --noEmit",
     "upload:mp-alipay": "uni build -p mp-alipay && minici --platform alipay",
     "upload:mp-dingtalk": "uni build -p mp-dingtalk && minici --platform dd",
-    "upload:mp-weixin": "uni build -p mp-weixin && minici --platform weixin"
+    "upload:mp-weixin": "uni build -p mp-weixin && minici --platform weixin",
+    "version-packages": "changeset version && pnpm sync:version && pnpm build:changelog"
   },
   "lint-staged": {
     "*.{js,ts,vue,json,jsonc}": "npx ultracite fix"
@@ -105,6 +105,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.12",
+    "@changesets/cli": "^3.0.2",
     "@commitlint/cli": "^21.2.2",
     "@commitlint/config-conventional": "^21.2.2",
     "@dcloudio/types": "^3.4.8",
@@ -124,7 +125,6 @@
     "@vue/test-utils": "^2.5.0",
     "@vue/tsconfig": "^0.9.1",
     "axios": "^1.20.0",
-    "changelogen": "^0.6.2",
     "cross-env": "^10.1.0",
     "esno": "^4.8.0",
     "fast-glob": "^3.3.3",

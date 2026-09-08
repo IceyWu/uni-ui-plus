@@ -8,6 +8,7 @@
     "includes": [
       "!node_modules",
       "!dist",
+      "!components.d.ts",
       "!docs/public",
       "!src/uni_modules/mp-html",
       "!src/pages.json",
