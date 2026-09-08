@@ -227,6 +227,9 @@ importers:
       axios:
         specifier: ^1.20.0
         version: 1.20.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
+      components-helper:
+        specifier: ^2.2.0
+        version: 2.2.0
       cross-env:
         specifier: ^10.1.0
         version: 10.1.0
@@ -3486,6 +3489,10 @@ packages:
   compare-versions@3.6.0:
     resolution: {integrity: sha512-W6Af2Iw1z4CB7q4uU4hv646dW9GQuBM+YpC0UvUCWSD8w90SJjp+ujJuXaEMtAXBtSqGfMPuFOVn4/+FlaqfBA==}
 
+  components-helper@2.2.0:
+    resolution: {integrity: sha512-Qm0/BWAM94IdnLrHM7HG2PMBBX7HERmg6nhCdiCJ968HP4iLV05P8H9usnOuuDHH1LHkgttMAheRNSnsEWmAUQ==}
+    engines: {node: '>=16.0.0'}
+
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
@@ -6154,6 +6161,7 @@ packages:
   vue-i18n@9.1.9:
     resolution: {integrity: sha512-JeRdNVxS2OGp1E+pye5XB6+M6BBkHwAv9C80Q7+kzoMdUDGRna06tjC0vCB/jDX9aWrl5swxOMFcyAr7or8XTA==}
     engines: {node: '>= 10'}
+    deprecated: v9 and v10 no longer supported. please migrate to v11. about maintenance status, see https://vue-i18n.intlify.dev/guide/maintenance.html
     peerDependencies:
       vue: ^3.0.0
 
@@ -6211,6 +6219,7 @@ packages:
 
   whatwg-encoding@1.0.5:
     resolution: {integrity: sha512-b5lim54JOPN9HtzvK9HFXvBma/rnfFeqsic0hSpjtDbVxR3dJKLc+KB4V6GgiGOvl7CY/KNh8rxSo9DKQrnUEw==}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-mimetype@2.3.0:
     resolution: {integrity: sha512-M4yMwr6mAnQz76TbJm914+gPpB/nCwvZbJU28cUD6dR004SAxDLOOSUaB1JDRqLtaOV/vi0IC5lEAGFgrjGv/g==}
@@ -10448,6 +10457,10 @@ snapshots:
   commander@2.20.3: {}
 
   compare-versions@3.6.0: {}
+
+  components-helper@2.2.0:
+    dependencies:
+      fast-glob: 3.3.3
 
   concat-map@0.0.1: {}
 

@@ -126,6 +126,7 @@
     "@vue/tsconfig": "^0.9.1",
     "axios": "^1.20.0",
     "cross-env": "^10.1.0",
+    "components-helper": "^2.2.0",
     "esno": "^4.8.0",
     "fast-glob": "^3.3.3",
     "git-cz": "^4.9.0",
