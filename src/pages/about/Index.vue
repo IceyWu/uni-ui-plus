@@ -4,7 +4,7 @@
       <view class="page-about__header">
         <image class="page-about__logo" mode="aspectFit" src="/static/icon/logo.png" />
         <text class="page-about__name">uni-ui-plus</text>
-        <text class="page-about__version">v0.0.70</text>
+        <text class="page-about__version">v0.0.71</text>
         <text class="page-about__desc">基于 Vue3+TS 的 uni-app 组件库</text>
       </view>
 
