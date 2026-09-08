@@ -4,6 +4,7 @@ import type { ReAttribute, ReComponentName, ReDocUrl, ReWebTypesSource, ReWebTyp
 import { arrayToRegExp, getTypeSymbol, hyphenate, isCommonType, isUnionType } from 'components-helper'
 import os from 'os'
 import path from 'path'
+import { fileURLToPath } from 'url'
 import { name, version } from '../package.json'
 import { generateWebTypes } from './component-helper'
 
@@ -100,7 +101,8 @@ const reAttribute: ReAttribute = (value, key, _row, title) => {
 }
 
 // 定义文档目录
-let entry = path.resolve(import.meta.dirname, '../docs/component/*.md')
+const scriptDir = path.dirname(fileURLToPath(import.meta.url))
+let entry = path.resolve(scriptDir, '../docs/component/*.md')
 
 if (os.platform() === 'win32') {
   entry = entry.replace(/\\/g, '/')
@@ -112,7 +114,7 @@ generateWebTypes({
   eventsDescription: '说明',
   eventsName: '事件名称',
   name,
-  outDir: path.resolve(import.meta.dirname, '../src/uni_modules/uni-ui-plus'),
+  outDir: path.resolve(scriptDir, '../src/uni_modules/uni-ui-plus'),
   props: 'Attributes',
   propsDefault: '默认值',
   propsDescription: '说明',
