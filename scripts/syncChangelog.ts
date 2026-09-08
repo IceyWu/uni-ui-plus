@@ -53,6 +53,9 @@ syncChangelog({
       path: path.resolve(cwd, 'docs/guide/changelog.md')
     },
     {
+      path: path.resolve(cwd, 'docs/CHANGELOG.md')
+    },
+    {
       createDir: true,
       path: path.resolve(cwd, 'docs/en-US/guide/changelog.md')
     }
