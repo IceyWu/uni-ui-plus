@@ -28,8 +28,8 @@
     classes.value = {
       'has-sidebar': hasSidebar.value,
       home: frontmatter.value.layout === 'home',
-      top: y.value === 0,
-      'screen-open': props.isScreenOpen
+      'screen-open': props.isScreenOpen,
+      top: y.value === 0
     }
   })
 </script>

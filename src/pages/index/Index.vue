@@ -1,5 +1,5 @@
 <template>
-  <page-wraper :use-wx-ad="false" :use-reward-fab="true">
+  <page-wraper :show-dark-mode="true" :use-reward-fab="true" :use-wx-ad="false">
     <view class="page">
       <view class="page__hd">
         <view class="page__title">
@@ -10,15 +10,17 @@
           </view>
         </view>
         <view class="page__desc">
-          {{ $t(
-              'uni-ui-plus-shi-yi-ge-ji-yu-vue3ts-kai-fa-de-uniapp-zu-jian-ku-ti-gong-70-gao-zhi-liang-zu-jian-zhi-chi-an-hei-mo-shi-guo-ji-hua-he-zi-ding-yi-zhu-ti'
-            ) }}
+          {{
+            $t(
+              'uni-ui-plus-yi-ge-gao-yan-zhi-qing-liang-hua-de-uniapp-zu-jian-ku'
+            )
+          }}
         </view>
       </view>
       <view class="page__bd">
         <block v-for="(item, index) in list" :key="index">
           <view class="kind-list__item">
-            <view :id="item.id" class="up-flex kind-list__item-hd" @click="kindToggle(item.id)">
+            <view class="up-flex kind-list__item-hd" :id="item.id" @click="kindToggle(item.id)">
               <view class="up-flex__item title">{{ item.name }}</view>
               <image class="kind-list__img" :src="item.icon"></image>
             </view>
@@ -26,9 +28,9 @@
               <view :class="['up-cells', openState[item.id] ? 'up-cells_show' : '']">
                 <view
                   class="up-cell"
+                  is-link
                   v-for="(page, j) in item.pages"
                   :key="j"
-                  is-link
                   :label="page.name"
                   @click="handleClick(`/subPages/${page.id}/Index`)"
                 >
@@ -48,58 +50,27 @@
   import { computed, ref } from 'vue'
   import { useI18n } from 'vue-i18n'
   import packageConfig from '../../../package.json'
+  import { getHomeCatalog } from '../../config/component-catalog'
+  import iconNavForm from '../images/icon_nav_form.png'
+  import iconNavShow from '../images/icon_nav_show.png'
+  import iconNavWidget from '../images/icon_nav_widget.png'
+  import shareImage from '../images/share.png'
 
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
 
-  const imgModules: any = import.meta.glob('../images/*.png', { eager: true })
+  const imgModules: Record<string, string> = {
+    'icon_nav_form.png': iconNavForm,
+    'icon_nav_show.png': iconNavShow,
+    'icon_nav_widget.png': iconNavWidget,
+    'share.png': shareImage
+  }
 
-  // 使用computed使list响应语言变化
-  const list = computed(() => [
-    {
-      id: 'widget',
-      name: t('ji-chu'),
-      open: false,
-      icon: imgModules['../images/icon_nav_widget.png'].default,
-      pages: [
-        {
-          id: 'button',
-          name: t('button-an-niu')
-        },
-        {
-          id: 'list',
-          name: t('lie-biao')
-        },
-        {
-          id: 'skeleton',
-          name: t('skeleton')
-        },
-        {
-          id: 'swiper',
-          name: 'Swiper 轮播'
-        }
-      ]
-    },
-    {
-      id: 'show',
-      name: t('shu-ju-zhan-shi'),
-      open: false,
-      icon: imgModules['../images/icon_nav_show.png'].default,
-      pages: [
-        {
-          id: 'img',
-          name: t('img-tu-pian')
-        },
-        {
-          id: 'waterfall',
-          name: t('waterfall')
-        },
-        {
-          id: 'livephoto',
-          name: t('livephoto')
-        }
-      ]
-    }
-  ])
+  const list = computed(() =>
+    getHomeCatalog({ locale: locale.value }).map((category) => ({
+      ...category,
+      icon: category.icon ? (imgModules[category.icon] ?? '') : ''
+    }))
+  )
 
   function handleClick(url: string) {
     uni.navigateTo({
@@ -115,54 +86,35 @@
   }
 
   onShareAppMessage(() => ({
-    title: t('yi-ge-ji-yu-vue3ts-de-uniapp-zu-jian-ku-ti-gong-70-gao-zhi-liang-zu-jian-zhi-chi-an-hei-mo-shi-guo-ji-hua-he-zi-ding-yi-zhu-ti'),
+    imageUrl: shareImage,
     path: '/pages/index/Index',
-    imageUrl: imgModules['../images/share.png'].default
+    title: t('yi-ge-ji-yu-vue3ts-de-uniapp-zu-jian-ku-ti-gong-70-gao-zhi-liang-zu-jian-zhi-chi-an-hei-mo-shi-guo-ji-hua-he-zi-ding-yi-zhu-ti')
   }))
 
   onShareTimeline(() => ({
-    title: t('yi-ge-ji-yu-vue3ts-de-uniapp-zu-jian-ku-ti-gong-70-gao-zhi-liang-zu-jian-zhi-chi-an-hei-mo-shi-guo-ji-hua-he-zi-ding-yi-zhu-ti-0'),
+    imageUrl: shareImage,
     path: '/pages/index/Index',
-    imageUrl: imgModules['../images/share.png'].default
+    title: t('yi-ge-ji-yu-vue3ts-de-uniapp-zu-jian-ku-ti-gong-70-gao-zhi-liang-zu-jian-zhi-chi-an-hei-mo-shi-guo-ji-hua-he-zi-ding-yi-zhu-ti-0')
   }))
 </script>
 
 <style lang="scss" scoped>
-.up-theme-dark {
-  .page__hd,
-  .kind-list__item {
-    background: #1b1b1b;
-  }
-
-  .title {
-    color: #ffffff;
-  }
-
-  :deep(.up-cell__label) {
-    color: rgba(232, 230, 227, 0.8) !important;
-  }
-
-  .kind-list__img {
-    filter: invert(100%);
-  }
-}
-
 .page__hd {
   padding: 40px 40px 30px;
   margin-bottom: 30px;
-  background: #fff;
+  background: var(--up-filled-oppo);
 }
 
 .page__title {
   text-align: left;
   font-size: 20px;
   font-weight: 400;
-  color: #0083ff;
+  color: var(--up-primary-6);
 }
 
 .page__desc {
   margin-top: 20px;
-  color: #999;
+  color: var(--up-text-secondary);
   text-align: left;
   font-size: 12px;
 }
@@ -208,15 +160,15 @@
   transform: translateY(-50%);
   transition: 0.3s;
 
-  color: rgba(0, 0, 0, 0.65);
+  color: var(--up-text-secondary);
 
   .up-cell {
-    background: #fff;
+    background: var(--up-filled-oppo);
     box-sizing: border-box;
     margin-bottom: 20px;
     padding: 10px 30px;
     font-size: 14px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--up-border-light);
     &:not(:last-child) {
       margin-bottom: 0;
       // border-bottom: 0;
@@ -224,7 +176,7 @@
   }
 
   :deep(.up-cell__label) {
-    color: rgba(0, 0, 0, 0.65);
+    color: var(--up-text-secondary);
   }
 }
 
@@ -235,7 +187,7 @@
 
 .kind-list__item {
   border-radius: 30px;
-  background: #fff;
+  background: var(--up-filled-oppo);
   overflow: hidden;
 
   &:not(:last-child) {
@@ -272,12 +224,12 @@
 
 .title {
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.85);
+  color: var(--up-text-main);
 }
 
 .page-name {
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.65);
+  color: var(--up-text-secondary);
 }
 
 .up-tool-right-line-angle::after {
@@ -286,7 +238,7 @@
   height: 8px;
   width: 8px;
   border-width: 2px 2px 0 0;
-  border-color: #b2b2b2;
+  border-color: var(--up-border-extra-strong);
   border-style: solid;
   -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
   transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);

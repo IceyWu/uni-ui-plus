@@ -20,51 +20,51 @@ export interface FlowData {
 
 export const waterfallProps = {
   /**
-   * @description 瀑布流数据列表
-   */
-  list: {
-    type: Array as PropType<WaterfallItem[]>,
-    default: () => []
-  },
-  /**
    * @description 列数
    * @default 2
    */
   column: {
-    type: Number,
-    default: 2
+    default: 2,
+    type: Number
   },
   /**
    * @description 列间距(百分比)
    * @default 2
    */
   columnSpace: {
-    type: Number,
-    default: 2
-  },
-  /**
-   * @description 图片字段名
-   * @default 'imgUrl'
-   */
-  imageField: {
-    type: String,
-    default: 'imgUrl'
+    default: 2,
+    type: Number
   },
   /**
    * @description 获取图片源的方法
    * @default undefined
    */
   getImageSrc: {
-    type: Function as PropType<(item: WaterfallItem) => string>,
-    default: undefined
+    default: undefined,
+    type: Function as PropType<(item: WaterfallItem) => string>
+  },
+  /**
+   * @description 图片字段名
+   * @default 'imgUrl'
+   */
+  imageField: {
+    default: 'imgUrl',
+    type: String
+  },
+  /**
+   * @description 瀑布流数据列表
+   */
+  list: {
+    default: () => [],
+    type: Array as PropType<WaterfallItem[]>
   },
   /**
    * @description 是否根据图片信息排序
    * @default false
    */
   sortByImgInfo: {
-    type: Boolean,
-    default: false
+    default: false,
+    type: Boolean
   }
 }
 

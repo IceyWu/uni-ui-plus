@@ -12,6 +12,8 @@
       "!src/uni_modules/mp-html",
       "!src/pages.json",
       "!src/manifest.json",
+      "!src/pages/**/Index.vue",
+      "!src/subPages/**/Index.vue",
       "!vite-plugins/conditional-test.vue"
     ]
   },
@@ -46,7 +48,9 @@
         "noDoubleEquals": "off",
         "noThenProperty": "off",
         "noShadowRestrictedNames": "off",
-        "useIterableCallbackReturn": "off"
+        "useIterableCallbackReturn": "off",
+        "noNestedPromises": "off",
+        "noReturnAssign": "off"
       },
       "correctness": {
         "noUnusedVariables": "warn",
@@ -72,11 +76,14 @@
         "noUnusedTemplateLiteral": "off",
         "useCollapsedIf": "off",
         "useForOf": "off",
-        "useUnifiedTypeSignatures": "off"
+        "useUnifiedTypeSignatures": "off",
+        "noExportedImports": "off",
+        "useVueMultiWordComponentNames": "off"
       },
       "performance": {
         "useTopLevelRegex": "off",
-        "noBarrelFile": "off"
+        "noBarrelFile": "off",
+        "noAwaitInLoops": "off"
       },
       "complexity": {
         "noForEach": "off",
@@ -86,6 +93,10 @@
         "useOptionalChain": "off"
       },
       "a11y": {
+        "noNoninteractiveElementInteractions": "off",
+        "noStaticElementInteractions": "off",
+        "useKeyWithClickEvents": "off",
+        "useSemanticElements": "off",
         "useButtonType": "off",
         "useGenericFontNames": "off",
         "noSvgWithoutTitle": "off",

@@ -1,8 +1,8 @@
 <template>
   <!-- 主容器：根据展开状态和过渡状态添加对应类名 -->
   <div
-    v-if="href"
     class="demo-model"
+    v-if="href"
     :class="{
     'collapsed': !expanded,
     'transition-end': transitionEnd
@@ -11,18 +11,18 @@
   >
     <!-- 头部控制栏 -->
     <div class="demo-header">
-      <ExternalLink :href="href" class="demo-link" :style="`${expanded ? '' : 'height:0;width:0;opacity:0'}`"> </ExternalLink>
-      <QrCode class="demo-qrcode" :src="qrcode" v-if="expanded&&qrcode"></QrCode>
+      <ExternalLink class="demo-link" :href="href" :style="`${expanded ? '' : 'height:0;width:0;opacity:0'}`"> </ExternalLink>
+      <QrCode class="demo-qrcode" v-if="expanded&&qrcode" :src="qrcode"></QrCode>
       <el-icon class="expand-icon" style="cursor: pointer;" @click="toggleExpand"> <component :is="expanded ? Fold : Expand" /> </el-icon>
     </div>
     <!-- iframe 容器 -->
     <div class="iframe-container">
-      <iframe v-if="expanded&&transitionEnd" ref="iframe" id="demo" class="iframe" scrolling="auto" frameborder="0" :src="href" />
+      <iframe class="iframe" frameborder="0" id="demo" scrolling="auto" v-if="expanded&&transitionEnd" ref="iframe" :src="href" />
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
   import { Expand, Fold } from '@element-plus/icons-vue'
   import { useData, useRoute } from 'vitepress'
   import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
@@ -51,7 +51,7 @@
   const vitepressData = useData()
 
   const href = computed(() => {
-    const path = route.path
+    const { path } = route
     const paths = path ? path.split('.')[0].split('/') : []
 
     if (!paths.length) {
@@ -62,7 +62,7 @@
   })
 
   const qrcode = computed(() => {
-    const path = route.path
+    const { path } = route
     const paths = path ? path.split('.')[0].split('/') : []
     if (!paths.length) {
       return ''
@@ -116,7 +116,7 @@
   function sendScrollMessage(hash: string) {
     if (iframe.value?.contentWindow && hash) {
       const title = decodeURIComponent(hash.replace(/^#/, ''))
-      iframe.value.contentWindow.postMessage({ type: 'scroll-to', title }, '*')
+      iframe.value.contentWindow.postMessage({ title, type: 'scroll-to' }, '*')
     }
   }
 

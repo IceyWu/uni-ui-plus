@@ -41,6 +41,20 @@ export interface SwiperList {
 
 export const swiperProps = {
   ...baseProps,
+  /**
+   * 自动以指定滑块的高度为整个容器的高度。当 vertical 为 true 时，默认不调整
+   * 仅支付宝小程序支持
+   * 类型：'first' | 'current' | 'highest' | 'none'
+   * 默认值：false
+   */
+  adjustHeight: makeStringProp<AdjustHeightType>('highest'),
+  /**
+   * vertical 为 true 时强制使 adjust-height 生效。
+   * 仅支付宝小程序支持
+   * 类型：boolean
+   * 默认值：false
+   */
+  adjustVerticalHeight: makeBooleanProp(false),
 
   /**
    * 是否自动播放轮播图
@@ -48,6 +62,12 @@ export const swiperProps = {
    * 默认值：true
    */
   autoplay: makeBooleanProp(true),
+  /**
+   * 视频是否自动播放
+   * 类型：boolean
+   * 默认值：true
+   */
+  autoplayVideo: makeBooleanProp(true),
 
   /**
    * 当前轮播在哪一项（下标）
@@ -55,6 +75,55 @@ export const swiperProps = {
    * 默认值：0
    */
   current: makeNumberProp(0),
+
+  /**
+   * 自定义图片类名
+   * 类型：string
+   */
+  customImageClass: makeStringProp(''),
+  /**
+   * 自定义指示器类名
+   * 类型：string
+   */
+  customIndicatorClass: makeStringProp(''),
+
+  /**
+   * 自定义swiper子项类名
+   * 类型：string
+   */
+  customItemClass: makeStringProp(''),
+  /**
+   * 自定义下一个子项类名
+   * 类型：string
+   */
+  customNextClass: makeStringProp(''),
+
+  /**
+   * 自定义下一个图片类名
+   * 类型：string
+   */
+  customNextImageClass: makeStringProp(''),
+  /**
+   * 自定义上一个子项类名
+   * 类型：string
+   */
+  customPrevClass: makeStringProp(''),
+
+  /**
+   * 自定义上一个图片类名
+   * 类型：string
+   */
+  customPrevImageClass: makeStringProp(''),
+  /**
+   * 自定义文字标题类名
+   * 类型：string
+   */
+  customTextClass: makeStringProp(''),
+  /**
+   * 自定义文字标题样式
+   * 类型：string
+   */
+  customTextStyle: makeStringProp(''),
 
   /**
    * 轮播滑动方向，可选值：'horizontal'（水平）或'vertical'（垂直）
@@ -92,6 +161,29 @@ export const swiperProps = {
   height: makeNumericProp('192'),
 
   /**
+   * 图片裁剪、缩放的模式
+   * 类型：string
+   * 默认值：'aspectFill'
+   */
+  imageMode: makeStringProp<ImageMode>('aspectFill'),
+  /**
+   * 指示器全部配置，可以是布尔值或指示器配置对象
+   * 类型：boolean 或 object
+   * 默认值：true
+   */
+  indicator: {
+    default: true,
+    type: [Boolean, Object] as PropType<boolean | Partial<SwiperNavProps>>
+  },
+
+  /**
+   * 页码信息展示位置，可选值：'left' | 'top-left' | 'top' | 'top-right' | 'bottom-left' | 'bottom' | 'bottom-right' | 'right'
+   * 类型：string
+   * 默认值：'bottom'
+   */
+  indicatorPosition: makeStringProp<IndicatorPositionType>('bottom'),
+
+  /**
    * 轮播间隔时间，单位为毫秒
    * 类型：number
    * 默认值：5000
@@ -104,8 +196,8 @@ export const swiperProps = {
    * 默认值：空数组
    */
   list: {
-    type: Array as PropType<SwiperList[] | string[]>,
-    default: () => []
+    default: () => [],
+    type: Array as PropType<SwiperList[] | string[]>
   },
 
   /**
@@ -114,13 +206,6 @@ export const swiperProps = {
    * 默认值：true
    */
   loop: makeBooleanProp(true),
-
-  /**
-   * 视频是否循环播放
-   * 类型：boolean
-   * 默认值：true
-   */
-  videoLoop: makeBooleanProp(true),
 
   /**
    * 视频是否静音播放
@@ -135,13 +220,6 @@ export const swiperProps = {
    * 默认值：'0'
    */
   nextMargin: makeNumericProp('0'),
-
-  /**
-   * 页码信息展示位置，可选值：'left' | 'top-left' | 'top' | 'top-right' | 'bottom-left' | 'bottom' | 'bottom-right' | 'right'
-   * 类型：string
-   * 默认值：'bottom'
-   */
-  indicatorPosition: makeStringProp<IndicatorPositionType>('bottom'),
   /**
    * 前边距
    * 类型：number 或 string（数字或可转换为数字的字符串）
@@ -155,35 +233,11 @@ export const swiperProps = {
    */
   snapToEdge: makeBooleanProp(false),
   /**
-   * 指示器全部配置，可以是布尔值或指示器配置对象
-   * 类型：boolean 或 object
-   * 默认值：true
-   */
-  indicator: {
-    type: [Boolean, Object] as PropType<boolean | Partial<SwiperNavProps>>,
-    default: true
-  },
-
-  /**
-   * 图片裁剪、缩放的模式
-   * 类型：string
-   * 默认值：'aspectFill'
-   */
-  imageMode: makeStringProp<ImageMode>('aspectFill'),
-  /**
-   * 选项对象中，value 对应的 key
-   */
-  valueKey: makeStringProp('value'),
-  /**
-   * 选项对象中，标题 text 对应的 key
-   */
-  textKey: makeStringProp('text'),
-  /**
-   * 视频是否自动播放
+   * 视频播放时是否停止自动轮播
    * 类型：boolean
-   * 默认值：true
+   * 默认值：false
    */
-  autoplayVideo: makeBooleanProp(true),
+  stopAutoplayWhenVideoPlay: makeBooleanProp(false),
   /**
    * 切换轮播项时是否停止上一个视频的播放
    * 类型：boolean
@@ -191,74 +245,20 @@ export const swiperProps = {
    */
   stopPreviousVideo: makeBooleanProp(true),
   /**
-   * 视频播放时是否停止自动轮播
+   * 选项对象中，标题 text 对应的 key
+   */
+  textKey: makeStringProp('text'),
+  /**
+   * 选项对象中，value 对应的 key
+   */
+  valueKey: makeStringProp('value'),
+
+  /**
+   * 视频是否循环播放
    * 类型：boolean
-   * 默认值：false
+   * 默认值：true
    */
-  stopAutoplayWhenVideoPlay: makeBooleanProp(false),
-  /**
-   * 自动以指定滑块的高度为整个容器的高度。当 vertical 为 true 时，默认不调整
-   * 仅支付宝小程序支持
-   * 类型：'first' | 'current' | 'highest' | 'none'
-   * 默认值：false
-   */
-  adjustHeight: makeStringProp<AdjustHeightType>('highest'),
-  /**
-   * vertical 为 true 时强制使 adjust-height 生效。
-   * 仅支付宝小程序支持
-   * 类型：boolean
-   * 默认值：false
-   */
-  adjustVerticalHeight: makeBooleanProp(false),
-  /**
-   * 自定义指示器类名
-   * 类型：string
-   */
-  customIndicatorClass: makeStringProp(''),
-
-  /**
-   * 自定义图片类名
-   * 类型：string
-   */
-  customImageClass: makeStringProp(''),
-
-  /**
-   * 自定义上一个图片类名
-   * 类型：string
-   */
-  customPrevImageClass: makeStringProp(''),
-
-  /**
-   * 自定义下一个图片类名
-   * 类型：string
-   */
-  customNextImageClass: makeStringProp(''),
-
-  /**
-   * 自定义swiper子项类名
-   * 类型：string
-   */
-  customItemClass: makeStringProp(''),
-  /**
-   * 自定义上一个子项类名
-   * 类型：string
-   */
-  customPrevClass: makeStringProp(''),
-  /**
-   * 自定义下一个子项类名
-   * 类型：string
-   */
-  customNextClass: makeStringProp(''),
-  /**
-   * 自定义文字标题类名
-   * 类型：string
-   */
-  customTextClass: makeStringProp(''),
-  /**
-   * 自定义文字标题样式
-   * 类型：string
-   */
-  customTextStyle: makeStringProp('')
+  videoLoop: makeBooleanProp(true)
 }
 
 export type SwiperProps = ExtractPropTypes<typeof swiperProps>

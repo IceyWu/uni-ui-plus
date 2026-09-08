@@ -32,22 +32,22 @@
   const emptyAndNoSidebar = computed(() => empty.value && !hasSidebar.value)
 
   const classes = computed(() => ({
-    VPLocalNav: true,
-    'has-sidebar': hasSidebar.value,
     empty: empty.value,
-    fixed: emptyAndNoSidebar.value
+    fixed: emptyAndNoSidebar.value,
+    'has-sidebar': hasSidebar.value,
+    VPLocalNav: true
   }))
 </script>
 
 <template>
   <div v-if="frontmatter.layout !== 'home' && (!emptyAndNoSidebar || y >= navHeight)" :class="classes">
     <div class="container">
-      <button v-if="hasSidebar" class="menu" :aria-expanded="open" aria-controls="VPSidebarNav" @click="$emit('open-menu')">
+      <button aria-controls="VPSidebarNav" class="menu" v-if="hasSidebar" :aria-expanded="open" @click="$emit('open-menu')">
         <span class="vpi-align-left menu-icon"></span>
         <span class="menu-text"> {{ theme.sidebarMenuLabel || 'Menu' }} </span>
       </button>
 
-      <VPLocalNavOutlineDropdown :headers="headers" :navHeight="navHeight" />
+      <VPLocalNavOutlineDropdown :headers="headers" :nav-height="navHeight" />
     </div>
   </div>
 </template>

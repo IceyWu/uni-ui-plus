@@ -8,8 +8,8 @@
   export default {
     options: {
       addGlobalClass: true,
-      virtualHost: true,
-      styleIsolation: 'shared'
+      styleIsolation: 'shared',
+      virtualHost: true
     }
   }
 </script>
@@ -24,10 +24,10 @@
   }
 
   const props = withDefaults(defineProps<Props>(), {
-    title: '',
-    transparent: false,
     customClass: '',
-    customStyle: ''
+    customStyle: '',
+    title: '',
+    transparent: false
   })
 
   const rootStyle = computed(() => {

@@ -1,27 +1,27 @@
 <template>
   <view class="up-waterfall">
     <view
-      v-for="(numVal, index) in flowData.column"
-      :id="`up-waterfall-cont-${index + 1}`"
-      :key="numVal"
       class="up-waterfall__column"
-      :style="{ width: widthCalc, 'margin-left': index === 0 ? 0 : marginCalc }"
+      v-for="(numVal, index) in flowData.column"
+      :key="numVal"
+      :id="`up-waterfall-cont-${index + 1}`"
+      :style="{ 'margin-left': index === 0 ? 0 : marginCalc, width: widthCalc }"
     >
       <view
+        class="up-waterfall__item"
         v-for="(item, j) in flowData[`column_${index + 1}`]"
         :key="item.id || `${item.index}-${j}`"
-        class="up-waterfall__item"
         @click="handleItemClick(item, Number(j))"
       >
-        <slot :item="item" :index="j" :on-load="() => handleImageLoad(item)" :on-error="() => handleImageError(item)">
+        <slot :index="j" :item="item" :on-error="() => handleImageError(item)" :on-load="() => handleImageLoad(item)">
           <template v-if="getImageSrcForItem(item)">
             <image
               class="up-waterfall__image"
-              :src="getImageSrcForItem(item)"
-              mode="widthFix"
               lazy-load
-              @load="handleImageLoad(item)"
+              mode="widthFix"
+              :src="getImageSrcForItem(item)"
               @error="handleImageError(item)"
+              @load="handleImageLoad(item)"
             />
           </template>
         </slot>
@@ -30,7 +30,7 @@
   </view>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
   import type { ComponentInternalInstance } from 'vue'
   import { computed, getCurrentInstance, nextTick, onMounted, reactive, ref, watch } from 'vue'
   import type { ColumnHeight, FlowData, WaterfallEmits, WaterfallItem } from './types'
@@ -43,12 +43,11 @@
   const _this = getCurrentInstance() as ComponentInternalInstance
 
   const flowData = reactive<FlowData>({
-    list: [],
     column: props.column,
-    columnSpace: props.columnSpace
+    columnSpace: props.columnSpace,
+    list: []
   })
 
-  const currentIndex = ref(0)
   const isInitializing = ref(false)
 
   watch(
@@ -84,9 +83,7 @@
 
   function resetWaterfall(list: WaterfallItem[]): void {
     flowData.list = [...list]
-    currentIndex.value = 0
-
-    for (let i = 1; i <= flowData.column; i++) {
+    for (let i = 1; i <= flowData.column; i += 1) {
       flowData[`column_${i}`] = []
     }
 
@@ -156,7 +153,7 @@
     emit('load-complete')
   }
 
-  for (let i = 1; i <= props.column; i++) {
+  for (let i = 1; i <= props.column; i += 1) {
     flowData[`column_${i}`] = []
   }
 
@@ -177,9 +174,10 @@
       return { column: 1, height: 0 }
     }
 
-    let m = a[0][s]
-    let mo = a[0]
-    for (let i = a.length - 1; i >= 0; i--) {
+    const [first] = a
+    let m = first[s]
+    let mo = first
+    for (let i = a.length - 1; i >= 0; i -= 1) {
       if (a[i][s] < m) {
         m = a[i][s]
         mo = a[i]
@@ -190,28 +188,19 @@
 
   function getMinColumnHeight(): Promise<ColumnHeight> {
     return new Promise((resolve) => {
-      const heightArr: ColumnHeight[] = []
-      let completedCount = 0
-
-      for (let i = 1; i <= flowData.column; i++) {
-        uni
-          .createSelectorQuery()
-          .in(_this)
-          .select(`#up-waterfall-cont-${i}`)
-          .boundingClientRect((res: any) => {
-            heightArr.push({
-              column: i,
-              height: (res?.height as number) || 0
-            })
-            completedCount++
-          })
-          .exec(() => {
-            if (completedCount >= flowData.column) {
-              const minObj = getMinObj(heightArr, 'height')
-              resolve(minObj)
-            }
-          })
-      }
+      uni
+        .createSelectorQuery()
+        .in(_this)
+        .selectAll('.up-waterfall__column')
+        .boundingClientRect((result) => {
+          const rects = Array.isArray(result) ? result : [result]
+          const heights = rects.map((rect, index) => ({
+            column: index + 1,
+            height: rect?.height || 0
+          }))
+          resolve(getMinObj(heights, 'height'))
+        })
+        .exec()
     })
   }
 
@@ -223,8 +212,6 @@
     }
 
     isInitializing.value = true
-    currentIndex.value = i
-
     try {
       const minHeightRes = await getMinColumnHeight()
       const columnKey = `column_${minHeightRes.column}`
@@ -281,21 +268,14 @@
     emit('item-click', item, index)
   }
 
-  const hasImageField = computed(() => {
-    if (!props.list.length) {
-      return false
-    }
-    return props.list.some((item) => getImageSrcForItem(item))
-  })
-
   // 获取图片源的统一方法
   function getImageSrcForItem(item: WaterfallItem): string {
     return props.getImageSrc ? props.getImageSrc(item) : item[props.imageField]
   }
 
   defineExpose({
-    resetWaterfall,
-    appendNewData
+    appendNewData,
+    resetWaterfall
   })
 </script>
 

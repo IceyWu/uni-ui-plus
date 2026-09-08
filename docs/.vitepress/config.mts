@@ -2,12 +2,107 @@ import { fileURLToPath, URL } from 'node:url'
 import viteCompression from 'vite-plugin-compression'
 import { defineConfig } from 'vitepress'
 import llmstxt from 'vitepress-plugin-llms'
+import { getDocsComponentNavItems, getDocsComponentSidebar } from '../../src/config/component-catalog'
 import zhCN from './locales/zh-CN'
 import { MarkdownTransform } from './plugins/markdown-transform'
 export default defineConfig({
+  description: '一个基于uni-ui打造的uni-app组件库',
+  head: [
+    ['link', { href: '/favicon.ico', rel: 'icon' }],
+    [
+      'script',
+      {},
+      `
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?c77588a5308ea5813c1d46bdd849338b";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    `
+    ]
+  ],
+  ignoreDeadLinks: true,
+  locales: {
+    root: {
+      label: '简体中文',
+      lang: 'zh-CN',
+      ...zhCN
+    }
+  },
+  themeConfig: {
+    editLink: {
+      pattern: 'https://github.com/IceyWu/uni-ui-plus/edit/master/docs/:path',
+      text: '为此页提供修改建议'
+    },
+
+    footer: {
+      copyright: 'Copyright © 2023-present weisheng',
+      message: `Released under the MIT License.`
+    },
+    lastUpdated: {
+      text: '最后更新'
+    },
+    logo: '/logo.png',
+    nav: [
+      {
+        activeMatch: '/guide/',
+        items: [
+          {
+            link: '/guide/introduction',
+            text: '介绍'
+          },
+          {
+            link: '/guide/quick-use',
+            text: '快速上手'
+          },
+          {
+            link: '/guide/changelog',
+            text: '更新日志'
+          }
+        ],
+        text: '指南'
+      },
+      {
+        activeMatch: '/component/',
+        items: getDocsComponentNavItems('zh-CN'),
+        text: '组件'
+      }
+    ],
+    search: {
+      options: {
+        apiKey: 'e49f270181e93a6b0206dfd7967b1038',
+        appId: '4C6QHNDI1I',
+        indexName: 'uni-ui-plus-docs'
+      },
+      provider: 'algolia'
+    },
+    sidebar: {
+      '/component/': getDocsComponentSidebar('zh-CN'),
+      '/guide/': [
+        {
+          link: '/guide/introduction',
+          text: '介绍'
+        },
+        {
+          link: '/guide/quick-use',
+          text: '快速上手'
+        },
+
+        {
+          link: '/guide/changelog',
+          text: '更新日志'
+        }
+      ]
+    },
+    socialLinks: [{ icon: 'github', link: 'https://github.com/IceyWu/uni-ui-plus' }]
+  },
+  title: `uni-ui-plus`,
   vite: {
     plugins: [
       llmstxt({
+        domain: 'haaaaaaaaaaaaa-uni.cn',
         ignoreFiles: [
           'reward/*',
           'index.md',
@@ -19,19 +114,17 @@ export default defineConfig({
           'guide/changelog.md',
           'guide/join-group.md',
           'guide/typography.md'
-        ],
-        domain: 'haaaaaaaaaaaaa-uni.cn'
+        ]
       }),
       MarkdownTransform(),
       viteCompression({
-        verbose: true,
-        disable: false,
-        threshold: 10_240,
         algorithm: 'gzip',
-        ext: '.gz'
+        disable: false,
+        ext: '.gz',
+        threshold: 10_240,
+        verbose: true
       })
     ],
-    ssr: { noExternal: ['element-plus'] },
     resolve: {
       alias: [
         {
@@ -55,140 +148,7 @@ export default defineConfig({
           replacement: fileURLToPath(new URL('./theme/components/VPNavBar.vue', import.meta.url))
         }
       ]
-    }
-  },
-  title: `uni-ui-plus`,
-  description: '一个基于uni-ui打造的uni-app组件库',
-  locales: {
-    root: {
-      label: '简体中文',
-      lang: 'zh-CN',
-      ...zhCN
-    }
-  },
-  head: [
-    ['link', { rel: 'icon', href: '/favicon.ico' }],
-    [
-      'script',
-      {},
-      `
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?c77588a5308ea5813c1d46bdd849338b";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();
-    `
-    ]
-  ],
-  themeConfig: {
-    logo: '/logo.png',
-    lastUpdated: {
-      text: '最后更新'
     },
-    editLink: {
-      pattern: 'https://github.com/IceyWu/uni-ui-plus/edit/master/docs/:path',
-      text: '为此页提供修改建议'
-    },
-    socialLinks: [{ icon: 'github', link: 'https://github.com/IceyWu/uni-ui-plus' }],
-    search: {
-      provider: 'algolia',
-      options: {
-        appId: '4C6QHNDI1I',
-        apiKey: 'e49f270181e93a6b0206dfd7967b1038',
-        indexName: 'uni-ui-plus-docs'
-      }
-    },
-
-    footer: {
-      message: `Released under the MIT License.`,
-      copyright: 'Copyright © 2023-present weisheng'
-    },
-    nav: [
-      {
-        text: '指南',
-        activeMatch: '/guide/',
-        items: [
-          {
-            text: '介绍',
-            link: '/guide/introduction'
-          },
-          {
-            text: '快速上手',
-            link: '/guide/quick-use'
-          },
-          {
-            text: '更新日志',
-            link: '/guide/changelog'
-          }
-        ]
-      },
-      {
-        text: '组件',
-        activeMatch: '/component/',
-        items: [
-          {
-            text: '基础组件',
-            link: '/component/list'
-          }
-        ]
-      }
-    ],
-    sidebar: {
-      '/guide/': [
-        {
-          text: '介绍',
-          link: '/guide/introduction'
-        },
-        {
-          text: '快速上手',
-          link: '/guide/quick-use'
-        },
-
-        {
-          text: '更新日志',
-          link: '/guide/changelog'
-        }
-      ],
-
-      '/component/': [
-        {
-          text: '基础',
-          collapsed: false,
-          items: [
-            {
-              link: '/component/list',
-              text: 'List 列表'
-            },
-            {
-              link: '/component/img',
-              text: 'Img 图片'
-            },
-            {
-              link: '/component/skeleton',
-              text: 'Skeleton 骨架屏'
-            },
-            {
-              link: '/component/empty',
-              text: 'Empty 空状态'
-            },
-            {
-              link: '/component/waterfall',
-              text: 'Waterfall 瀑布流'
-            },
-            {
-              link: '/component/livephoto',
-              text: 'LivePhoto 实况照片'
-            },
-            {
-              link: '/component/swiper',
-              text: 'Swiper 轮播图'
-            }
-          ]
-        }
-      ]
-    }
-  },
-  ignoreDeadLinks: true
+    ssr: { noExternal: ['element-plus'] }
+  }
 })

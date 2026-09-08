@@ -1,10 +1,10 @@
-<script setup lang="ts">
+<script lang="ts" setup>
   import { defineComponent, h } from 'vue'
 
   defineProps({
     href: {
-      type: String,
-      required: true
+      required: true,
+      type: String
     }
   })
 
@@ -30,7 +30,7 @@
 </script>
 
 <template>
-  <el-link :href="href" target="_blank" style="text-decoration: none;font-size: 1.2em;" :underline="false">
+  <el-link style="text-decoration: none;font-size: 1.2em;" target="_blank" :href="href" :underline="false">
     <slot />
     <ExternalLinkIconComponent style="margin-left: 0.25em;"> </ExternalLinkIconComponent>
   </el-link>

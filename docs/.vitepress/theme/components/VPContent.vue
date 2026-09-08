@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
   import { useData } from 'vitepress'
   import NotFound from 'vitepress/dist/client/theme-default//NotFound.vue'
   import VPHome from 'vitepress/dist/client/theme-default/components/VPHome.vue'
@@ -38,7 +38,7 @@
       <template #home-features-after><slot name="home-features-after" /></template>
     </VPHome>
 
-    <component v-else-if="frontmatter.layout && frontmatter.layout !== 'doc'" :is="frontmatter.layout" />
+    <component :is="frontmatter.layout" v-else-if="frontmatter.layout && frontmatter.layout !== 'doc'" />
 
     <VPDoc v-else>
       <template #doc-top><slot name="doc-top" /></template>

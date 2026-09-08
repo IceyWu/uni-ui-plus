@@ -1,4 +1,4 @@
-<script setup lang="ts"></script>
+<script lang="ts" setup></script>
 
 <template>
   <p class="home-star">

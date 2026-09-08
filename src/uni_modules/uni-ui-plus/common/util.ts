@@ -2,7 +2,7 @@ import type { BaseProps } from './props.ts'
 
 // ==================== Type Guards ====================
 
-const toString = Object.prototype.toString
+const { toString } = Object.prototype
 
 export function is(val: unknown, type: string) {
   return toString.call(val) === `[object ${type}]`
@@ -88,17 +88,17 @@ export function uuid() {
 export function objToStyle(styles: Record<string, any> | Record<string, any>[]): string {
   if (isArray(styles)) {
     const result = styles
-      .filter((item) => item != null && item !== '')
+      .filter((item) => item !== null && item !== '')
       .map((item) => objToStyle(item))
       .join(';')
     return result ? (result.endsWith(';') ? result : `${result};`) : ''
   }
   if (isString(styles)) {
-    return styles ? (styles.endsWith(';') ? styles : `${styles};`) : ''
+    return styles.endsWith(';') ? styles : `${styles};`
   }
   if (isObj(styles)) {
     const result = Object.keys(styles)
-      .filter((key) => styles[key] != null && styles[key] !== '')
+      .filter((key) => styles[key] !== null && styles[key] !== '')
       .map((key) => [kebabCase(key), styles[key]].join(':'))
       .join(';')
     return result ? (result.endsWith(';') ? result : `${result};`) : ''
@@ -145,11 +145,9 @@ export function normalizeStyle(value: unknown): NormalizedStyle | string | undef
     const res: NormalizedStyle = {}
     for (const item of value) {
       const normalized = isString(item) ? parseStringStyle(item) : (normalizeStyle(item) as NormalizedStyle)
-      if (normalized) {
-        for (const key in normalized) {
-          if (!isEmpty(normalized[key])) {
-            res[key] = normalized[key]
-          }
+      for (const key in normalized) {
+        if (!isEmpty(normalized[key])) {
+          res[key] = normalized[key]
         }
       }
     }

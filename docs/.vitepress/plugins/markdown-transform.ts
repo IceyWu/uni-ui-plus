@@ -5,8 +5,8 @@ import i18n from '../locales/markdown-transform'
 
 export function MarkdownTransform(): Plugin {
   return {
-    name: 'md-transform',
     enforce: 'pre',
+    name: 'md-transform',
     async transform(code, id) {
       if (!id.endsWith('.md')) {
         return

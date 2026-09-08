@@ -3,7 +3,7 @@
     <view class="page-swiper">
       <demo-group title="基本用法">
         <demo-group-item title="基本用法" :no-padding="true">
-          <view class="page-swiper__container"><up-swiper :list="swiperList" height="200" @click="handleClick" @change="handleChange" /></view>
+          <view class="page-swiper__container"><up-swiper height="200" :list="swiperList" @change="handleChange" @click="handleClick" /></view>
         </demo-group-item>
       </demo-group>
 
@@ -11,9 +11,9 @@
         <demo-group-item title="选择类型">
           <view class="page-swiper__types">
             <view
+              class="page-swiper__type-btn"
               v-for="item in indicatorTypes"
               :key="item.value"
-              class="page-swiper__type-btn"
               :class="{ active: selectedType === item.value }"
               @click="selectedType = item.value"
             >
@@ -21,15 +21,15 @@
             </view>
           </view>
         </demo-group-item>
-        <demo-group-item :title="selectedType" :no-padding="true">
-          <view class="page-swiper__container"><up-swiper :list="swiperList" height="200" :indicator="{ type: selectedType }" /></view>
+        <demo-group-item :no-padding="true" :title="selectedType">
+          <view class="page-swiper__container"><up-swiper height="200" :indicator="{ type: selectedType }" :list="swiperList" /></view>
         </demo-group-item>
       </demo-group>
 
       <demo-group title="自定义内容">
         <demo-group-item title="自定义内容" :no-padding="true">
           <view class="page-swiper__container">
-            <up-swiper :list="customList" height="200">
+            <up-swiper height="200" :list="customList">
               <template #default="{ item }">
                 <view class="page-swiper__custom" :style="{ background: (item as any).color }">
                   <text class="page-swiper__custom-title">{{ (item as any).title }}</text>
@@ -67,13 +67,13 @@
   const selectedType = ref<SwiperIndicatorType>('dots')
 
   const customList = ref<SwiperList[]>([
-    { id: 1, title: '自定义卡片 1', description: '自定义轮播内容', color: '#FF6B6B' },
-    { id: 2, title: '自定义卡片 2', description: '完全自定义样式', color: '#4ECDC4' },
-    { id: 3, title: '自定义卡片 3', description: '支持插槽展示', color: '#45B7D1' }
+    { color: '#FF6B6B', description: '自定义轮播内容', id: 1, title: '自定义卡片 1' },
+    { color: '#4ECDC4', description: '完全自定义样式', id: 2, title: '自定义卡片 2' },
+    { color: '#45B7D1', description: '支持插槽展示', id: 3, title: '自定义卡片 3' }
   ])
 
   function handleClick(data: { index: number; item: any }) {
-    uni.showToast({ title: `点击了第 ${data.index + 1} 项`, icon: 'none' })
+    uni.showToast({ icon: 'none', title: `点击了第 ${data.index + 1} 项` })
   }
 
   function handleChange(data: { current: number; source: string }) {
@@ -85,7 +85,7 @@
 .page-swiper {
   &__container { margin: 0 24rpx; border-radius: 16rpx; overflow: hidden; }
   &__types { display: flex; flex-wrap: wrap; gap: 16rpx; }
-  &__type-btn { padding: 12rpx 24rpx; background: #f5f5f5; border-radius: 40rpx; font-size: 26rpx; color: #666; &.active { background: #007aff; color: white; } }
+  &__type-btn { padding: 12rpx 24rpx; background: var(--up-filled-content); border-radius: 40rpx; font-size: 26rpx; color: var(--up-text-secondary); &.active { background: #007aff; color: white; } }
   &__custom { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 16rpx; }
   &__custom-title { font-size: 36rpx; font-weight: bold; color: #fff; margin-bottom: 12rpx; }
   &__custom-desc { font-size: 26rpx; color: rgba(255, 255, 255, 0.9); }

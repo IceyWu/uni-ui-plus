@@ -20,10 +20,10 @@
   export default {
     name: componentName,
     options: {
-      virtualHost: true,
       addGlobalClass: true,
       // #ifndef H5
-      styleIsolation: 'shared'
+      styleIsolation: 'shared',
+      virtualHost: true
       // #endif
     }
   }
@@ -31,15 +31,15 @@
 
 <template>
   <view class="unip-skeleton">
-    <view v-if="loading" class="unip-skeleton__wrapper" style="display: flex; flex-direction: row">
+    <view class="unip-skeleton__wrapper" style="display: flex; flex-direction: row" v-if="loading">
       <!-- 头像 -->
       <template v-if="type === 'avatar'">
         <view
           class="unip-skeleton__wrapper__avatar"
           :class="[`unip-skeleton__wrapper__avatar--${avatarShape}`, animate && 'unip-animate']"
           :style="{
-            width: getStyleVal(avatarSize),
-            height: getStyleVal(avatarSize)
+            height: getStyleVal(avatarSize),
+            width: getStyleVal(avatarSize)
           }"
         />
       </template>
@@ -47,9 +47,9 @@
       <template v-else-if="type === 'title'">
         <view class="unip-skeleton__wrapper__title__list">
           <view
+            class="unip-skeleton__wrapper__title"
             v-for="idx in rows"
             :key="idx"
-            class="unip-skeleton__wrapper__title"
             :class="[animate && 'unip-animate']"
             :style="{
               height: getStyleVal(titleHeight),

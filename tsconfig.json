@@ -18,9 +18,7 @@
     "sourceMap": true,
     "module": "ESNext"
   },
-  "vueCompilerOptions": {
-    "plugins": ["@uni-helper/uni-types/volar-plugin"]
-  },
+  "vueCompilerOptions": {},
   "include": [
     "src/**/*.ts",
     "src/**/*.vue",

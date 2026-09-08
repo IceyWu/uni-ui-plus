@@ -1,17 +1,8 @@
 {
-  "id": "uni-ui-plus",
   "name": "uni-ui-plus",
   "displayName": "uni-ui-plus",
   "version": "0.0.70",
   "description": "uni-ui-plus 一个现代化的 uni-app 组件库",
-  "author": "Icey Wu <3128006406@qq.com>",
-  "license": "MIT",
-  "homepage": "https://github.com/iceywu/uni-ui-plus#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/iceywu/uni-ui-plus.git"
-  },
-  "bugs": "https://github.com/iceywu/uni-ui-plus/issues",
   "keywords": [
     "uni-ui-plus",
     "组件库",
@@ -20,16 +11,23 @@
     "暗黑模式",
     "国际化"
   ],
-  "main": "index.ts",
+  "homepage": "https://github.com/iceywu/uni-ui-plus#readme",
+  "bugs": "https://github.com/iceywu/uni-ui-plus/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iceywu/uni-ui-plus.git"
+  },
+  "license": "MIT",
+  "author": "Icey Wu <3128006406@qq.com>",
   "sideEffects": [
     "*.scss",
     "*/components/**/*.vue"
   ],
-  "vetur": {
-    "tags": "tags.json",
-    "attributes": "attributes.json"
+  "main": "index.ts",
+  "peerDependencies": {
+    "vue": ">=3.2.0"
   },
-  "web-types": "web-types.json",
+  "id": "uni-ui-plus",
   "uni_modules": {
     "dependencies": [],
     "encrypt": [],
@@ -76,7 +74,9 @@
       }
     }
   },
-  "peerDependencies": {
-    "vue": ">=3.2.0"
-  }
+  "vetur": {
+    "tags": "tags.json",
+    "attributes": "attributes.json"
+  },
+  "web-types": "web-types.json"
 }

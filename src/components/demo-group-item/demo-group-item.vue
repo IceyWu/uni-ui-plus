@@ -8,8 +8,8 @@
   export default {
     options: {
       addGlobalClass: true,
-      virtualHost: true,
-      styleIsolation: 'shared'
+      styleIsolation: 'shared',
+      virtualHost: true
     }
   }
 </script>
@@ -21,9 +21,9 @@
   }
 
   withDefaults(defineProps<Props>(), {
-    title: '',
     customClass: '',
-    noPadding: false
+    noPadding: false,
+    title: ''
   })
 </script>
 <style lang="scss" scoped>

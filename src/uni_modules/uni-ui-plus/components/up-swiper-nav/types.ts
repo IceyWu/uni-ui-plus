@@ -18,13 +18,13 @@ export const swiperNavprops = {
    */
   direction: makeStringProp<DirectionType>('horizontal'),
   /**
-   * 小于这个数字不会显示导航器
-   */
-  minShowNum: makeNumberProp(2),
-  /**
    * 指示器位置
    */
   indicatorPosition: makeStringProp<IndicatorPositionType>('bottom'),
+  /**
+   * 小于这个数字不会显示导航器
+   */
+  minShowNum: makeNumberProp(2),
   /**
    * 是否显示两侧的控制按钮
    */

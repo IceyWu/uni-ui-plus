@@ -3,9 +3,9 @@ export default {
     indicator: 'LIVE'
   },
   loadmore: {
-    loading: 'Loading...',
-    finished: 'Finished loading',
     error: 'Failed to load...',
+    finished: 'Finished loading',
+    loading: 'Loading...',
     retry: 'Refresh'
   }
 }

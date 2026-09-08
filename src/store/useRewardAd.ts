@@ -3,8 +3,8 @@ import { ref } from 'vue'
 // TODO: useToast 待实现
 function useToast() {
   return {
-    loading: (..._args: any[]) => {},
     close: () => {},
+    loading: (..._args: any[]) => {},
     show: (..._args: any[]) => {}
   }
 }
@@ -89,5 +89,5 @@ export function useRewardAd() {
         })
   }
 
-  return { createRewardVideoAd, showRewardAd, isFree }
+  return { createRewardVideoAd, isFree, showRewardAd }
 }

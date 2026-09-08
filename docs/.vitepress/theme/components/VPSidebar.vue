@@ -26,7 +26,7 @@
         isLocked.value = false
       }
     },
-    { immediate: true, flush: 'post' }
+    { flush: 'post', immediate: true }
   )
 
   const key = ref(0)
@@ -41,16 +41,16 @@
 </script>
 
 <template>
-  <aside v-if="hasSidebar" class="VPSidebar" :class="{ open }" ref="navEl" @click.stop>
+  <aside class="VPSidebar" v-if="hasSidebar" ref="navEl" :class="{ open }">
     <div class="curtain" />
 
-    <nav class="nav" id="VPSidebarNav" aria-labelledby="sidebar-aria-label" tabindex="-1">
+    <nav aria-labelledby="sidebar-aria-label" class="nav" id="VPSidebarNav" tabindex="-1">
       <span class="visually-hidden" id="sidebar-aria-label"> Sidebar Navigation </span>
 
       <slot name="sidebar-nav-before" />
       <!-- 添加广告位插槽 -->
       <slot name="sidebar-ad"> <SidebarAds /> </slot>
-      <VPSidebarGroup :items="sidebarGroups" :key="key" />
+      <VPSidebarGroup :key="key" :items="sidebarGroups" />
       <slot name="sidebar-nav-after" />
     </nav>
   </aside>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { computed, ref } from 'vue'
+  import { computed, onUnmounted, ref } from 'vue'
   import { addUnit, isDef, objToStyle } from '../../common/util'
   import { type ImageEmits, imageProps } from './types'
 
@@ -7,10 +7,16 @@
   const emit = defineEmits<ImageEmits>()
 
   const status = ref<'loading' | 'error' | 'success'>('loading')
+  let delayTimer: ReturnType<typeof setTimeout> | null = null
 
   function handleLoad(e: any) {
+    if (delayTimer) {
+      clearTimeout(delayTimer)
+      delayTimer = null
+    }
     if (props.delay) {
-      setTimeout(() => {
+      delayTimer = setTimeout(() => {
+        delayTimer = null
         status.value = 'success'
         emit('load', e)
       }, props.delay)
@@ -20,6 +26,10 @@
     emit('load', e)
   }
   function handleError(e: any) {
+    if (delayTimer) {
+      clearTimeout(delayTimer)
+      delayTimer = null
+    }
     status.value = 'error'
     emit('error', e)
   }
@@ -56,6 +66,12 @@
     }
     emit('click', event)
   }
+
+  onUnmounted(() => {
+    if (delayTimer) {
+      clearTimeout(delayTimer)
+    }
+  })
 </script>
 
 <script lang="ts">
@@ -65,10 +81,10 @@
   export default {
     name: componentName,
     options: {
-      virtualHost: true,
       addGlobalClass: true,
       // #ifndef H5
-      styleIsolation: 'shared'
+      styleIsolation: 'shared',
+      virtualHost: true
       // #endif
     }
   }
@@ -79,24 +95,24 @@
     <!-- 主图片 -->
     <image
       class="up-img--success"
-      :style="status !== 'success' ? 'width:0;height:0;' : ``"
-      :src="src"
-      :mode="mode"
       :lazy-load="lazyLoad"
-      @load="handleLoad"
+      :mode="mode"
+      :src="src"
+      :style="status !== 'success' ? 'width:0;height:0;' : ``"
       @error="handleError"
+      @load="handleLoad"
     />
 
     <!-- loading 占位插槽 -->
-    <slot v-if="status === 'loading'" name="loading">
+    <slot name="loading" v-if="status === 'loading'">
       <view class="up-img--loading">
         <template v-if="!placeholderSrc">{{ loadingText }}</template>
-        <image class="up-img--placeholder" :src="placeholderSrc" :style="filterStyle" :mode="mode" />
+        <image class="up-img--placeholder" :mode="mode" :src="placeholderSrc" :style="filterStyle" />
       </view>
     </slot>
 
     <!-- error 插槽 -->
-    <slot v-if="status === 'error'" name="error"> <view class="up-img--error">{{ errorText }}</view> </slot>
+    <slot name="error" v-if="status === 'error'"> <view class="up-img--error">{{ errorText }}</view> </slot>
   </view>
 </template>
 

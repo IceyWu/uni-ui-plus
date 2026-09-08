@@ -3,11 +3,12 @@ import { readdirSync, readFileSync, statSync, writeFileSync } from 'fs'
 import inquirer from 'inquirer'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import packageConfig from '../package.json'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const src = path.resolve(__dirname, '../src/uni_modules/uni-ui-plus')
-const oldVersion = require('../package.json').version
+const oldVersion = packageConfig.version
 const LOWEST_VERSION = '$LOWEST_VERSION$'
 
 const handleLowestVersion = (dir: string, version: string) => {
@@ -35,18 +36,18 @@ const handleLowestVersion = (dir: string, version: string) => {
 inquirer
   .prompt([
     {
-      type: 'list',
-      name: 'version',
-      message: '请选择发版类型（默认值：✨ minor)',
       choices: ['🐛 patch 小版本', '✨ minor 中版本', '🚀 major 大版本'],
-      default: '✨ minor 中版本'
+      default: '✨ minor 中版本',
+      message: '请选择发版类型（默认值：✨ minor)',
+      name: 'version',
+      type: 'list'
     },
     {
-      type: 'list',
-      name: 'release',
-      message: '确认发布？',
       choices: ['Y', 'N'],
-      default: 'Y'
+      default: 'Y',
+      message: '确认发布？',
+      name: 'release',
+      type: 'list'
     }
   ])
   .then((answers: any) => {

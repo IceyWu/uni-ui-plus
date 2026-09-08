@@ -7,7 +7,7 @@
  * - 测试单个组件: pnpm test:workflow up-button
  * - 测试多个组件: pnpm test:workflow up-button up-input
  * - 测试所有组件: pnpm test:workflow --all
- * - 跳过 lint: pnpm test:workflow up-button --skip-lint
+ * - 跳过代码检查: pnpm test:workflow up-button --skip-lint
  * - 生成覆盖率报告: pnpm test:workflow up-button --coverage
  */
 
@@ -61,7 +61,7 @@ function parseArgs(): WorkflowOptions {
     }
   })
 
-  return { components, skipLint, coverage, testAll }
+  return { components, coverage, skipLint, testAll }
 }
 
 /**
@@ -109,19 +109,19 @@ function checkTestFilesExist(components: string[]): boolean {
 }
 
 /**
- * 运行 ESLint 检查
+ * 运行 Biome/Ultracite 代码检查
  * @returns 是否检查通过
  */
 async function runLint(): Promise<boolean> {
   try {
-    console.log('\n📝 步骤 1: 运行 ESLint 检查')
+    console.log('\n📝 步骤 1: 运行 Biome/Ultracite 代码检查')
     console.log('-'.repeat(80))
-    console.log('运行 ESLint 检查...')
+    console.log('运行 Biome/Ultracite 代码检查...')
     execSync('pnpm lint', { stdio: 'inherit' })
-    console.log('✅ ESLint 检查通过')
+    console.log('✅ 代码检查通过')
     return true
   } catch (error) {
-    console.error('❌ ESLint 检查失败')
+    console.error('❌ 代码检查失败')
     if (error instanceof Error) {
       console.error(error.message)
     }
@@ -172,8 +172,8 @@ async function runComponentTests(components: string[], coverage: boolean): Promi
 
       results.push({
         component,
-        status: 'success',
-        coverage: coverage ? getCoverageData(component) : null
+        coverage: coverage ? getCoverageData(component) : null,
+        status: 'success'
       })
 
       console.log(`✅ 组件 ${component} 测试通过`)
@@ -185,8 +185,8 @@ async function runComponentTests(components: string[], coverage: boolean): Promi
 
       results.push({
         component,
-        status: 'failure',
-        error: errorMessage
+        error: errorMessage,
+        status: 'failure'
       })
 
       console.error(`❌ 组件 ${component} 测试失败`)

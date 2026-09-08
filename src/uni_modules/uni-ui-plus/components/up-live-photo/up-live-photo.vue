@@ -1,15 +1,9 @@
-<script setup lang="ts">
+<script lang="ts" setup>
   import { computed, getCurrentInstance, nextTick, onUnmounted, ref, watch } from 'vue'
   import { addUnit, isDef, objToStyle } from '../../common/util'
   import { t } from '../../locale'
   import UpImage from '../up-image/up-image.vue'
-  import {
-    indicatorBrightSvg,
-    indicatorDimSvg,
-    indicatorDotSvg,
-    muteOffSvg,
-    muteOnSvg,
-  } from './icons'
+  import { indicatorBrightSvg, indicatorDimSvg, indicatorDotSvg, muteOffSvg, muteOnSvg } from './icons'
   import type { LivePhotoEmits } from './types'
   import { livePhotoProps } from './types'
 
@@ -26,6 +20,7 @@
   const videoLoadProgress = ref(0)
   const isVideoLoaded = ref(false)
   const isVideoLoading = ref(false)
+  const isVideoRequested = ref(false)
   const isMuted = ref(props.muted)
   // 标记组件是否已卸载，防止卸载后 setTimeout 回调操作已销毁的上下文
   let isUnmounted = false
@@ -41,6 +36,7 @@
   let progressTimeout: ReturnType<typeof setTimeout> | null = null
   let transitionTimer: ReturnType<typeof setTimeout> | null = null
   let pressTimer: ReturnType<typeof setTimeout> | null = null
+  let interactionTimer: ReturnType<typeof setTimeout> | null = null
 
   // 同步外部 muted prop
   watch(
@@ -72,11 +68,11 @@
     } = props
     return {
       ...restProps,
-      width: '100%',
+      customClass: '',
+      customStyle: '',
       height: '100%',
       radius: 0,
-      customStyle: '',
-      customClass: ''
+      width: '100%'
     }
   })
 
@@ -117,6 +113,7 @@
       clearLoadTimers()
       isVideoLoaded.value = false
       isVideoLoading.value = false
+      isVideoRequested.value = false
       videoLoadProgress.value = 0
     }
   )
@@ -170,6 +167,13 @@
     }
   }
 
+  function clearInteractionTimer() {
+    if (interactionTimer) {
+      clearTimeout(interactionTimer)
+      interactionTimer = null
+    }
+  }
+
   /**
    * 开始模拟视频加载进度。
    * 小程序 video 的 progress 事件不可靠，这里用模拟进度兜底，
@@ -181,6 +185,7 @@
     }
 
     isVideoLoading.value = true
+    isVideoRequested.value = true
     videoLoadProgress.value = 0
 
     progressTimer = setInterval(() => {
@@ -253,6 +258,7 @@
 
     isPressed.value = true
     isTransitioning.value = true
+    clearInteractionTimer()
     clearTransitionTimer()
 
     if (props.enableVibration) {
@@ -274,7 +280,8 @@
       const videoCtx = getVideoContext()
       if (videoCtx) {
         videoCtx.play()
-        setTimeout(() => {
+        interactionTimer = setTimeout(() => {
+          interactionTimer = null
           if (isUnmounted) {
             return
           }
@@ -297,9 +304,11 @@
 
     isPressed.value = false
     isTransitioning.value = true
+    clearInteractionTimer()
     clearTransitionTimer()
 
-    setTimeout(() => {
+    interactionTimer = setTimeout(() => {
+      interactionTimer = null
       if (isUnmounted) {
         return
       }
@@ -352,16 +361,17 @@
   }
 
   defineExpose({
-    stopVideo: onLongPressEnd,
-    toggleMute,
+    isMuted: () => isMuted.value,
     isPlaying: () => isVideoPlaying.value,
-    isMuted: () => isMuted.value
+    stopVideo: onLongPressEnd,
+    toggleMute
   })
 
   onUnmounted(() => {
     isUnmounted = true
     clearLoadTimers()
     clearTransitionTimer()
+    clearInteractionTimer()
     if (pressTimer) {
       clearTimeout(pressTimer)
       pressTimer = null
@@ -376,10 +386,10 @@
   export default {
     name: componentName,
     options: {
-      virtualHost: true,
       addGlobalClass: true,
       // #ifndef H5
-      styleIsolation: 'shared'
+      styleIsolation: 'shared',
+      virtualHost: true
       // #endif
     }
   }
@@ -395,8 +405,8 @@
         'up-live-photo__image-layer--transitioning': !props.displayOnly && isTransitioning,
       }"
     >
-      <slot name="image" :src="props.src" :image-props="imageProps">
-        <up-image v-bind="imageProps" class="up-live-photo__image" @load="onImageLoad" @error="onImageError">
+      <slot name="image" :image-props="imageProps" :src="props.src">
+        <up-image v-bind="imageProps" class="up-live-photo__image" @error="onImageError" @load="onImageLoad">
           <template #loading>
             <slot name="loading">
               <view class="up-live-photo__loading">
@@ -411,31 +421,32 @@
 
     <!-- 视频层 -->
     <view
-      v-if="!props.displayOnly"
       class="up-live-photo__video-layer"
+      v-if="!props.displayOnly && isVideoRequested"
       :class="{
-        'up-live-photo__video-layer--visible': (isPressed && isVideoPlaying) || (props.autoplay && isVideoPlaying),
         'up-live-photo__video-layer--transitioning': isTransitioning,
+        'up-live-photo__video-layer--visible': (isPressed && isVideoPlaying) || (props.autoplay && isVideoPlaying),
       }"
     >
       <video
-        :id="`live-photo-video-${componentId}`"
-        :src="props.videoSrc"
         class="up-live-photo__video"
+        object-fit="cover"
+        v-if="isVideoRequested"
         :controls="false"
-        :show-play-btn="false"
-        :show-fullscreen-btn="false"
-        :show-progress="false"
-        :show-center-play-btn="false"
-        :show-loading="false"
+        :id="`live-photo-video-${componentId}`"
         :muted="isMuted"
         :poster="props.src"
-        object-fit="cover"
-        @play="() => { isVideoPlaying = true; emit('video-play') }"
-        @pause="() => { isVideoPlaying = false; emit('video-pause') }"
+        :show-center-play-btn="false"
+        :show-fullscreen-btn="false"
+        :show-loading="false"
+        :show-play-btn="false"
+        :show-progress="false"
+        :src="props.videoSrc"
         @ended="onVideoEnded"
-        @loadeddata="onVideoLoadedData"
         @error="onVideoError"
+        @loadeddata="onVideoLoadedData"
+        @pause="() => { isVideoPlaying = false; emit('video-pause') }"
+        @play="() => { isVideoPlaying = true; emit('video-play') }"
         @progress="onVideoProgress"
         @timeupdate="onVideoProgress"
       />
@@ -443,26 +454,26 @@
 
     <!-- Live Photo 指示器 -->
     <view
-      v-if="props.showIndicator"
       class="up-live-photo__indicator"
+      v-if="props.showIndicator"
       :class="{ 'up-live-photo__indicator--active': !props.displayOnly && isPressed }"
       :style="indicatorPositionStyle"
     >
       <view class="up-live-photo__indicator-icon">
         <view class="up-live-photo__indicator-svg-wrap">
           <image class="up-live-photo__indicator-svg" :src="indicatorDimSvg" />
-          <view v-if="isVideoLoading && !isVideoLoaded" class="up-live-photo__indicator-progress">
+          <view class="up-live-photo__indicator-progress" v-if="isVideoLoading && !isVideoLoaded">
             <view
+              class="up-live-photo__indicator-progress-dot"
               v-for="(_, index) in 12"
               :key="index"
-              class="up-live-photo__indicator-progress-dot"
               :class="{ 'is-visible': isIndicatorDotVisible(index) }"
               :style="{ transform: `rotate(${index * 30}deg)` }"
             >
               <image class="up-live-photo__indicator-svg" :src="indicatorDotSvg" />
             </view>
           </view>
-          <view v-else-if="isVideoLoaded" class="up-live-photo__indicator-svg-bright">
+          <view class="up-live-photo__indicator-svg-bright" v-else-if="isVideoLoaded">
             <image class="up-live-photo__indicator-svg" :src="indicatorBrightSvg" />
           </view>
         </view>
@@ -471,19 +482,19 @@
     </view>
 
     <!-- 静音按钮 -->
-    <view v-if="props.showMuteButton && !props.displayOnly" class="up-live-photo__mute-btn" @touchstart.stop="toggleMute">
+    <view class="up-live-photo__mute-btn" v-if="props.showMuteButton && !props.displayOnly" @touchstart.stop="toggleMute">
       <image class="up-live-photo__mute-btn-img" :src="isMuted ? muteOnSvg : muteOffSvg" />
     </view>
 
     <!-- 交互层 -->
     <view
-      v-if="!props.displayOnly"
       class="up-live-photo__interaction"
+      v-if="!props.displayOnly"
       :class="{ 'up-live-photo__interaction--pressing': isPressed }"
-      @touchstart.prevent="onInteractionStart"
-      @touchend.prevent="onInteractionEnd"
-      @touchcancel="onInteractionEnd"
       @contextmenu.prevent
+      @touchcancel="onInteractionEnd"
+      @touchend.prevent="onInteractionEnd"
+      @touchstart.prevent="onInteractionStart"
     />
   </view>
 </template>

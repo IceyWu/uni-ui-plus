@@ -3,22 +3,22 @@
     <view class="page-waterfall">
       <demo-group title="基础用法">
         <demo-group-item title="基础用法" :no-padding="true">
-          <view class="page-waterfall__box"><up-waterfall :list="basicList" :column="2" @item-click="handleItemClick" /></view>
+          <view class="page-waterfall__box"><up-waterfall :column="2" :list="basicList" @item-click="handleItemClick" /></view>
         </demo-group-item>
       </demo-group>
 
       <demo-group title="自定义列数">
         <demo-group-item title="自定义列数" :no-padding="true">
-          <view class="page-waterfall__box"><up-waterfall :list="threeColumnList" :column="3" :column-space="1" :sortByImgInfo="false" /></view>
+          <view class="page-waterfall__box"><up-waterfall :column="3" :column-space="1" :list="threeColumnList" :sort-by-img-info="false" /></view>
         </demo-group-item>
       </demo-group>
 
       <demo-group title="自定义渲染">
         <demo-group-item title="自定义渲染" :no-padding="true">
           <view class="page-waterfall__box">
-            <up-waterfall :list="customList" :column="2">
-              <template #default="{ item, onLoad, onError }">
-                <image :src="item.imgUrl" mode="aspectFill" class="page-waterfall__img" @load="onLoad" @error="onError" />
+            <up-waterfall :column="2" :list="customList">
+              <template #default="{ item, onError, onLoad }">
+                <image class="page-waterfall__img" mode="aspectFill" :src="item.imgUrl" @error="onError" @load="onLoad" />
                 <view class="page-waterfall__info">
                   <text class="page-waterfall__title">{{ item.title }}</text>
                   <text class="page-waterfall__price">¥{{ item.price }}</text>
@@ -32,7 +32,7 @@
   </page-wraper>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
   import { ref } from 'vue'
   import UpWaterfall from '@/uni_modules/uni-ui-plus/components/up-waterfall/up-waterfall.vue'
 
@@ -55,14 +55,14 @@
   ])
 
   const customList = ref([
-    { id: 1, imgUrl: 'https://picsum.photos/300/200?random=21', title: '特价商品 1', price: 99.9 },
-    { id: 2, imgUrl: 'https://picsum.photos/300/250?random=22', title: '特价商品 2', price: 199.9 },
-    { id: 3, imgUrl: 'https://picsum.photos/300/180?random=23', title: '特价商品 3', price: 299.9 },
-    { id: 4, imgUrl: 'https://picsum.photos/300/220?random=24', title: '特价商品 4', price: 399.9 }
+    { id: 1, imgUrl: 'https://picsum.photos/300/200?random=21', price: 99.9, title: '特价商品 1' },
+    { id: 2, imgUrl: 'https://picsum.photos/300/250?random=22', price: 199.9, title: '特价商品 2' },
+    { id: 3, imgUrl: 'https://picsum.photos/300/180?random=23', price: 299.9, title: '特价商品 3' },
+    { id: 4, imgUrl: 'https://picsum.photos/300/220?random=24', price: 399.9, title: '特价商品 4' }
   ])
 
   function handleItemClick(item: any, _index: number) {
-    uni.showToast({ title: `点击了 ${item.title}`, icon: 'none' })
+    uni.showToast({ icon: 'none', title: `点击了 ${item.title}` })
   }
 </script>
 
@@ -71,7 +71,7 @@
   &__box { min-height: 400rpx; padding: 0 24rpx; }
   &__img { width: 100%; height: 200rpx; }
   &__info { padding: 16rpx; }
-  &__title { font-size: 28rpx; font-weight: 500; color: #333; display: block; margin-bottom: 8rpx; }
+  &__title { font-size: 28rpx; font-weight: 500; color: var(--up-text-main); display: block; margin-bottom: 8rpx; }
   &__price { font-size: 32rpx; font-weight: 600; color: #ff4757; display: block; }
 }
 </style>

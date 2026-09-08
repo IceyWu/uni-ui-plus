@@ -4,48 +4,48 @@
     <scroll-view scroll-x scroll-y style="width: 100%; height: 100%">
       <!-- #endif -->
       <swiper
+        class="up-swiper__track"
         :adjust-height="adjustHeight"
         :adjust-vertical-height="adjustVerticalHeight"
-        class="up-swiper__track"
         :autoplay="autoplay && !videoPlaying"
-        :current="navCurrent"
-        :interval="interval"
-        :duration="duration"
         :circular="loop"
-        :vertical="direction == 'vertical'"
-        :easing-function="easingFunction"
-        :previous-margin="addUnit(previousMargin)"
-        :next-margin="addUnit(nextMargin)"
-        :snap-to-edge="snapToEdge"
+        :current="navCurrent"
         :display-multiple-items="displayMultipleItems"
+        :duration="duration"
+        :easing-function="easingFunction"
+        :interval="interval"
+        :next-margin="addUnit(nextMargin)"
+        :previous-margin="addUnit(previousMargin)"
+        :snap-to-edge="snapToEdge"
         :style="{ height: addUnit(height) }"
-        @change="handleChange"
+        :vertical="direction == 'vertical'"
         @animationfinish="handleAnimationfinish"
+        @change="handleChange"
       >
         <swiper-item v-for="(item, index) in list" :key="index" :class="swiperItemClass">
-          <slot :item="item" :index="index">
+          <slot :index="index" :item="item">
             <video
+              object-fit="cover"
               v-if="isVideo(item)"
-              :id="`video-${index}-${uid}`"
-              :style="{ height: addUnit(height) }"
-              :src="isObj(item) ? item[valueKey] : item"
-              :poster="isObj(item) ? item.poster : ''"
+              :autoplay="autoplayVideo"
               :class="`up-swiper__video ${customItemClass} ${getCustomItemClass(currentValue, index, list)}`"
-              @play="handleVideoPaly"
-              @pause="handleVideoPause"
               :enable-progress-gesture="false"
+              :id="`video-${index}-${uid}`"
               :loop="videoLoop"
               :muted="muted"
-              :autoplay="autoplayVideo"
-              objectFit="cover"
+              :poster="isObj(item) ? item.poster : ''"
+              :src="isObj(item) ? item[valueKey] : item"
+              :style="{ height: addUnit(height) }"
               @click="handleClick(index, item)"
+              @pause="handleVideoPause"
+              @play="handleVideoPaly"
             />
             <image
               v-else
-              :src="isObj(item) ? item[valueKey] : item"
               :class="`up-swiper__image ${customImageClass} ${customItemClass} ${getCustomItemClass(currentValue, index, list)}`"
-              :style="{ height: addUnit(height) }"
               :mode="imageMode"
+              :src="isObj(item) ? item[valueKey] : item"
+              :style="{ height: addUnit(height) }"
               @click="handleClick(index, item)"
             />
             <text v-if="isObj(item) && item[textKey]" :class="`up-swiper__text ${customTextClass}`" :style="customTextStyle">
@@ -62,14 +62,14 @@
       <slot name="indicator" :current="currentValue" :total="list.length"></slot>
       <up-swiper-nav
         v-if="!$slots.indicator"
-        :custom-class="customIndicatorClass"
-        :type="swiperIndicator.type"
         :current="swiperIndicator.current"
-        :total="swiperIndicator.total"
+        :custom-class="customIndicatorClass"
         :direction="swiperIndicator.direction"
         :indicator-position="swiperIndicator.indicatorPosition"
         :min-show-num="swiperIndicator.minShowNum"
         :show-controls="swiperIndicator.showControls"
+        :total="swiperIndicator.total"
+        :type="swiperIndicator.type"
         @change="handleIndicatorChange"
       />
     </template>
@@ -81,10 +81,10 @@
   export default defineComponent({
     name: componentName,
     options: {
-      virtualHost: true,
       addGlobalClass: true,
       // #ifndef H5
-      styleIsolation: 'shared'
+      styleIsolation: 'shared',
+      virtualHost: true
       // #endif
     }
   })
@@ -141,18 +141,18 @@
 
   const swiperIndicator = computed(() => {
     const { list, direction, indicatorPosition, indicator } = props
-    const swiperIndicator: any = {
+    const indicatorConfig: any = {
       current: currentValue.value || 0,
-      total: list.length || 0,
       direction: direction || 'horizontal',
-      indicatorPosition: indicatorPosition || 'bottom'
+      indicatorPosition: indicatorPosition || 'bottom',
+      total: list.length || 0
     }
     if (isObj(indicator)) {
-      swiperIndicator.type = indicator.type || 'dots'
-      swiperIndicator.minShowNum = indicator.minShowNum || 2
-      swiperIndicator.showControls = indicator.showControls || false
+      indicatorConfig.type = indicator.type || 'dots'
+      indicatorConfig.minShowNum = indicator.minShowNum || 2
+      indicatorConfig.showControls = indicator.showControls || false
     }
-    return swiperIndicator
+    return indicatorConfig
   })
 
   const getMediaType = (item: string | SwiperList, type: 'video' | 'image') => {
@@ -166,7 +166,7 @@
 
   const isVideo = (item: string | SwiperList) => getMediaType(item, 'video')
 
-  const isImage = (item: string | SwiperList) => getMediaType(item, 'image')
+  const _isImage = (item: string | SwiperList) => getMediaType(item, 'image')
 
   function navTo(index: number) {
     if (index === currentValue.value) {

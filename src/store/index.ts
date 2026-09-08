@@ -1,25 +1,23 @@
 import { ref } from 'vue'
 
 const isDark = ref<boolean>(false)
+let initialized = false
 
 function setDark(dark: boolean) {
   isDark.value = dark
-  // #ifdef H5
-  process.env.NODE_ENV === 'development' && uni.setStorageSync('isDark', dark)
-  // #endif
-  // #ifndef H5
+  uni.setTabBarStyle({
+    backgroundColor: dark ? '#111318' : '#ffffff',
+    borderStyle: dark ? 'black' : 'white',
+    color: dark ? '#8b8f98' : '#7a7e83',
+    selectedColor: dark ? '#60a5fa' : '#1c64fd'
+  })
   uni.setStorageSync('isDark', dark)
-  // #endif
 }
 
 export function useDark() {
-  // #ifdef H5
-  process.env.NODE_ENV === 'development'
-    ? setDark(Boolean(uni.getStorageSync('isDark')))
-    : setDark(localStorage.getItem('up-theme-appearance') === 'dark')
-  // #endif
-  // #ifndef H5
-  setDark(Boolean(uni.getStorageSync('isDark')))
-  // #endif
+  if (!initialized) {
+    initialized = true
+    setDark(Boolean(uni.getStorageSync('isDark')))
+  }
   return { isDark, setDark }
 }

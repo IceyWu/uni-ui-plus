@@ -1,8 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 
-const extractSCSSVariables = (scssFilePath: string): Record<string, string> => {
-  const scssContent = fs.readFileSync(scssFilePath, 'utf8')
+const extractSCSSVariables = (sourcePath: string): Record<string, string> => {
+  const scssContent = fs.readFileSync(sourcePath, 'utf8')
   const componentVarIndex = scssContent.indexOf('/* component var */')
 
   if (componentVarIndex === -1) {
@@ -31,7 +31,7 @@ const extractSCSSVariables = (scssFilePath: string): Record<string, string> => {
  * @param {object} variables - 变量对象
  * @returns {string} - TypeScript 文件内容
  */
-const generateTSFileContent = (variables: Record<string, string>) => {
+const generateTSFileContent = (themeVariables: Record<string, string>) => {
   let tsContent = `import type { ExtractPropTypes, PropType } from 'vue'
 import { makeStringProp, baseProps } from '../common/props'
 
@@ -117,10 +117,10 @@ export type baseThemeVars = {
 
 `
 
-  for (const key in variables) {
+  for (const key in themeVariables) {
     tsContent += `export type ${key}ThemeVars = {\n`
-    if (variables[key].includes('\n')) {
-      const lines = variables[key].split('\n')
+    if (themeVariables[key].includes('\n')) {
+      const lines = themeVariables[key].split('\n')
 
       lines.forEach((line) => {
         line = line.trim()
@@ -131,7 +131,7 @@ export type baseThemeVars = {
         }
       })
     } else {
-      const line = variables[key]
+      const line = themeVariables[key]
       if (line.split(':').length === 2) {
         const parts = line.split(':')
         const propertyName = parts[0].replace(/^\$-/, '').replace(/-([a-z])/g, (_match, letter) => letter.toUpperCase())
@@ -142,7 +142,7 @@ export type baseThemeVars = {
     tsContent += '}\n\n'
   }
 
-  const exportTypes = Object.keys(variables)
+  const exportTypes = Object.keys(themeVariables)
     .map((key) => `${key}ThemeVars`)
     .join(' & ')
   tsContent += `export type ConfigProviderThemeVars = baseThemeVars &\n  ${exportTypes.split('&').join('&\n ')}\n`

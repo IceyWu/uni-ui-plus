@@ -9,8 +9,8 @@
   </template>
   <view
     v-if="total >= minShowNum"
-    :style="customStyle"
     :class="`up-swiper-nav up-swiper-nav--${direction} up-swiper-nav--${type} up-swiper-nav--${indicatorPosition} ${customClass}`"
+    :style="customStyle"
   >
     <block v-if="type === 'dots' || type === 'dots-bar'">
       <view
@@ -50,9 +50,9 @@
   export default {
     name: componentName,
     options: {
-      virtualHost: true,
       addGlobalClass: true,
-      styleIsolation: 'shared'
+      styleIsolation: 'shared',
+      virtualHost: true
     }
   }
 </script>

@@ -7,24 +7,12 @@ export type AvatarShapeType = 'circle' | 'square'
 // 定义 props
 export const skeletonProps = {
   /**
-   * @description 骨架屏类型
-   */
-  type: makeStringProp<SkeletonType>('title'),
-  /**
-   * @description 是否禁用刷新功能
-   * @default false
-   */
-  loading: {
-    type: Boolean,
-    default: true
-  },
-  /**
    * @description 是否开启骨架屏
    * @default false
    */
   animate: {
-    type: Boolean,
-    default: true
+    default: true,
+    type: Boolean
   },
   /**
    * @description 头像形状
@@ -36,33 +24,45 @@ export const skeletonProps = {
    * @default 60
    */
   avatarSize: {
-    type: [Number, String] as PropType<number | string>,
-    default: 60
+    default: 60,
+    type: [Number, String] as PropType<number | string>
   },
   /**
-   * @description 标题高度
-   * @default 36
+   * @description 是否禁用刷新功能
+   * @default false
    */
-  titleHeight: {
-    type: [Number, String] as PropType<number | string>,
-    default: 36
-  },
-  /**
-   * @description 标题宽度
-   * @default "100%"
-   */
-  titleWidth: {
-    type: [Number, String] as PropType<number | string>,
-    default: '100%'
+  loading: {
+    default: true,
+    type: Boolean
   },
   /**
    * @description 行数
    * @default 3
    */
   rows: {
-    type: Number,
-    default: 3
-  }
+    default: 3,
+    type: Number
+  },
+  /**
+   * @description 标题高度
+   * @default 36
+   */
+  titleHeight: {
+    default: 36,
+    type: [Number, String] as PropType<number | string>
+  },
+  /**
+   * @description 标题宽度
+   * @default "100%"
+   */
+  titleWidth: {
+    default: '100%',
+    type: [Number, String] as PropType<number | string>
+  },
+  /**
+   * @description 骨架屏类型
+   */
+  type: makeStringProp<SkeletonType>('title')
 } as const
 
 export type SkeletonProps = ExtractPropTypes<typeof skeletonProps>

@@ -1,5 +1,5 @@
 import { createI18n } from 'vue-i18n'
-import Locale from '../uni_modules/uni-ui-plus/locale'
+import { Locale } from '../uni_modules/uni-ui-plus/locale'
 import UpEnUS from '../uni_modules/uni-ui-plus/locale/lang/en-US'
 import enUS from './en-US.json'
 import zhCN from './zh-CN.json'
@@ -7,20 +7,20 @@ import zhCN from './zh-CN.json'
 Locale.add({ 'en-US': UpEnUS })
 
 const messages = {
-  'zh-CN': {
-    ...zhCN
-  },
   'en-US': {
     ...enUS
+  },
+  'zh-CN': {
+    ...zhCN
   }
 }
 
 // 创建i18n实例
 const i18n = createI18n({
-  locale: uni.getStorageSync('currentLang') || 'zh-CN',
   fallbackLocale: 'zh-CN',
-  messages,
-  legacy: false
+  legacy: false,
+  locale: uni.getStorageSync('currentLang') || 'zh-CN',
+  messages
 })
 
 Locale.use(i18n.global.locale.value)

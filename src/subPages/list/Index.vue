@@ -11,8 +11,8 @@
               @on-refresh="onRefresh"
             >
               <template #default="{ data: { list } }">
-                <view v-for="(item, index) in list" :key="index" class="page-list__item">
-                  <image :src="item.cover" class="page-list__cover" mode="aspectFill" />
+                <view class="page-list__item" v-for="(item, index) in list" :key="index">
+                  <image class="page-list__cover" mode="aspectFill" :src="item.cover" />
                   <view class="page-list__content">
                     <view class="page-list__title">{{ item.title }}</view>
                     <view class="page-list__desc">{{ item.desc }}</view>
@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { getObjVal, list, sleep } from '@iceywu/utils'
+  import { get, list, sleep } from '@iceywu/utils'
   import { onMounted, ref } from 'vue'
   import { useRequest } from 'vue-hooks-pure'
   import UpList from '@/uni_modules/uni-ui-plus/components/up-list/up-list.vue'
@@ -46,10 +46,10 @@
     const data = list(0, size - 1, (index) => {
       const element = baseSize + index
       return {
-        id: element,
         cover: `https://picsum.photos/id/${element}/200/300`,
-        title: `title ${element}`,
-        desc: `desc ${element}`
+        desc: `desc ${element}`,
+        id: element,
+        title: `title ${element}`
       }
     })
     return {
@@ -64,16 +64,16 @@
     onLoad: onLoadMore,
     result
   } = useRequest(getTestApi, {
-    target: 'list',
-    loadingDelay: 300,
-    getVal: (res) => getObjVal(res, 'result.content', []),
+    getVal: (res) => get(res, 'result.content', []),
     listOptions: {
-      defaultPageKey: 'page',
-      defaultSizeKey: 'size',
       defaultDataKey: 'list',
       defaultPage: -1,
-      getTotal: (data) => getObjVal(data, 'result.total', 0)
-    }
+      defaultPageKey: 'page',
+      defaultSizeKey: 'size',
+      getTotal: (data) => get(data, 'result.total', 0)
+    },
+    loadingDelay: 300,
+    target: 'list'
   })
 
   onMounted(() => {
@@ -85,12 +85,12 @@
 .page-list {
   &__box {
     height: calc(80vh - 200rpx);
-    background: #f7f8fa;
+    background: var(--up-filled-bottom);
   }
   &__item {
     display: flex;
     align-items: flex-start;
-    background: #fff;
+    background: var(--up-filled-oppo);
     border-radius: 16rpx;
     box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
     margin: 0 24rpx 24rpx;
@@ -109,13 +109,13 @@
   }
   &__title {
     font-size: 30rpx;
-    color: #222;
+    color: var(--up-text-main);
     font-weight: 600;
     margin-bottom: 12rpx;
   }
   &__desc {
     font-size: 26rpx;
-    color: #888;
+    color: var(--up-text-secondary);
     line-height: 1.5;
   }
 }

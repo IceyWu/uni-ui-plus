@@ -49,7 +49,7 @@ function camelToKebabCase(str: string): string {
 
 function clearWxqrcodeDirectory(outputDir: string) {
   if (fs.existsSync(outputDir)) {
-    fs.rmSync(outputDir, { recursive: true, force: true })
+    fs.rmSync(outputDir, { force: true, recursive: true })
     console.log(`已删除目录: ${outputDir}`)
   }
 }
@@ -61,7 +61,7 @@ async function generateMiniProgramCode(accessToken: string, pagePath: string, re
     width: 430
   }
 
-  for (let attempt = 1; attempt <= retries; attempt++) {
+  for (let attempt = 1; attempt <= retries; attempt += 1) {
     try {
       const response = await axios.post(url, data, {
         responseType: 'arraybuffer'
@@ -72,7 +72,7 @@ async function generateMiniProgramCode(accessToken: string, pagePath: string, re
         fs.mkdirSync(outputDir, { recursive: true })
       }
 
-      const componentName = pagePath.split('/')[1]
+      const [, componentName] = pagePath.split('/')
       const formattedName = camelToKebabCase(componentName)
 
       const fileName = path.join(outputDir, `${formattedName}.png`)

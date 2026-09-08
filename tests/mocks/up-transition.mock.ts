@@ -20,17 +20,17 @@ interface TransitionProps {
  */
 vi.mock('@/uni_modules/uni-ui-plus/components/up-transition/up-transition.vue', () => ({
   default: {
+    emits: ['click', 'touchmove', 'before-enter', 'enter', 'after-enter', 'before-leave', 'leave', 'after-leave'],
     name: 'up-transition',
     props: {
-      show: Boolean,
-      name: [String, Array],
       customClass: String,
       customStyle: String,
-      duration: [Number, Object],
       destroy: Boolean,
-      lazyRender: Boolean
+      duration: [Number, Object],
+      lazyRender: Boolean,
+      name: [String, Array],
+      show: Boolean
     },
-    emits: ['click', 'touchmove', 'before-enter', 'enter', 'after-enter', 'before-leave', 'leave', 'after-leave'],
     setup(props: TransitionProps, { emit }: { emit: (event: string, ...args: any[]) => void }) {
       // 监听 show 属性变化，触发相应事件
       watch(

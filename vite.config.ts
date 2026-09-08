@@ -4,9 +4,17 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   base: './',
-  plugins: [Components(), uni()],
   build: {
-    target: 'es2015',
-    sourcemap: false
-  }
+    sourcemap: false,
+    target: 'es2015'
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+        silenceDeprecations: ['legacy-js-api']
+      }
+    }
+  },
+  plugins: [Components(), uni()]
 })

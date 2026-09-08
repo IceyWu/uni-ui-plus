@@ -1,18 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-  <circle cx="8" cy="8" r="1.5" fill="white"/>
-  <circle cx="8" cy="8" r="3.5" stroke="white" stroke-width="1"/>
+<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="8" cy="8" fill="white" r="1.5" />
+  <circle cx="8" cy="8" r="3.5" stroke="white" stroke-width="1" />
   <g fill="white" opacity=".3">
-    <circle cx="8" cy="1.5" r=".8"/>
-    <circle cx="11.25" cy="2.37" r=".8"/>
-    <circle cx="13.63" cy="4.75" r=".8"/>
-    <circle cx="14.5" cy="8" r=".8"/>
-    <circle cx="13.63" cy="11.25" r=".8"/>
-    <circle cx="11.25" cy="13.63" r=".8"/>
-    <circle cx="8" cy="14.5" r=".8"/>
-    <circle cx="4.75" cy="13.63" r=".8"/>
-    <circle cx="2.37" cy="11.25" r=".8"/>
-    <circle cx="1.5" cy="8" r=".8"/>
-    <circle cx="2.37" cy="4.75" r=".8"/>
-    <circle cx="4.75" cy="2.37" r=".8"/>
+    <circle cx="8" cy="1.5" r=".8" />
+    <circle cx="11.25" cy="2.37" r=".8" />
+    <circle cx="13.63" cy="4.75" r=".8" />
+    <circle cx="14.5" cy="8" r=".8" />
+    <circle cx="13.63" cy="11.25" r=".8" />
+    <circle cx="11.25" cy="13.63" r=".8" />
+    <circle cx="8" cy="14.5" r=".8" />
+    <circle cx="4.75" cy="13.63" r=".8" />
+    <circle cx="2.37" cy="11.25" r=".8" />
+    <circle cx="1.5" cy="8" r=".8" />
+    <circle cx="2.37" cy="4.75" r=".8" />
+    <circle cx="4.75" cy="2.37" r=".8" />
   </g>
 </svg>

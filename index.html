@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="./favicon.ico">
+    <link href="./favicon.ico" rel="shortcut icon">
     <script>
       'use strict'
       const coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') || CSS.supports('top: constant(a)'))
@@ -18,6 +18,6 @@
   </head>
   <body>
     <div id="app"><!--app-html--></div>
-    <script type="module" src="/src/main.ts"></script>
+    <script src="/src/main.ts" type="module"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
   import { VPDocAsideSponsors } from 'vitepress/theme'
   import { computed } from 'vue'
   import { useSponsor } from '../composables/sponsor'
@@ -8,8 +8,8 @@
   const sponsors = computed(
     () =>
       data?.value.map((sponsor) => ({
-        size: sponsor.size === 'big' ? 'mini' : 'xmini',
-        items: sponsor.items
+        items: sponsor.items,
+        size: sponsor.size === 'big' ? 'mini' : 'xmini'
       })) ?? []
   )
 </script>

@@ -4,75 +4,75 @@ import { makeNumericProp } from '../../common/props.ts'
 
 // 定义 props
 export const imageProps = {
-  mode: {
-    type: String as PropType<ImageMode>,
-    default: 'scaleToFill'
-  } as const,
-  width: {
-    type: [Number, String] as PropType<number | string>
-  },
-  height: {
-    type: [Number, String] as PropType<number | string>
-  },
-  delay: {
-    type: Number,
-    default: 0
-  },
-  radius: {
-    type: [Number, String] as PropType<number | string>,
-    default: 0
-  },
-  minHeight: makeNumericProp('200rpx'),
-  lazyLoad: {
-    type: Boolean,
-    default: true
+  customClass: {
+    default: '',
+    type: String
   },
   customStyle: {
-    type: String,
-    default: ''
+    default: '',
+    type: String
   },
-  round: {
-    type: Boolean,
-    default: false
+  delay: {
+    default: 0,
+    type: Number
   },
   enablePreview: {
-    type: Boolean,
-    default: false
-  },
-  customClass: {
-    type: String,
-    default: ''
-  },
-
-  src: {
-    type: String,
-    default: ''
-  },
-  previewSrc: {
-    type: String,
-    default: ''
-  },
-  placeholderSrc: {
-    type: String,
-    default: ''
-  },
-  filter: {
-    type: [Number, String] as PropType<number | string>,
-    default: ''
-  },
-  /**
-   * @description 加载中提示文字
-   */
-  loadingText: {
-    type: String,
-    default: '加载中...'
+    default: false,
+    type: Boolean
   },
   /**
    * @description 加载失败提示文字
    */
   errorText: {
-    type: String,
-    default: '加载异常'
+    default: '加载异常',
+    type: String
+  },
+  filter: {
+    default: '',
+    type: [Number, String] as PropType<number | string>
+  },
+  height: {
+    type: [Number, String] as PropType<number | string>
+  },
+  lazyLoad: {
+    default: true,
+    type: Boolean
+  },
+  /**
+   * @description 加载中提示文字
+   */
+  loadingText: {
+    default: '加载中...',
+    type: String
+  },
+  minHeight: makeNumericProp('200rpx'),
+  mode: {
+    default: 'scaleToFill',
+    type: String as PropType<ImageMode>
+  } as const,
+  placeholderSrc: {
+    default: '',
+    type: String
+  },
+  previewSrc: {
+    default: '',
+    type: String
+  },
+  radius: {
+    default: 0,
+    type: [Number, String] as PropType<number | string>
+  },
+  round: {
+    default: false,
+    type: Boolean
+  },
+
+  src: {
+    default: '',
+    type: String
+  },
+  width: {
+    type: [Number, String] as PropType<number | string>
   }
 } as const
 

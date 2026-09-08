@@ -22,11 +22,11 @@ export function useCaseData() {
           const response = await axios.get(url + path, {
             timeout: 5000 // 设置5秒超时
           })
-          const data = response.data && response.data.data ? response.data.data : []
-          return data.map((item) => ({
-            name: item.name,
+          const caseData = response.data && response.data.data ? response.data.data : []
+          return caseData.map((item) => ({
+            description: item.description,
             image: item.image ? url + item.image : '',
-            description: item.description
+            name: item.name
           })) // 成功获取数据后直接返回
         } catch {
           console.warn(`Failed to fetch from ${url}`)

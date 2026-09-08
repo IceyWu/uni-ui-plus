@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
   import { onHide, onLaunch, onShow, onThemeChange } from '@dcloudio/uni-app'
   import { useI18nSync } from './hooks/useI18nSync'
   import { useIframeMessage } from './hooks/useIframeMessage'

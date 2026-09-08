@@ -12,12 +12,12 @@
             <switch :checked="isAnimate" @change="switchChange" />
           </view>
           <up-skeleton :animate="isAnimate" />
-          <view style="margin-top: 24rpx"><up-skeleton :animate="isAnimate" type="avatar" :avatarSize="80" avatarShape="circle" /></view>
+          <view style="margin-top: 24rpx"><up-skeleton avatar-shape="circle" type="avatar" :animate="isAnimate" :avatar-size="80" /></view>
         </demo-group-item>
       </demo-group>
 
       <demo-group title="头像骨架">
-        <demo-group-item title="头像骨架"> <up-skeleton type="avatar" :avatarSize="80" avatarShape="circle" /> </demo-group-item>
+        <demo-group-item title="头像骨架"> <up-skeleton avatar-shape="circle" type="avatar" :avatar-size="80" /> </demo-group-item>
       </demo-group>
 
       <demo-group title="标题行数">
@@ -25,7 +25,7 @@
       </demo-group>
 
       <demo-group title="标题宽度">
-        <demo-group-item title="标题宽度"> <up-skeleton titleWidth="50%" /> </demo-group-item>
+        <demo-group-item title="标题宽度"> <up-skeleton title-width="50%" /> </demo-group-item>
       </demo-group>
     </view>
   </page-wraper>

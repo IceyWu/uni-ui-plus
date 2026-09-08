@@ -23,12 +23,22 @@
     <slot name="sidebar-ad-content">
       <!-- 默认广告内容 -->
       <div class="sidebar-ad-list">
-        <div v-for="(ad, index) in data" :key="index" class="sidebar-ad-item">
-          <div class="sidebar-ad-link" @click="handleClick(ad)"><img :src="ad.image" :alt="ad.title" class="sidebar-ad-img"></div>
+        <div class="sidebar-ad-item" v-for="(ad, index) in data" :key="index">
+          <div
+            aria-label="查看广告"
+            class="sidebar-ad-link"
+            role="button"
+            tabindex="0"
+            @click="handleClick(ad)"
+            @keydown.enter="handleClick(ad)"
+            @keydown.space.prevent="handleClick(ad)"
+          >
+            <img class="sidebar-ad-img" :alt="ad.title" :src="ad.image">
+          </div>
         </div>
       </div>
     </slot>
-    <el-image-viewer v-if="showViewer" :url-list="[previewUrl]" @close="showViewer = false" hide-on-click-modal teleported />
+    <el-image-viewer hide-on-click-modal teleported v-if="showViewer" :url-list="[previewUrl]" @close="showViewer = false" />
   </div>
 </template>
 

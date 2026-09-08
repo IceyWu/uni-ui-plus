@@ -1,7 +1,7 @@
-<script setup lang="ts">
+<script lang="ts" setup>
   import packageConfig from '../../../../package.json'
 </script>
 
 <template>
-  <el-tag text style="vertical-align: middle;margin-left:8px;" size="small" effect="plain">{{ packageConfig.version }}</el-tag>
+  <el-tag effect="plain" size="small" style="vertical-align: middle;margin-left:8px;" text>{{ packageConfig.version }}</el-tag>
 </template>

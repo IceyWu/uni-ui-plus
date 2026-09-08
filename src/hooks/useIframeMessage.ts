@@ -1,4 +1,4 @@
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 
 interface IframeMessageOptions {
   /**
@@ -31,7 +31,7 @@ export function useIframeMessage(options: IframeMessageOptions = {}) {
       return
     }
 
-    const data = event.data
+    const { data } = event
 
     // 处理语言切换消息
     if (typeof data === 'string' && SUPPORTED_LOCALES.includes(data)) {
@@ -94,8 +94,12 @@ export function useIframeMessage(options: IframeMessageOptions = {}) {
     setupMessageListener()
   })
 
+  onUnmounted(() => {
+    removeMessageListener()
+  })
+
   return {
-    setupMessageListener,
-    removeMessageListener
+    removeMessageListener,
+    setupMessageListener
   }
 }

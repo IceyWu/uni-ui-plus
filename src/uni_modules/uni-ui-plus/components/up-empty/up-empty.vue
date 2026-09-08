@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
   import { computed, defineComponent } from 'vue'
   import { PREFIX } from '../../common/event'
   import { getMainClass, pxCheck } from '../../common/util'
@@ -19,15 +19,15 @@
   const style = computed(() => {
     if (props.imageSize) {
       return {
-        width: pxCheck(props.imageSize),
-        height: pxCheck(props.imageSize)
+        height: pxCheck(props.imageSize),
+        width: pxCheck(props.imageSize)
       }
     }
     return {}
   })
 
   const src = computed(() => {
-    const image = props.image
+    const { image } = props
     if (image.startsWith('https://') || image.startsWith('http://') || image.startsWith('//') || image.startsWith('data:')) {
       return image
     }
@@ -41,9 +41,9 @@
   export default defineComponent({
     name: componentName,
     options: {
-      virtualHost: true,
       addGlobalClass: true,
-      styleIsolation: 'shared'
+      styleIsolation: 'shared',
+      virtualHost: true
     }
   })
 </script>
@@ -51,7 +51,7 @@
 <template>
   <view :class="classes" :style="customStyle">
     <view class="up-empty__box" :style="style">
-      <slot name="image"> <image v-if="src" class="up-empty__box--img" :src="src" /> </slot>
+      <slot name="image"> <image class="up-empty__box--img" v-if="src" :src="src" /> </slot>
     </view>
 
     <slot name="description"> <view class="up-empty__description">{{ description }}</view> </slot>

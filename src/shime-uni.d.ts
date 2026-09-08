@@ -5,6 +5,6 @@ declare module 'vue' {
   interface ComponentCustomOptions extends Hooks {}
 
   export interface ComponentCustomProperties {
-    $t(key: string | number, ...args: any[]): string
+    $t: (key: string | number, ...args: any[]) => string
   }
 }

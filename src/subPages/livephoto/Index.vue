@@ -3,7 +3,7 @@
     <view class="page-livephoto">
       <demo-group title="基本用法">
         <demo-group-item title="基本用法">
-          <up-live-photo :video-src="demoData.videoSrc" :src="demoData.imageSrc" width="300" height="200" radius="12" />
+          <up-live-photo height="200" radius="12" width="300" :src="demoData.imageSrc" :video-src="demoData.videoSrc" />
         </demo-group-item>
       </demo-group>
 
@@ -11,47 +11,47 @@
         <demo-group-item title="自定义圆角">
           <view class="page-livephoto__slider">
             <text>圆角：{{ customRadius }} rpx</text>
-            <slider @change="onRadiusChange" :min="0" :max="100" :step="10" :value="customRadius" show-value />
+            <slider show-value :max="100" :min="0" :step="10" :value="customRadius" @change="onRadiusChange" />
           </view>
-          <up-live-photo :video-src="demoData.videoSrc" :src="demoData.imageSrc" width="300" height="200" :radius="customRadius" />
+          <up-live-photo height="200" width="300" :radius="customRadius" :src="demoData.imageSrc" :video-src="demoData.videoSrc" />
         </demo-group-item>
       </demo-group>
 
       <demo-group title="自动播放">
         <demo-group-item title="自动播放">
-          <up-live-photo :video-src="demoData.videoSrc" :src="demoData.imageSrc" width="300" height="200" radius="12" :autoplay="true" />
+          <up-live-photo height="200" radius="12" width="300" :autoplay="true" :src="demoData.imageSrc" :video-src="demoData.videoSrc" />
         </demo-group-item>
       </demo-group>
 
       <demo-group title="隐藏指示器">
         <demo-group-item title="隐藏指示器">
-          <up-live-photo :video-src="demoData.videoSrc" :src="demoData.imageSrc" width="300" height="200" radius="12" :show-indicator="false" />
+          <up-live-photo height="200" radius="12" width="300" :show-indicator="false" :src="demoData.imageSrc" :video-src="demoData.videoSrc" />
         </demo-group-item>
       </demo-group>
 
       <demo-group title="展示模式">
         <demo-group-item title="展示模式">
-          <up-live-photo :video-src="demoData.videoSrc" :src="demoData.imageSrc" width="300" height="200" radius="12" :display-only="true" />
+          <up-live-photo height="200" radius="12" width="300" :display-only="true" :src="demoData.imageSrc" :video-src="demoData.videoSrc" />
         </demo-group-item>
       </demo-group>
 
       <demo-group title="自定义指示器位置">
         <demo-group-item title="自定义指示器位置">
           <up-live-photo
-            :video-src="demoData.videoSrc"
-            :src="demoData.imageSrc"
-            width="300"
             height="200"
-            radius="12"
             indicator-left="50"
             indicator-top="30"
+            radius="12"
+            width="300"
+            :src="demoData.imageSrc"
+            :video-src="demoData.videoSrc"
           />
         </demo-group-item>
       </demo-group>
 
       <demo-group title="自定义图片插槽">
         <demo-group-item title="自定义图片插槽">
-          <up-live-photo :video-src="demoData.videoSrc" :src="'invalid-url'" width="300" height="200" radius="12">
+          <up-live-photo height="200" radius="12" width="300" :src="'invalid-url'" :video-src="demoData.videoSrc">
             <template #error>
               <view class="page-livephoto__error">
                 <text>图片加载失败</text>
@@ -64,14 +64,14 @@
       <demo-group title="事件监听">
         <demo-group-item title="带静音控制">
           <up-live-photo
-            :video-src="demoData.videoSrc"
-            :src="demoData.imageSrc"
-            width="300"
             height="200"
             radius="12"
+            width="300"
             :autoplay="true"
             :muted="isMuted"
             :show-mute-button="true"
+            :src="demoData.imageSrc"
+            :video-src="demoData.videoSrc"
             @update:muted="(val) => (isMuted = val)"
           />
         </demo-group-item>
@@ -80,13 +80,13 @@
   </page-wraper>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
   import { reactive, ref } from 'vue'
   import UpLivePhoto from '@/uni_modules/uni-ui-plus/components/up-live-photo/up-live-photo.vue'
 
   const demoData = reactive({
-    videoSrc: 'https://nest-js.oss-accelerate.aliyuncs.com/nestTest/1/1733058160657.MOV',
-    imageSrc: 'https://nest-js.oss-accelerate.aliyuncs.com/nestTest/1/1733058160256.JPEG'
+    imageSrc: 'https://nest-js.oss-accelerate.aliyuncs.com/nestTest/1/1733058160256.JPEG',
+    videoSrc: 'https://nest-js.oss-accelerate.aliyuncs.com/nestTest/1/1733058160657.MOV'
   })
 
   const customRadius = ref(20)

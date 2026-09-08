@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
   import { useData } from 'vitepress'
   import { useSidebar } from 'vitepress/theme'
   import { computed, onMounted, ref } from 'vue'
@@ -21,10 +21,10 @@
 </script>
 
 <template>
-  <footer v-if="theme.footer" class="VPFooter" :class="{ 'has-sidebar': hasSidebar }">
+  <footer class="VPFooter" v-if="theme.footer" :class="{ 'has-sidebar': hasSidebar }">
     <div class="container">
-      <p v-if="theme.footer.message" class="message" v-html="theme.footer.message"></p>
-      <p v-if="copyright" class="copyright" v-html="copyright"></p>
+      <p class="message" v-if="theme.footer.message" v-html="theme.footer.message"></p>
+      <p class="copyright" v-if="copyright" v-html="copyright"></p>
     </div>
   </footer>
 </template>

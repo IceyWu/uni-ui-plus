@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
   import { useData, useRoute } from 'vitepress'
   import VPDocAside from 'vitepress/dist/client/theme-default/components/VPDocAside.vue'
   import VPDocFooter from 'vitepress/dist/client/theme-default/components/VPDocFooter.vue'
@@ -19,10 +19,10 @@
 </script>
 
 <template>
-  <div class="VPDoc" :class="{ 'has-sidebar': hasSidebar, 'has-aside': hasAside, 'is-component': isComponent, 'is-expanded': expanded }">
+  <div class="VPDoc" :class="{ 'has-aside': hasAside, 'has-sidebar': hasSidebar, 'is-component': isComponent, 'is-expanded': expanded }">
     <slot name="doc-top" />
     <div class="container">
-      <div v-if="hasAside" class="aside" :class="{ 'left-aside': leftAside }">
+      <div class="aside" v-if="hasAside" :class="{ 'left-aside': leftAside }">
         <div class="aside-curtain" />
         <div class="aside-container">
           <div class="aside-content">

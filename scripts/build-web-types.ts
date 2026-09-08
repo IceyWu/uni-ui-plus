@@ -56,7 +56,7 @@ const reWebTypesType: ReWebTypesType = (type) => {
   const isUnion = isUnionType(symbol)
   const module = findModule(symbol)
 
-  return isPublicType || isNumber || !symbol || isUnion ? _type : { name: _type, source: { symbol, module } }
+  return isPublicType || isNumber || !symbol || isUnion ? _type : { name: _type, source: { module, symbol } }
 }
 
 // 查找模块的函数
@@ -67,7 +67,6 @@ const findModule = (type: string) => {
       return key
     }
   }
-  return
 }
 
 // 将驼峰写法转换为短横线连接的写法的函数
@@ -78,7 +77,7 @@ const reAttribute: ReAttribute = (value, key, _row, title) => {
   if (title.includes('Attributes')) {
     if (key === '参数') {
       if (value.includes('v-model:')) {
-        const part = value.split(/[\s/|]/).find((part) => part.startsWith('v-model:'))
+        const part = value.split(/[\s/|]/).find((segment) => segment.startsWith('v-model:'))
         if (part) {
           const suffix = toKebabCase(part.split(':')[1].split(/[\s\W]/)[0])
           return `v-model:${suffix}`
@@ -108,26 +107,26 @@ if (os.platform() === 'win32') {
 }
 
 generateWebTypes({
-  name,
-  version,
   entry,
+  events: 'Events',
+  eventsDescription: '说明',
+  eventsName: '事件名称',
+  name,
   outDir: path.resolve(import.meta.dirname, '../src/uni_modules/uni-ui-plus'),
+  props: 'Attributes',
+  propsDefault: '默认值',
+  propsDescription: '说明',
+  propsName: '参数',
+  propsOptions: '可选值',
+  propsType: '类型',
+  reAttribute,
   reComponentName,
   reDocUrl,
   reWebTypesSource,
   reWebTypesType,
-  reAttribute,
-  events: 'Events',
-  eventsName: '事件名称',
-  eventsDescription: '说明',
   slots: 'Slots',
-  slotsName: '名称',
   slotsDescription: '说明',
-  props: 'Attributes',
-  propsName: '参数',
-  propsDescription: '说明',
-  propsType: '类型',
-  propsOptions: '可选值',
-  propsDefault: '默认值',
-  tableRegExp: /#+\s+(.*\s*Attributes|.*\s*Events|.*\s*Slots|.*\s*Directives)\s*\n+(\|?.+\|.+)\n\|?\s*:?-+:?\s*\|.+((\n\|?.+\|.+)+)/g
+  slotsName: '名称',
+  tableRegExp: /#+\s+(.*\s*Attributes|.*\s*Events|.*\s*Slots|.*\s*Directives)\s*\n+(\|?.+\|.+)\n\|?\s*:?-+:?\s*\|.+((\n\|?.+\|.+)+)/g,
+  version
 })

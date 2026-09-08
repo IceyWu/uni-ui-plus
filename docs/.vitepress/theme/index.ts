@@ -14,16 +14,16 @@ import 'element-plus/dist/index.css'
 
 export default {
   ...Theme,
+  enhanceApp({ app }) {
+    app.component('SvgImage', SvgImage)
+    app.component('ExternalLink', ExternalLink)
+    app.use(ElementPlus)
+  },
   Layout() {
     return h(Theme.Layout, null, {
       'home-hero-info-after': () => h(HomeStar),
       'layout-bottom': () => h(CustomFooter),
       'nav-bar-title-after': () => h(NavBarTitleAfter)
     })
-  },
-  enhanceApp({ app }) {
-    app.component('SvgImage', SvgImage)
-    app.component('ExternalLink', ExternalLink)
-    app.use(ElementPlus)
   }
 }

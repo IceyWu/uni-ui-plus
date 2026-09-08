@@ -18,7 +18,6 @@
  */
 export function UpResolver() {
   return {
-    type: 'component' as const,
     resolve: (name: string) => {
       if (name.match(/^Up[A-Z]/)) {
         const compName = name
@@ -27,10 +26,11 @@ export function UpResolver() {
           .toLowerCase()
         const kebabName = `up-${compName}`
         return {
-          name,
-          from: `uni-ui-plus/components/${kebabName}/${kebabName}.vue`
+          from: `uni-ui-plus/components/${kebabName}/${kebabName}.vue`,
+          name
         }
       }
-    }
+    },
+    type: 'component' as const
   }
 }

@@ -10,6 +10,9 @@ const messages: Messages = {
 }
 
 export const Locale = {
+  add(newMessages: Messages = {}) {
+    Object.assign(messages, newMessages)
+  },
   messages(): Message {
     return messages[lang.value] || messages['zh-CN']
   },
@@ -19,10 +22,6 @@ export const Locale = {
     if (newMessage) {
       messages[newLang] = newMessage
     }
-  },
-
-  add(newMessages: Messages = {}) {
-    Object.assign(messages, newMessages)
   }
 }
 
@@ -44,5 +43,3 @@ export function t(path: string): string {
 }
 
 export const useCurrentLang = () => lang
-
-export default Locale

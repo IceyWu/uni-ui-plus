@@ -13,8 +13,8 @@ export const configProviderProps = {
    * 自定义主题变量
    */
   themeVars: {
-    type: Object as PropType<ConfigProviderThemeVars>,
-    default: () => ({})
+    default: () => ({}),
+    type: Object as PropType<ConfigProviderThemeVars>
   }
 }
 

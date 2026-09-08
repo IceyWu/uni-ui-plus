@@ -1,12 +1,12 @@
 export default {
-  'zh-CN': {
-    sourceCode: '源代码',
-    document: '文档',
-    component: '组件'
-  },
   'en-US': {
-    sourceCode: 'Source Code',
+    component: 'Component',
     document: 'Documentation',
-    component: 'Component'
+    sourceCode: 'Source Code'
+  },
+  'zh-CN': {
+    component: '组件',
+    document: '文档',
+    sourceCode: '源代码'
   }
 }

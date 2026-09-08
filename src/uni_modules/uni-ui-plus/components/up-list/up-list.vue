@@ -5,7 +5,7 @@
     ScrollViewOnScrolltolower,
     ScrollViewProps
   } from '@uni-helper/uni-app-types'
-  import { computed, defineComponent, nextTick, onMounted, reactive, ref, watch } from 'vue'
+  import { computed, nextTick, reactive, ref, watch } from 'vue'
   import UpSkeleton from '../up-skeleton/up-skeleton.vue'
   import { type ListEmits, listProps } from './types'
 
@@ -14,9 +14,9 @@
 
   // 虚拟列表相关
   const state = reactive({
-    startOffset: 0,
+    list: computed(() => props.listObj?.list || []).value.slice(),
     start: 0,
-    list: computed(() => props.listObj?.list || []).value.slice()
+    startOffset: 0
   })
   const clientHeight = uni.getSystemInfoSync().windowHeight || 667
   const getContainerHeight = computed(
@@ -29,13 +29,23 @@
   const listHeight = computed(() => state.list.length * (props.virtualListProps.itemHeight ?? 50))
   const phantomHeight = computed(() => (props.listObj?.loading ? listHeight.value + (props.virtualListProps.loadingHeight ?? 0) : listHeight.value))
   const visibleData = computed(() => state.list.slice(state.start, Math.min(end.value, state.list.length)))
+  let loadRequested = false
+
+  function requestLoad() {
+    if (loadRequested || props.listObj?.loading || props.listObj?.finished) {
+      return
+    }
+    loadRequested = true
+    emit('onLoad')
+  }
+
   function handleScrollEvent(e: any) {
     const { scrollTop } = e.detail
     const itemHeight = props.virtualListProps.itemHeight ?? 50
     state.start = Math.floor(scrollTop / itemHeight)
     state.startOffset = scrollTop - (scrollTop % itemHeight)
-    if (end.value > state.list.length) {
-      emit('onLoad')
+    if (end.value >= state.list.length) {
+      requestLoad()
     }
     emit('onScroll', e)
   }
@@ -48,8 +58,11 @@
   }
   watch(
     () => props.listObj?.list,
-    () => {
+    (newList, oldList) => {
       state.list = (props.listObj?.list || []).slice()
+      if (newList?.length !== oldList?.length) {
+        loadRequested = false
+      }
     }
   )
 
@@ -57,13 +70,14 @@
   const onRefresh: ScrollViewOnRefresherrefresh = (_event) => {
     const tempData = { ...props.listObj }
     tempData.finished = false
+    loadRequested = false
     setTriggered(true)
     emit('update:listObj', tempData)
     emit('onRefresh')
   }
-  const listRef = ref<any>(null)
+  const _listRef = ref<any>(null)
   const onLowerBottom: ScrollViewOnScrolltolower = (_event) => {
-    emit('onLoad')
+    requestLoad()
   }
   const triggered = ref<any>(false)
 
@@ -73,10 +87,6 @@
   function onRestore() {
     setTriggered('restore')
   }
-  function onAbort() {
-    // 下拉刷新被中止时的回调，预留扩展
-  }
-
   watch(
     () => props.listObj,
     (newListObj, oldListObj) => {
@@ -111,10 +121,10 @@
   export default {
     name: componentName,
     options: {
-      virtualHost: true,
       addGlobalClass: true,
       // #ifndef H5
-      styleIsolation: 'shared'
+      styleIsolation: 'shared',
+      virtualHost: true
       // #endif
     }
   }
@@ -122,24 +132,23 @@
 
 <template>
   <scroll-view
-    ref="listRef"
     class="up-list"
+    ref="listRef"
     :class="[virtualListProps.enabled ? 'up-list-virtual' : '']"
-    :scroll-y="scrollViewProps.scrollY"
-    :scroll-x="scrollViewProps.scrollX"
-    :refresher-enabled="scrollViewProps.refresherEnabled"
-    :refresher-triggered="triggered"
-    :refresher-threshold="scrollViewProps.refresherThreshold"
     :refresher-background="scrollViewProps.refresherBackground"
+    :refresher-enabled="scrollViewProps.refresherEnabled"
+    :refresher-threshold="scrollViewProps.refresherThreshold"
+    :refresher-triggered="triggered"
+    :scroll-x="scrollViewProps.scrollX"
+    :scroll-y="scrollViewProps.scrollY"
+    :style="virtualListProps.enabled ? { height: getContainerHeight + 'px' } : isNeedHFull ? { height: '100%' } : undefined"
     @refresherpulling="onPulling"
     @refresherrefresh="onRefresh"
     @refresherrestore="onRestore"
-    @refresherabort="onAbort"
-    @scrolltolower="onLowerBottom"
     @scroll="(e) => (virtualListProps.enabled ? handleScrollEvent(e) : emit('onScroll', e))"
-    :style="virtualListProps.enabled ? { height: getContainerHeight + 'px' } : isNeedHFull ? { height: '100%' } : undefined"
+    @scrolltolower="onLowerBottom"
   >
-    <template v-if="!listObj?.list?.length && !listObj?.loading">
+    <template v-if="isNeedEmpty && !listObj?.list?.length && !listObj?.loading">
       <view
         class="empty-box"
         :class="[isNeedEmptyCenter ? 'up-center-empty' : '', isNeedEmptyPb ? '' : 'up-no-padding-bottom']"
@@ -155,26 +164,26 @@
         <view class="up-list-phantom" :style="{ height: `${phantomHeight}px` }" />
         <view class="up-list-container" :style="{ transform: getTransform }">
           <view
-            v-for="(item, index) in visibleData"
-            :id="`list-item-${Number(index + state.start)}`"
-            :key="index"
-            :style="{ height: `${virtualListProps.itemHeight}px` }"
             class="up-list-item"
+            v-for="(item, index) in visibleData"
+            :key="item?.id ?? index + state.start"
+            :id="`list-item-${Number(index + state.start)}`"
+            :style="{ height: `${virtualListProps.itemHeight}px` }"
           >
-            <slot :item="item" :index="index + state.start" />
+            <slot :index="index + state.start" :item="item" />
           </view>
         </view>
         <!-- 虚拟列表模式下的底部 loading -->
         <view
-          v-if="listObj?.loading"
           class="up-virtual-loading-box"
+          v-if="listObj?.loading"
           :style="{
-            top: `${listHeight + 60 + 0}px`,
-            position: 'absolute',
+            height: virtualListProps.loadingHeight + 'px',
             left: 0,
+            position: 'absolute',
             right: 0,
-            width: '100%',
-            height: virtualListProps.loadingHeight + 'px'
+            top: `${listHeight + 60 + 0}px`,
+            width: '100%'
           }"
         >
           <slot name="loading"> <UpSkeleton /> </slot>
@@ -182,7 +191,7 @@
       </template>
       <template v-else>
         <template v-if="isListMode">
-          <view v-for="(item, index) in listObj.list" :key="index" class="up-list-item"><slot :item="item" :index="index + state.start" /></view>
+          <view class="up-list-item" v-for="(item, index) in listObj.list" :key="item?.id ?? index"><slot :index="index" :item="item" /></view>
         </template>
         <template v-else> <slot :data="listObj" /> </template>
       </template>

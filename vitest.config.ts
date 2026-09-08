@@ -7,6 +7,13 @@ import vitePluginUniConditionalCompile from './vite-plugins/vite-plugin-uni-cond
 const platform = process.env.UNI_PLATFORM || 'h5'
 
 export default defineConfig({
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler'
+      }
+    }
+  },
   plugins: [
     vitePluginUniConditionalCompile({
       platform
@@ -19,22 +26,9 @@ export default defineConfig({
       '@vite-plugins': resolve(import.meta.dirname, './vite-plugins')
     }
   },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        api: 'modern-compiler'
-      }
-    }
-  },
   test: {
-    environment: 'jsdom',
-    globals: true,
-    setupFiles: ['./tests/setup.ts'],
-    include: ['tests/**/*.test.ts'],
     coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html', 'json-summary'],
-      include: ['src/uni_modules/uni-ui-plus/components/**/*.{vue,ts}'],
+      all: false,
       exclude: [
         'node_modules/**',
         'tests/**',
@@ -45,19 +39,25 @@ export default defineConfig({
         '**/*.d.ts',
         'src/uni_modules/uni-ui-plus/common/**/*.{vue,ts}'
       ],
+      include: ['src/uni_modules/uni-ui-plus/components/**/*.{vue,ts}'],
+      provider: 'v8',
+      reporter: ['text', 'json', 'html', 'json-summary'],
       thresholds:
         process.env.COMPONENT_TEST === 'true'
           ? undefined
           : {
-              statements: 70,
               branches: 70,
               functions: 70,
-              lines: 70
-            },
-      all: false
+              lines: 70,
+              statements: 70
+            }
     },
     deps: {
       inline: ['vue-i18n']
-    }
+    },
+    environment: 'jsdom',
+    globals: true,
+    include: ['tests/**/*.test.ts'],
+    setupFiles: ['./tests/setup.ts']
   }
 })

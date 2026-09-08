@@ -110,8 +110,6 @@ export default function vitePluginUniConditionalCompile(options: ConditionalComp
           map: null
         }
       }
-
-      return
     }
   }
 }
