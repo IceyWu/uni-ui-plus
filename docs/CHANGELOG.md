@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.72
+
+### Patch Changes
+
+- a4d7625: 修复发布流程和 web-types 构建兼容性，发布 `0.0.72`。
+
 ## 0.0.71
 
 ### Patch Changes
