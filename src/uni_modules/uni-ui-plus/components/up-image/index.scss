@@ -30,6 +30,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    opacity: 1;
+    transition: opacity 0.12s ease-out;
+
+    &-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
   }
 
   &--round {

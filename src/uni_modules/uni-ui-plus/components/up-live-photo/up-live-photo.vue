@@ -3,7 +3,13 @@
   import { addUnit, isDef, objToStyle } from '../../common/util'
   import { t } from '../../locale'
   import UpImage from '../up-image/up-image.vue'
-  import { indicatorBrightSvg, indicatorDimSvg, muteOffSvg, muteOnSvg } from './icons'
+  import {
+    indicatorBrightSvg,
+    indicatorDimSvg,
+    indicatorDotSvg,
+    muteOffSvg,
+    muteOnSvg,
+  } from './icons'
   import type { LivePhotoEmits } from './types'
   import { livePhotoProps } from './types'
 
@@ -25,6 +31,10 @@
   let isUnmounted = false
 
   const instance = getCurrentInstance()
+
+  function isIndicatorDotVisible(index: number) {
+    return isVideoLoading.value && index < Math.ceil((videoLoadProgress.value / 100) * 12)
+  }
 
   // 定时器引用，统一管理生命周期
   let progressTimer: ReturnType<typeof setInterval> | null = null
@@ -98,17 +108,6 @@
       styles.top = addUnit(props.indicatorTop)
     }
     return objToStyle(styles)
-  })
-
-  // 亮图层的裁剪高度百分比（从顶部往下露出）
-  const brightClipHeight = computed(() => {
-    if (isVideoLoaded.value) {
-      return '100%'
-    }
-    if (!isVideoLoading.value) {
-      return '0%'
-    }
-    return `${Math.min(videoLoadProgress.value, 100)}%`
   })
 
   // 监听视频源变化，重置加载状态
@@ -451,10 +450,19 @@
     >
       <view class="up-live-photo__indicator-icon">
         <view class="up-live-photo__indicator-svg-wrap">
-          <!-- 底层：暗淡版图标 -->
           <image class="up-live-photo__indicator-svg" :src="indicatorDimSvg" />
-          <!-- 上层：全亮版图标，通过 height 裁剪显示加载进度 -->
-          <view class="up-live-photo__indicator-svg-bright" :style="`height:${brightClipHeight}`">
+          <view v-if="isVideoLoading && !isVideoLoaded" class="up-live-photo__indicator-progress">
+            <view
+              v-for="(_, index) in 12"
+              :key="index"
+              class="up-live-photo__indicator-progress-dot"
+              :class="{ 'is-visible': isIndicatorDotVisible(index) }"
+              :style="{ transform: `rotate(${index * 30}deg)` }"
+            >
+              <image class="up-live-photo__indicator-svg" :src="indicatorDotSvg" />
+            </view>
+          </view>
+          <view v-else-if="isVideoLoaded" class="up-live-photo__indicator-svg-bright">
             <image class="up-live-photo__indicator-svg" :src="indicatorBrightSvg" />
           </view>
         </view>

@@ -1,11 +1,13 @@
-// 指示器图标 - 暗淡版（未加载，外圈点 opacity=0.3）
-export const indicatorDimSvg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none'%3E%3Ccircle cx='8' cy='8' r='1.5' fill='white'/%3E%3Ccircle cx='8' cy='8' r='3.5' stroke='white' stroke-width='1'/%3E%3Ccircle cx='8' cy='2' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='11.5' cy='3.2' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='13.8' cy='6.5' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='13.8' cy='9.5' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='11.5' cy='12.8' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='8' cy='14' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='4.5' cy='12.8' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='2.2' cy='9.5' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='2.2' cy='6.5' r='.8' fill='white' opacity='.3'/%3E%3Ccircle cx='4.5' cy='3.2' r='.8' fill='white' opacity='.3'/%3E%3C/svg%3E`
+import indicatorBrightSvg from './assets/indicator-bright.svg'
+import indicatorDimSvg from './assets/indicator-dim.svg'
+import indicatorDotSvg from './assets/indicator-dot.svg'
+import muteOffSvg from './assets/mute-off.svg'
+import muteOnSvg from './assets/mute-on.svg'
 
-// 指示器图标 - 全亮版（已加载）
-export const indicatorBrightSvg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none'%3E%3Ccircle cx='8' cy='8' r='1.5' fill='white'/%3E%3Ccircle cx='8' cy='8' r='3.5' stroke='white' stroke-width='1'/%3E%3Ccircle cx='8' cy='2' r='.8' fill='white'/%3E%3Ccircle cx='11.5' cy='3.2' r='.8' fill='white'/%3E%3Ccircle cx='13.8' cy='6.5' r='.8' fill='white'/%3E%3Ccircle cx='13.8' cy='9.5' r='.8' fill='white'/%3E%3Ccircle cx='11.5' cy='12.8' r='.8' fill='white'/%3E%3Ccircle cx='8' cy='14' r='.8' fill='white'/%3E%3Ccircle cx='4.5' cy='12.8' r='.8' fill='white'/%3E%3Ccircle cx='2.2' cy='9.5' r='.8' fill='white'/%3E%3Ccircle cx='2.2' cy='6.5' r='.8' fill='white'/%3E%3Ccircle cx='4.5' cy='3.2' r='.8' fill='white'/%3E%3C/svg%3E`
-
-// 静音按钮 - 非静音（喇叭 + 声波）
-export const muteOffSvg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='11 5 6 9 2 9 2 15 6 15 11 19 11 5'/%3E%3Cpath d='M15.54 8.46a5 5 0 0 1 0 7.07'/%3E%3Cpath d='M19.07 4.93a10 10 0 0 1 0 14.14'/%3E%3C/svg%3E`
-
-// 静音按钮 - 静音（喇叭 + 斜线）
-export const muteOnSvg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='11 5 6 9 2 9 2 15 6 15 11 19 11 5'/%3E%3Cline x1='23' y1='9' x2='17' y2='15'/%3E%3Cline x1='17' y1='9' x2='23' y2='15'/%3E%3C/svg%3E`
+export {
+  indicatorBrightSvg,
+  indicatorDimSvg,
+  indicatorDotSvg,
+  muteOffSvg,
+  muteOnSvg,
+}
