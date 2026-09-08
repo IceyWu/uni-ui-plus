@@ -1,0 +1,49 @@
+@use '../../styles/mixin/mixin.scss' as *;
+
+// empty - 使用组件级 CSS 变量，fallback 引用主题 token
+$empty-padding: var(--up-empty-padding, var(--up-padding-super-spacious) 0) !default;
+$empty-image-size: var(--up-empty-image-size, 170px) !default;
+$empty-description-margin-top: var(--up-empty-description-margin-top, var(--up-spacing-main)) !default;
+$empty-description-color: var(--up-empty-description-color, var(--up-text-auxiliary)) !default;
+$empty-description-font-size: var(--up-empty-description-font-size, var(--up-typography-body-size-main)) !default;
+$empty-description-line-height: var(--up-empty-description-line-height, var(--up-typography-body-line-height-size-main)) !default;
+$empty-description-padding: var(--up-empty-description-padding, 0 var(--up-padding-super-spacious)) !default;
+
+.up-theme-dark {
+  .up-empty {
+    background: var(--up-filled-bottom);
+  }
+}
+
+.up-empty {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $empty-padding;
+
+  &__box {
+    width: $empty-image-size;
+    height: $empty-image-size;
+
+    .img {
+      width: 100%;
+      height: 100%;
+    }
+
+    // 兼容小程序标签和img-slot
+    image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__description {
+    padding: $empty-description-padding;
+    margin-top: $empty-description-margin-top;
+    font-size: $empty-description-font-size;
+    line-height: $empty-description-line-height;
+    color: $empty-description-color;
+  }
+}

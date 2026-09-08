@@ -1,0 +1,22 @@
+<script lang="ts" setup>
+  defineProps<{ svg: string }>()
+</script>
+
+<template>
+  <figure class="svg-image-root" v-html="svg" />
+</template>
+
+<style>
+  .svg-image-root {
+    padding: 1ch;
+    margin: 1ch 0;
+    background-color: #eee;
+    border-radius: 8px;
+  }
+  html.dark .svg-image-root {
+    background-color: #313641;
+  }
+  .svg-image-root svg text {
+    font-family: var(--vp-font-family-base);
+  }
+</style>

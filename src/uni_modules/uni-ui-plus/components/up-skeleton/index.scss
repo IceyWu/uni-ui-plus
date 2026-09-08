@@ -1,0 +1,81 @@
+@use '../../styles/mixin/mixin.scss' as *;
+
+@mixin background {
+  /* #ifdef APP-NVUE */
+  background-color: var(--up-filled-content);
+  /* #endif */
+  /* #ifndef APP-NVUE */
+  background: linear-gradient(90deg, var(--up-filled-content) 25%, var(--up-filled-strong) 37%, var(--up-filled-content) 50%);
+  background-size: 400% 100%;
+  /* #endif */
+}
+
+.unip-skeleton {
+  flex: 1;
+  width: 100%;
+
+  &__wrapper {
+    &__avatar {
+      @include background;
+      margin-right: var(--up-spacing-extra-loose);
+
+      &--circle {
+        border-radius: var(--up-radius-full);
+      }
+
+      &--square {
+        border-radius: var(--up-radius-main);
+      }
+    }
+
+    &__title {
+      margin-top: var(--up-spacing-tight);
+      width: 100%;
+      height: 36rpx;
+      border-radius: var(--up-radius-small);
+      @include background;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &__list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    &__content {
+      flex: 1;
+
+      &__rows,
+      &__title {
+        @include background;
+        border-radius: var(--up-radius-small);
+      }
+    }
+  }
+
+  &__wrapper__title {
+    margin-top: var(--up-spacing-tight);
+    width: 100%;
+    height: 1.125rem;
+    border-radius: var(--up-radius-small);
+    background-size: 400% 100%;
+  }
+
+  .unip-animate {
+    animation: unip-skeleton-animation 1.8s ease infinite;
+  }
+}
+
+@keyframes unip-skeleton-animation {
+  0% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0 50%;
+  }
+}

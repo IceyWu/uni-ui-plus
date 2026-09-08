@@ -1,0 +1,22 @@
+{
+  "name": "docs",
+  "version": "0.0.72",
+  "private": true,
+  "scripts": {
+    "build": "vitepress build",
+    "dev": "vitepress dev --port 5174",
+    "serve": "vitepress serve"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
+    "@vueuse/core": "^14.2.1",
+    "element-plus": "^2.13.7",
+    "vue": "^3.5.33"
+  },
+  "devDependencies": {
+    "sass": "^1.99.0",
+    "vite-plugin-compression": "^0.5.1",
+    "vitepress": "^1.6.4",
+    "vitepress-plugin-llms": "^1.12.1"
+  }
+}

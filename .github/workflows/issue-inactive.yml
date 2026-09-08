@@ -1,0 +1,104 @@
+name: Issue Inactive
+
+# 暂时停用：仅保留手动触发。恢复自动执行时取消下方 schedule 的注释即可
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: '0 16 * * *'
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  close-issues:
+    runs-on: ubuntu-latest
+    steps:
+      # 关闭被标记为「需要更多信息」且长时间无回应的 issue
+      - name: Close inactive issues
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const INACTIVE_DAYS = 7
+            const rules = [
+              { label: 'need reproduction', body: '' },
+              {
+                label: 'pending',
+                body: '由于该 issue 被标记为需要更多信息，却 7 天未收到回应。现关闭 issue，若有任何问题，可评论回复。',
+              },
+            ]
+
+            const deadline = Date.now() - INACTIVE_DAYS * 24 * 60 * 60 * 1000
+
+            for (const rule of rules) {
+              const issues = await github.paginate(github.rest.issues.listForRepo, {
+                ...context.repo,
+                state: 'open',
+                labels: rule.label,
+                per_page: 100,
+              })
+
+              for (const issue of issues) {
+                // listForRepo 会返回 PR，需要排除
+                if (issue.pull_request) continue
+                if (new Date(issue.updated_at).getTime() > deadline) continue
+
+                if (rule.body) {
+                  await github.rest.issues.createComment({
+                    ...context.repo,
+                    issue_number: issue.number,
+                    body: rule.body,
+                  })
+                }
+
+                await github.rest.issues.update({
+                  ...context.repo,
+                  issue_number: issue.number,
+                  state: 'closed',
+                })
+
+                core.info(`closed #${issue.number} (${rule.label})`)
+              }
+            }
+
+  lock-issues:
+    runs-on: ubuntu-latest
+    steps:
+      # 锁定关闭后长期无活动的 issue
+      - name: Lock inactive closed issues
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const INACTIVE_DAYS = 30
+            const BODY = '此 issue 已被自动锁定，因为关闭后没有任何近期活动。如果有相关 bug，请重新创建一个新 issue。'
+
+            const deadline = Date.now() - INACTIVE_DAYS * 24 * 60 * 60 * 1000
+
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              ...context.repo,
+              state: 'closed',
+              sort: 'updated',
+              direction: 'asc',
+              per_page: 100,
+            })
+
+            for (const issue of issues) {
+              if (issue.pull_request) continue
+              if (issue.locked) continue
+              // 按 updated 升序，遇到第一个仍在活跃窗口内的即可停止
+              if (new Date(issue.updated_at).getTime() > deadline) break
+
+              await github.rest.issues.createComment({
+                ...context.repo,
+                issue_number: issue.number,
+                body: BODY,
+              })
+
+              await github.rest.issues.lock({
+                ...context.repo,
+                issue_number: issue.number,
+                lock_reason: 'resolved',
+              })
+
+              core.info(`locked #${issue.number}`)
+            }

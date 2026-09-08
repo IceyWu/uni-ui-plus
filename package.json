@@ -1,0 +1,162 @@
+{
+  "name": "uni-ui-plus",
+  "version": "0.0.72",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iceywu/uni-ui-plus.git"
+  },
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build:app": "uni build -p app",
+    "build:app-android": "uni build -p app-android",
+    "build:app-ios": "uni build -p app-ios",
+    "build:changelog": "esno ./scripts/syncChangelog.ts",
+    "build:custom": "uni build -p",
+    "build:docs": "pnpm run build:h5 && pnpm --filter ./docs build && esno ./scripts/demoCopy.ts",
+    "build:h5": "uni build",
+    "build:h5:ssr": "uni build --ssr",
+    "build:lib": "esno ./scripts/build-lib.ts",
+    "build:mp-alipay": "uni build -p mp-alipay",
+    "build:mp-baidu": "uni build -p mp-baidu",
+    "build:mp-dingtalk": "uni build -p mp-dingtalk",
+    "build:mp-kuaishou": "uni build -p mp-kuaishou",
+    "build:mp-lark": "uni build -p mp-lark",
+    "build:mp-qq": "uni build -p mp-qq",
+    "build:mp-toutiao": "uni build -p mp-toutiao",
+    "build:mp-weixin": "uni build -p mp-weixin",
+    "build:qrcode": "esno ./scripts/qrcode.ts",
+    "build:quickapp-webview": "uni build -p quickapp-webview",
+    "build:theme-vars": "esno ./scripts/buildThemeVars.ts",
+    "build:web-types": "esno ./scripts/build-web-types.ts",
+    "changeset": "changeset",
+    "commit": "git-cz",
+    "coverage": "vitest run --coverage",
+    "coverage:h5": "cross-env UNI_PLATFORM=h5 vitest run --coverage",
+    "dev:app": "uni -p app",
+    "dev:app-android": "uni -p app-android",
+    "dev:app-ios": "uni -p app-ios",
+    "dev:custom": "uni -p",
+    "dev:docs": "pnpm --filter ./docs dev",
+    "dev:h5": "uni",
+    "dev:h5:ssr": "uni --ssr",
+    "dev:mp-alipay": "uni -p mp-alipay",
+    "dev:mp-baidu": "uni -p mp-baidu",
+    "dev:mp-dingtalk": "uni -p mp-dingtalk",
+    "dev:mp-kuaishou": "uni -p mp-kuaishou",
+    "dev:mp-lark": "uni -p mp-lark",
+    "dev:mp-qq": "uni -p mp-qq",
+    "dev:mp-toutiao": "uni -p mp-toutiao",
+    "dev:mp-weixin": "uni -p mp-weixin",
+    "dev:quickapp-webview": "uni -p quickapp-webview",
+    "docs:serve": "pnpm --filter ./docs serve",
+    "preinstall": "npx only-allow pnpm",
+    "lint": "pnpm exec biome check .",
+    "lint:fix": "ultracite fix",
+    "lint:unsafe": "ultracite fix --unsafe",
+    "prepare": "husky",
+    "release": "pnpm build:web-types && pnpm build:lib && pnpm changeset publish",
+    "sync:version": "esno ./scripts/sync-version.ts",
+    "test": "vitest",
+    "test:all": "pnpm run test:h5 && pnpm run test:mp-weixin",
+    "test:component": "esno ./scripts/test-component.ts",
+    "test:h5": "cross-env UNI_PLATFORM=h5 vitest",
+    "test:mp-weixin": "cross-env UNI_PLATFORM=mp-weixin vitest",
+    "test:workflow": "esno ./scripts/test-workflow.ts",
+    "type-check": "vue-tsc --noEmit",
+    "upload:mp-alipay": "uni build -p mp-alipay && minici --platform alipay",
+    "upload:mp-dingtalk": "uni build -p mp-dingtalk && minici --platform dd",
+    "upload:mp-weixin": "uni build -p mp-weixin && minici --platform weixin",
+    "version-packages": "changeset version && pnpm sync:version && pnpm build:changelog"
+  },
+  "lint-staged": {
+    "*.{js,ts,vue,json,jsonc}": "npx ultracite fix"
+  },
+  "config": {
+    "commitizen": {
+      "path": "git-cz"
+    }
+  },
+  "browserslist": [
+    "Android >= 4.4",
+    "ios >= 9"
+  ],
+  "dependencies": {
+    "@dcloudio/uni-app": "3.0.0-5020420260813003",
+    "@dcloudio/uni-app-harmony": "3.0.0-5020420260813003",
+    "@dcloudio/uni-app-plus": "3.0.0-5020420260813003",
+    "@dcloudio/uni-components": "3.0.0-5020420260813003",
+    "@dcloudio/uni-h5": "3.0.0-5020420260813003",
+    "@dcloudio/uni-mp-alipay": "3.0.0-5020420260813003",
+    "@dcloudio/uni-mp-baidu": "3.0.0-5020420260813003",
+    "@dcloudio/uni-mp-harmony": "3.0.0-5020420260813003",
+    "@dcloudio/uni-mp-jd": "3.0.0-5020420260813003",
+    "@dcloudio/uni-mp-kuaishou": "3.0.0-5020420260813003",
+    "@dcloudio/uni-mp-lark": "3.0.0-5020420260813003",
+    "@dcloudio/uni-mp-qq": "3.0.0-5020420260813003",
+    "@dcloudio/uni-mp-toutiao": "3.0.0-5020420260813003",
+    "@dcloudio/uni-mp-weixin": "3.0.0-5020420260813003",
+    "@dcloudio/uni-mp-xhs": "3.0.0-5020420260813003",
+    "@dcloudio/uni-quickapp-webview": "3.0.0-5020420260813003",
+    "vue": "^3.4.21",
+    "vue-i18n": "^9.1.9"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.12",
+    "@changesets/cli": "^3.0.2",
+    "@commitlint/cli": "^21.2.2",
+    "@commitlint/config-conventional": "^21.2.2",
+    "@dcloudio/types": "^3.4.8",
+    "@dcloudio/uni-automator": "3.0.0-5020420260813003",
+    "@dcloudio/uni-cli-shared": "3.0.0-5020420260813003",
+    "@dcloudio/uni-stacktracey": "3.0.0-5020420260813003",
+    "@dcloudio/vite-plugin-uni": "3.0.0-5020420260813003",
+    "@iceywu/utils": "^0.1.0",
+    "@types/node": "^26.5.0",
+    "@uni-helper/uni-app-types": "1.1.0",
+    "@uni-helper/uni-types": "1.1.0",
+    "@uni-helper/vite-plugin-uni-components": "0.3.2",
+    "@vant/touch-emulator": "^1.5.0",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vitest/coverage-v8": "^1.6.0",
+    "@vue/runtime-core": "^3.5.33",
+    "@vue/test-utils": "^2.5.0",
+    "@vue/tsconfig": "^0.9.1",
+    "axios": "^1.20.0",
+    "components-helper": "^2.2.0",
+    "cross-env": "^10.1.0",
+    "esno": "^4.8.0",
+    "fast-glob": "^3.3.3",
+    "git-cz": "^4.9.0",
+    "husky": "^9.1.7",
+    "inquirer": "^14.2.2",
+    "jsdom": "^30.0.1",
+    "lint-staged": "^17.5.0",
+    "mini-types": "^0.1.7",
+    "miniprogram-api-typings": "^5.2.3",
+    "rollup": "4.14.3",
+    "sass": "^1.104.0",
+    "typescript": "^5.8.3",
+    "ultracite": "^7.11.0",
+    "vite": "5.2.8",
+    "vitest": "^1.6.0",
+    "vue-hooks-pure": "^0.0.36",
+    "vue-tsc": "^3.3.11"
+  },
+  "packageManager": "pnpm@12.3.4",
+  "uni-app": {
+    "scripts": {
+      "mp-dingtalk": {
+        "title": "钉钉小程序",
+        "env": {
+          "UNI_PLATFORM": "mp-alipay"
+        },
+        "define": {
+          "MP-DINGTALK": true
+        }
+      }
+    }
+  }
+}

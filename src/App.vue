@@ -1,0 +1,54 @@
+<script lang="ts" setup>
+  import { onHide, onLaunch, onShow, onThemeChange } from '@dcloudio/uni-app'
+  import { useI18nSync } from './hooks/useI18nSync'
+  import { useIframeMessage } from './hooks/useIframeMessage'
+  import { useDark } from './store'
+
+  // 初始化国际化
+  const darkMode = useDark()
+  const { setLocale } = useI18nSync()
+
+  // 使用专门的iframe消息处理hook
+  useIframeMessage({
+    onLocaleChange: (locale) => {
+      setLocale(locale)
+    },
+    onThemeChange: (isDark) => {
+      darkMode.setDark(isDark)
+    }
+  })
+
+  onThemeChange((option) => {
+    darkMode.setDark(option.theme === 'dark')
+  })
+
+  onLaunch(() => {
+    const systemInfo = uni.getSystemInfoSync()
+    darkMode.setDark(systemInfo.theme === 'dark')
+  })
+  onShow(() => {
+    /* placeholder */
+  })
+  onHide(() => {
+    /* placeholder */
+  })
+</script>
+<style lang="scss">
+@use '@/iconfont/index.css';
+@use '@/uni_modules/uni-ui-plus/styles/theme/index.scss' as *;
+@use './theme/presets.scss' as *;
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+page {
+  margin: 0;
+  padding: 0;
+  font-family: var(--up-typography-body-font-family, PingFang SC), San Francisco, Roboto, arial, Noto Sans CJK, Microsoft Yahei, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--up-filled-bottom, #ffffff);
+}
+</style>

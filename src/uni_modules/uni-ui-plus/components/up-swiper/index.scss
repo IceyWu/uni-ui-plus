@@ -1,0 +1,55 @@
+@use '../../styles/mixin/mixin' as *;
+
+$-swiper-radius: var(--up-swiper-radius, var(--up-radius-zero)) !default;
+$-swiper-item-padding: var(--up-swiper-item-padding, 0) !default;
+$-swiper-item-text-color: var(--up-swiper-item-text-color, var(--up-text-white)) !default;
+$-swiper-item-text-fs: var(--up-swiper-item-text-fs, var(--up-typography-body-size-main)) !default;
+
+@include b(swiper) {
+  position: relative;
+
+  @include e(track) {
+    border-radius: $-swiper-radius;
+    overflow: hidden;
+    transform: translateY(0);
+  }
+
+  @include e(item) {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: $-swiper-item-padding;
+
+    @include m(slot) {
+      /* #ifdef MP */
+      :deep() {
+        /* #ifdef MP-WEIXIN */
+        view:not([class]) {
+          width: 100%;
+          height: 100%;
+        }
+        /* #endif */
+        /* #ifndef MP-WEIXIN */
+        view {
+          width: 100%;
+          height: 100%;
+        }
+        /* #endif */
+      }
+      /* #endif */
+    }
+  }
+
+  @include e(image, video) {
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  @include e(text) {
+    position: absolute;
+    right: var(--up-padding-extra-loose);
+    top: var(--up-padding-extra-loose);
+    color: $-swiper-item-text-color;
+    font-size: $-swiper-item-text-fs;
+  }
+}

@@ -1,0 +1,46 @@
+name: Issue Reply
+
+# 暂时停用：仅保留手动触发。恢复自动执行时取消下方 issues 触发的注释即可
+on:
+  workflow_dispatch:
+  # issues:
+  #   types: [labeled]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  issue-reply:
+    runs-on: ubuntu-latest
+    if: contains(fromJSON('["pending", "need reproduce", "help wanted"]'), github.event.label.name)
+    steps:
+      - name: Reply by label
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const author = context.payload.issue.user.login
+            const label = context.payload.label.name
+
+            const replies = {
+              'pending': `你好，@${author}。
+
+            看起来这条 issue 描述得有些模糊，缺少一些必要的信息，推荐阅读一下[贡献指南](https://github.com/iceywu/uni-ui-plus/blob/master/.github/CONTRIBUTING.md)。`,
+
+              'need reproduce': `你好，@${author}。
+
+            我们需要你提供一个最小重现demo，以便于我们帮你排查问题。你可以通过 [create-uni](https://github.com/uni-helper/create-uni) 快速创建一个uni-ui-plus项目，并添加相关复现逻辑来提供。`,
+
+              'help wanted': `你好，@${author}。
+
+            我们完全同意你的提议/反馈，欢迎直接在此仓库创建一个 Pull Request 来解决这个问题。请将 Pull Request 发到正确的分支，务必填写 Pull Request 内的预设模板，提供改动所需相应的 示例、TypeScript 定义、文档等，并确保在各平台测试通过，我们会尽快进行 Review，提前感谢和期待您的贡献。`,
+            }
+
+            const body = replies[label]
+            if (!body) return
+
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              body,
+            })

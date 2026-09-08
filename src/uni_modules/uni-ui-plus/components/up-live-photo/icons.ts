@@ -1,0 +1,5 @@
+export { default as indicatorBrightSvg } from './assets/indicator-bright.svg'
+export { default as indicatorDimSvg } from './assets/indicator-dim.svg'
+export { default as indicatorDotSvg } from './assets/indicator-dot.svg'
+export { default as muteOffSvg } from './assets/mute-off.svg'
+export { default as muteOnSvg } from './assets/mute-on.svg'

@@ -1,0 +1,44 @@
+/**
+ * 辅助函数
+ */
+@use "sass:meta";
+@use "sass:string";
+@use 'config';
+
+/* 转换成字符串 */
+@function selectorToString($selector) {
+  $selector: meta.inspect($selector);
+  $selector: string.slice($selector, 2, -2);
+
+  @return $selector;
+}
+
+/* 判断是否存在 Modifier */
+@function containsModifier($selector) {
+  $selector: selectorToString($selector);
+
+  @if string.index($selector, config.$modifierSeparator) {
+    @return true;
+  }
+
+  @else {
+    @return false;
+  }
+}
+
+/* 判断是否存在伪类 */
+@function containsPseudo($selector) {
+  $selector: selectorToString($selector);
+
+  @if string.index($selector, ':') {
+    @return true;
+  }
+
+  @else {
+    @return false;
+  }
+}
+
+
+
+

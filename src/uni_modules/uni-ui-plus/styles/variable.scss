@@ -1,0 +1,18 @@
+// Global design tokens
+$padding-zero: 0 !default;
+$padding-main: 24rpx !default;
+$padding-loose: 32rpx !default;
+
+$text-main: var(--up-text-main, #18181B) !default;
+
+$font-weight-medium: 500 !default;
+
+$typography-body-size-main: 28rpx !default;
+$typography-body-size-extra-large: 36rpx !default;
+$typography-body-line-height-size-main: 40rpx !default;
+$typography-body-line-height-size-large: 48rpx !default;
+
+$filled-oppo: var(--up-filled-oppo, #ffffff) !default;
+
+$border-main: var(--up-border-main, #E5E5E5) !default;
+$stroke-main: 1px !default;

@@ -1,0 +1,715 @@
+import { config } from '@vue/test-utils'
+import { vi } from 'vitest'
+import './suppress-warnings'
+
+// 全局设置 uni 相关 API 的 mock
+vi.stubGlobal('uni', {
+  // 模拟 canIUse API
+  canIUse: vi.fn().mockImplementation((feature: string) => {
+    // 默认返回 true，表示支持所有功能
+    // 可以根据需要为特定功能返回 false
+    const unsupportedFeatures: string[] = [
+      'createOffscreenCanvas'
+      // 在这里添加不支持的功能
+    ]
+    return !unsupportedFeatures.includes(feature)
+  }),
+  // 模拟 Canvas 导出图片 API
+  canvasToTempFilePath: vi.fn().mockImplementation(({ success }) => {
+    success?.({
+      tempFilePath: 'cropped-image.jpg'
+    })
+  }),
+  // 模拟选择文件相关 API
+  chooseImage: vi.fn().mockImplementation((options) => {
+    if (options.success) {
+      options.success({
+        tempFilePaths: ['https://example.com/image.jpg'],
+        tempFiles: [{ path: 'https://example.com/image.jpg', size: 1024 }]
+      })
+    }
+    if (options.complete) {
+      options.complete()
+    }
+    return Promise.resolve({
+      tempFilePaths: ['https://example.com/image.jpg'],
+      tempFiles: [{ path: 'https://example.com/image.jpg', size: 1024 }]
+    })
+  }),
+  chooseMedia: vi.fn().mockImplementation((options) => {
+    if (options.success) {
+      options.success({
+        tempFiles: [
+          {
+            duration: 0,
+            fileType: 'image',
+            size: 1024,
+            tempFilePath: 'https://example.com/image.jpg',
+            thumbTempFilePath: 'https://example.com/image.jpg'
+          }
+        ],
+        type: 'image'
+      })
+    }
+    if (options.complete) {
+      options.complete()
+    }
+    return Promise.resolve({
+      tempFiles: [
+        {
+          duration: 0,
+          fileType: 'image',
+          size: 1024,
+          tempFilePath: 'https://example.com/image.jpg',
+          thumbTempFilePath: 'https://example.com/image.jpg'
+        }
+      ],
+      type: 'image'
+    })
+  }),
+  // 模拟 Canvas 相关 API
+  createCanvasContext: vi.fn().mockReturnValue({
+    arc: vi.fn(),
+    beginPath: vi.fn(),
+    clearRect: vi.fn(),
+    closePath: vi.fn(),
+    createLinearGradient: vi.fn().mockReturnValue({
+      addColorStop: vi.fn()
+    }),
+    draw: vi.fn((_, callback) => {
+      callback && callback()
+    }),
+    drawImage: vi.fn(),
+    fill: vi.fn(),
+    fillRect: vi.fn(),
+    lineTo: vi.fn(),
+    moveTo: vi.fn(),
+    restore: vi.fn(),
+    rotate: vi.fn(),
+    scale: vi.fn(),
+    setFillStyle: vi.fn(),
+    setLineCap: vi.fn(),
+    setLineWidth: vi.fn(),
+    setStrokeStyle: vi.fn(),
+    stroke: vi.fn(),
+    translate: vi.fn()
+  }),
+  // 模拟 IntersectionObserver 相关 API
+  createIntersectionObserver: vi.fn().mockImplementation(() => {
+    let _relativeToOptions: any = null
+    let _relativeToViewportOptions: any = null
+
+    const mockObserver: any = {
+      disconnect: vi.fn(),
+
+      observe: vi.fn((selector, callback) => {
+        if (callback) {
+          // 提取选择器中的 ID
+          const idMatch = selector.match(/#([^.\s]+)/)
+          const id = idMatch ? idMatch[1] : selector
+
+          callback({
+            boundingClientRect: {
+              bottom: 100,
+              height: 100,
+              left: 0,
+              right: 100,
+              top: 0,
+              width: 100
+            },
+            dataset: {},
+            id,
+            intersectionRatio: 0.5,
+            intersectionRect: {
+              bottom: 100,
+              height: 100,
+              left: 0,
+              right: 100,
+              top: 0,
+              width: 100
+            },
+            relativeRect: {
+              bottom: 100,
+              height: 100,
+              left: 0,
+              right: 100,
+              top: 0,
+              width: 100
+            },
+            time: Date.now()
+          })
+        }
+      }),
+      relativeTo: vi.fn((selector, margins) => {
+        _relativeToOptions = { margins, selector }
+        return mockObserver
+      }),
+
+      relativeToViewport: vi.fn((margins) => {
+        _relativeToViewportOptions = margins
+        return mockObserver
+      })
+    }
+
+    return mockObserver
+  }),
+  // 模拟 createOffscreenCanvas API
+  createOffscreenCanvas: vi.fn().mockImplementation((options?: { width?: number; height?: number }) => {
+    // 返回一个模拟的 OffscreenCanvas 对象
+    return {
+      createImage: vi.fn().mockImplementation(() => {
+        const img = {
+          onerror: null as unknown as (() => void) | null,
+          onload: null as unknown as (() => void) | null,
+          src: ''
+        }
+        return img
+      }),
+      getContext: vi.fn().mockReturnValue({
+        clearRect: vi.fn(),
+        createPattern: vi.fn().mockReturnValue({}),
+        drawImage: vi.fn(),
+        fillRect: vi.fn(),
+        fillStyle: '',
+        fillText: vi.fn(),
+        font: '',
+        measureText: vi.fn().mockReturnValue({ width: 100 }),
+        restore: vi.fn(),
+        rotate: vi.fn(),
+        save: vi.fn(),
+        textAlign: 'left',
+        textBaseline: 'alphabetic',
+        translate: vi.fn()
+      }),
+      height: options?.height || 150,
+      width: options?.width || 300
+    }
+  }),
+  // 模拟 SelectorQuery 相关 API
+  createSelectorQuery: vi.fn().mockImplementation(() => {
+    // 创建一个更健壮的 mock 对象，支持链式调用和不同的选择器
+    let currentSelector = ''
+    let isSelectAll = false
+    let boundingClientRectCallback: ((rect: any) => void) | null = null
+    let scrollOffsetCallback: ((rect: any) => void) | null = null
+    let fieldsCallback: ((rect: any) => void) | null = null
+    let _fieldsOptions: any = null
+    let _currentScope: any = null
+
+    // 默认的节点信息模板
+    const mockNodeInfo = {
+      bottom: 100,
+      dataset: {},
+      height: 100,
+      id: '',
+      left: 0,
+      right: 100,
+      scrollLeft: 0,
+      scrollTop: 0,
+      top: 0,
+      width: 100
+    }
+
+    const mockQuery: any = {
+      boundingClientRect: vi.fn((callback) => {
+        boundingClientRectCallback = callback
+        return mockQuery
+      }),
+
+      exec: vi.fn((callback) => {
+        // 根据选择器和方法生成模拟数据
+        let result
+
+        // 提取选择器中的 ID 或类名
+        const idMatch = currentSelector.match(/#([^.\s]+)/)
+        const classMatch = currentSelector.match(/\.([^#\s]+)/)
+        const id = idMatch ? idMatch[1] : ''
+        const className = classMatch ? classMatch[1] : ''
+
+        // 创建模拟节点信息，根据选择器调整
+        let nodeInfo = { ...mockNodeInfo, id }
+
+        // 为特定选择器提供特定的模拟数据
+        if (currentSelector.includes('up-tabs') || currentSelector.includes('up-tab')) {
+          nodeInfo = {
+            ...nodeInfo,
+            bottom: 44,
+            height: 44,
+            left: 0,
+            right: 375,
+            top: 0,
+            width: 375
+          }
+        } else if (currentSelector.includes('up-segmented')) {
+          nodeInfo = {
+            ...nodeInfo,
+            bottom: 40,
+            height: 40,
+            left: 0,
+            right: 300,
+            top: 0,
+            width: 300
+          }
+        } else if (currentSelector.includes('up-slide-verify')) {
+          nodeInfo = {
+            ...nodeInfo,
+            bottom: 40,
+            height: 40,
+            left: 0,
+            right: 300,
+            top: 0,
+            width: 300
+          }
+        } else if (currentSelector.includes('up-index-bar')) {
+          nodeInfo = {
+            ...nodeInfo,
+            bottom: 600,
+            height: 600,
+            left: 0,
+            right: 375,
+            top: 0,
+            width: 375
+          }
+        }
+
+        // 根据是否是 selectAll 返回数组或单个对象
+        if (isSelectAll) {
+          // 为不同的选择器创建不同数量的项目
+          let count = 2
+          if (currentSelector.includes('up-segmented__item')) {
+            count = 3
+          } else if (currentSelector.includes('up-tab')) {
+            count = 4
+          } else if (currentSelector.includes('up-index-anchor')) {
+            count = 5
+          }
+
+          // 创建指定数量的节点信息
+          result = new Array(count).fill(0).map((_, index) => ({
+            ...nodeInfo,
+            dataset: { index: index.toString() },
+            id: `${id || className}-${index}`,
+            left: (nodeInfo.width / count) * index,
+            right: (nodeInfo.width / count) * (index + 1),
+            width: nodeInfo.width / count
+          }))
+        } else {
+          result = nodeInfo
+        }
+
+        // 调用相应的回调函数
+        if (boundingClientRectCallback) {
+          boundingClientRectCallback(result)
+        }
+
+        if (scrollOffsetCallback) {
+          scrollOffsetCallback(result)
+        }
+
+        if (fieldsCallback) {
+          fieldsCallback(result)
+        }
+
+        // 如果提供了 exec 的回调，也调用它
+        if (callback) {
+          callback([result])
+        }
+
+        return Promise.resolve([result])
+      }),
+
+      fields: vi.fn((fields, callback) => {
+        _fieldsOptions = fields
+        fieldsCallback = callback
+        return mockQuery
+      }),
+      // 支持 in 方法，用于组件内查询
+      in: vi.fn((scope) => {
+        _currentScope = scope
+        return mockQuery
+      }),
+
+      scrollOffset: vi.fn((callback) => {
+        scrollOffsetCallback = callback
+        return mockQuery
+      }),
+
+      select: vi.fn((selector) => {
+        currentSelector = selector
+        isSelectAll = false
+        return mockQuery
+      }),
+
+      selectAll: vi.fn((selector) => {
+        currentSelector = selector
+        isSelectAll = true
+        return mockQuery
+      }),
+
+      selectViewport: vi.fn(() => {
+        currentSelector = 'viewport'
+        isSelectAll = false
+        return mockQuery
+      })
+    }
+
+    return mockQuery
+  }),
+  getAppBaseInfo: vi.fn().mockReturnValue({
+    language: 'zh-CN',
+    theme: 'light',
+    version: '1.0.0'
+  }),
+  getDeviceInfo: vi.fn().mockReturnValue({
+    deviceBrand: 'apple',
+    deviceModel: 'iPhone',
+    devicePixelRatio: 2,
+    osName: 'ios',
+    osVersion: '17.0',
+    platform: 'ios'
+  }),
+  // 模拟获取图片信息相关 API
+  getImageInfo: vi.fn().mockImplementation((options) => {
+    if (options.src) {
+      if (options.success) {
+        options.success({
+          height: 600,
+          orientation: 'up',
+          path: options.src,
+          type: 'png',
+          width: 800
+        })
+      }
+    } else if (options.fail) {
+      options.fail()
+    }
+    if (options.complete) {
+      options.complete()
+    }
+    return Promise.resolve({
+      height: 600,
+      orientation: 'up',
+      path: options.src,
+      type: 'png',
+      width: 800
+    })
+  }),
+  // 模拟微信胶囊按钮信息 API
+  getMenuButtonBoundingClientRect: vi.fn().mockReturnValue({
+    bottom: 36,
+    height: 32,
+    left: 288,
+    right: 375,
+    top: 4,
+    width: 87
+  }),
+
+  // 模拟获取节点信息 API
+  getNodeInfo: vi.fn().mockImplementation((options) => {
+    if (options?.success) {
+      options.success({
+        bottom: 100,
+        dataset: {},
+        height: 100,
+        id: options.selector || '',
+        left: 0,
+        right: 100,
+        top: 0,
+        width: 100
+      })
+    }
+    if (options?.complete) {
+      options.complete()
+    }
+    return Promise.resolve({
+      bottom: 100,
+      dataset: {},
+      height: 100,
+      id: options.selector || '',
+      left: 0,
+      right: 100,
+      top: 0,
+      width: 100
+    })
+  }),
+  // 设置 getSystemInfoSync 方法
+  getSystemInfoSync: vi.fn().mockReturnValue({
+    brand: 'devtools',
+    language: 'zh-CN',
+    model: 'iPhone',
+    pixelRatio: 2,
+    platform: 'ios',
+    safeArea: {
+      bottom: 780,
+      height: 667,
+      left: 0,
+      right: 375,
+      top: 20,
+      width: 375
+    },
+    safeAreaInsets: {
+      bottom: 20,
+      left: 0,
+      right: 0,
+      top: 20
+    },
+    screenHeight: 800,
+    screenWidth: 375,
+    statusBarHeight: 20,
+    theme: 'light',
+    version: '1.0.0',
+    windowHeight: 667,
+    windowTop: 0,
+    windowWidth: 375
+  }),
+  getWindowInfo: vi.fn().mockReturnValue({
+    pixelRatio: 2,
+    safeArea: {
+      bottom: 780,
+      height: 667,
+      left: 0,
+      right: 375,
+      top: 20,
+      width: 375
+    },
+    safeAreaInsets: {
+      bottom: 20,
+      left: 0,
+      right: 0,
+      top: 20
+    },
+    screenHeight: 800,
+    screenWidth: 375,
+    statusBarHeight: 20,
+    windowHeight: 667,
+    windowTop: 0,
+    windowWidth: 375
+  }),
+  hideLoading: vi.fn().mockImplementation((options) => {
+    if (options?.success) {
+      options.success()
+    }
+    if (options?.complete) {
+      options.complete()
+    }
+    return Promise.resolve({ errMsg: 'hideLoading:ok' })
+  }),
+  hideToast: vi.fn().mockImplementation((options) => {
+    if (options?.success) {
+      options.success()
+    }
+    if (options?.complete) {
+      options.complete()
+    }
+    return Promise.resolve({ errMsg: 'hideToast:ok' })
+  }),
+  // 模拟 小程序路由相关 API
+  navigateTo: vi.fn().mockImplementation((options) => {
+    if (options?.success) {
+      options.success()
+    }
+    if (options?.complete) {
+      options.complete()
+    }
+    return Promise.resolve({ errMsg: 'navigateTo:ok' })
+  }),
+
+  // 模拟页面滚动监听 API
+  onPageScroll: vi.fn(),
+
+  // 模拟窗口尺寸变化监听 API
+  onWindowResize: vi.fn(),
+  // 模拟页面滚动相关 API
+  pageScrollTo: vi.fn().mockImplementation((options) => {
+    if (options.success) {
+      options.success({ errMsg: 'pageScrollTo:ok' })
+    }
+    if (options.complete) {
+      options.complete()
+    }
+    return Promise.resolve({ errMsg: 'pageScrollTo:ok' })
+  }),
+  // 模拟图片预览相关 API
+  previewImage: vi.fn().mockImplementation((options) => {
+    if (options.success) {
+      options.success({ errMsg: 'previewImage:ok' })
+    }
+    if (options.complete) {
+      options.complete()
+    }
+    return Promise.resolve({ errMsg: 'previewImage:ok' })
+  }),
+  redirectTo: vi.fn().mockImplementation((options) => {
+    if (options?.success) {
+      options.success()
+    }
+    if (options?.complete) {
+      options.complete()
+    }
+    return Promise.resolve({ errMsg: 'redirectTo:ok' })
+  }),
+  // 模拟保存图片相关 API
+  saveImageToPhotosAlbum: vi.fn().mockImplementation((options) => {
+    if (options.success) {
+      options.success({ errMsg: 'saveImageToPhotosAlbum:ok' })
+    }
+    if (options.complete) {
+      options.complete()
+    }
+    return Promise.resolve({ errMsg: 'saveImageToPhotosAlbum:ok' })
+  }),
+  // 模拟 loading 相关 API
+  showLoading: vi.fn().mockImplementation((options) => {
+    if (options.success) {
+      options.success()
+    }
+    if (options.complete) {
+      options.complete()
+    }
+    return Promise.resolve({ errMsg: 'showLoading:ok' })
+  }),
+  // 模拟 modal 相关 API
+  showModal: vi.fn().mockImplementation((options) => {
+    if (options.success) {
+      options.success({ cancel: false, confirm: true })
+    }
+    if (options.complete) {
+      options.complete()
+    }
+    return Promise.resolve({ cancel: false, confirm: true, errMsg: 'showModal:ok' })
+  }),
+  // 模拟 toast 相关 API
+  showToast: vi.fn().mockImplementation((options) => {
+    if (options.success) {
+      options.success()
+    }
+    if (options.complete) {
+      options.complete()
+    }
+    return Promise.resolve({ errMsg: 'showToast:ok' })
+  }),
+  // 模拟上传文件相关 API
+  uploadFile: vi.fn().mockImplementation((options) => {
+    if (options.success) {
+      options.success({ data: '{"code": 0, "msg": "success", "url": "https://example.com/image.jpg"}' })
+    }
+    if (options.complete) {
+      options.complete()
+    }
+    return {
+      abort: vi.fn(),
+      onProgressUpdate: vi.fn()
+    }
+  }),
+
+  // 模拟振动反馈 API
+  vibrateShort: vi.fn().mockImplementation((options?: any) => {
+    if (options?.success) {
+      options.success()
+    }
+    if (options?.complete) {
+      options.complete()
+    }
+    return Promise.resolve({ errMsg: 'vibrateShort:ok' })
+  })
+})
+
+// 配置全局组件模拟
+config.global.components = {
+  // 模拟uni-app的block组件
+  block: {
+    name: 'block',
+    template: '<div><slot></slot></div>'
+  },
+  // 模拟uni-app的image组件
+  image: {
+    name: 'uni-image',
+    props: ['src', 'mode', 'lazy-load'],
+    template: '<img><slot></slot></img>'
+  },
+  // 模拟uni-app的input组件
+  input: {
+    emits: ['input', 'focus', 'blur', 'confirm'],
+    name: 'uni-input',
+    props: ['value', 'type', 'password', 'placeholder', 'disabled', 'maxlength'],
+    template: '<input />'
+  },
+  // 模拟uni-app的picker-view和picker-view-column
+  'picker-view': {
+    emits: ['change'],
+    name: 'uni-picker-view',
+    props: ['value', 'range', 'range-key', 'indicator-style', 'indicator-class'],
+    template: '<div class="picker-view"><slot></slot></div>'
+  },
+  'picker-view-column': {
+    name: 'uni-picker-view-column',
+    props: ['value', 'range', 'range-key'],
+    template: '<div class="picker-view-column"><slot></slot></div>'
+  },
+  // 模拟uni-app的scroll-view组件
+  'scroll-view': {
+    name: 'uni-scroll-view',
+    props: ['scroll-y', 'scroll-x', 'scroll-top', 'scroll-left', 'scroll-into-view'],
+    template: '<div class="scroll-view"><slot></slot></div>'
+  },
+  // 模拟uni-app的swiper组件
+  swiper: {
+    name: 'uni-swiper',
+    props: ['indicator-dots', 'autoplay', 'interval', 'duration', 'circular'],
+    template: '<div class="swiper"><slot></slot></div>'
+  },
+  // 模拟uni-app的swiper-item组件
+  'swiper-item': {
+    name: 'uni-swiper-item',
+    template: '<div class="swiper-item"><slot></slot></div>'
+  },
+  // 模拟uni-app的text组件
+  text: {
+    name: 'uni-text',
+    template: '<span><slot></slot></span>'
+  },
+  // 模拟uni-app的textarea组件
+  textarea: {
+    emits: ['input', 'focus', 'blur', 'confirm'],
+    name: 'uni-textarea',
+    props: ['value', 'placeholder', 'disabled', 'maxlength'],
+    template: '<textarea></textarea>'
+  },
+  // 模拟uni-app的video组件
+  video: {
+    emits: ['play', 'pause', 'ended', 'timeupdate', 'fullscreenchange'],
+    name: 'uni-video',
+    props: ['src', 'poster', 'controls', 'autoplay', 'loop'],
+    template: '<video></video>'
+  },
+  // 模拟uni-app的view组件
+  view: {
+    name: 'uni-view',
+    template: '<div><slot></slot></div>'
+  }
+}
+
+// 同时设置 stubs 以确保兼容性
+config.global.stubs = config.global.components
+
+// 添加一些额外的全局对象
+;(global as any).getCurrentPages = vi.fn(() => [{ $getAppWebview: vi.fn(), route: 'pages/index/index' }])
+;(global as any).getApp = vi.fn(() => ({}))
+
+// 模拟 uni-app 生命周期
+;(global as any).onLaunch = vi.fn()
+;(global as any).onShow = vi.fn()
+;(global as any).onHide = vi.fn()
+;(global as any).onUnload = vi.fn()
+;(global as any).onError = vi.fn()
+
+// 模拟触摸事件
+class TouchEvent extends Event {
+  touches: Array<{ clientX: number; clientY: number }>
+  constructor(type: string, options: any = {}) {
+    super(type, options)
+    this.touches = options.touches || [{ clientX: 0, clientY: 0 }]
+  }
+}
+// 添加到全局
+;(global as any).TouchEvent = TouchEvent

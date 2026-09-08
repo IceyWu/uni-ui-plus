@@ -1,0 +1,101 @@
+@mixin dark-theme-vars {
+  /* 深色模式语义变量 */
+  /* 主色 */
+  --up-primary-1: var(--up-blue-10);
+  --up-primary-2: var(--up-blue-9);
+  --up-primary-3: var(--up-blue-8);
+  --up-primary-4: var(--up-blue-7);
+  --up-primary-5: var(--up-blue-6);
+  --up-primary-6: var(--up-blue-5);
+  --up-primary-7: var(--up-blue-4);
+  --up-primary-8: var(--up-blue-3);
+  --up-primary-9: var(--up-blue-2);
+  --up-primary-10: var(--up-blue-1);
+  /* 危险色 */
+  --up-danger-main: var(--up-red-5);
+  --up-danger-hover: var(--up-red-6);
+  --up-danger-clicked: var(--up-red-4);
+  --up-danger-disabled: var(--up-red-8);
+  --up-danger-particular: var(--up-red-9);
+  --up-danger-surface: var(--up-red-10);
+  /* 成功色 */
+  --up-success-main: var(--up-green-5);
+  --up-success-hover: var(--up-green-6);
+  --up-success-clicked: var(--up-green-4);
+  --up-success-disabled: var(--up-green-8);
+  --up-success-particular: var(--up-green-9);
+  --up-success-surface: var(--up-green-10);
+  /* 警告色 */
+  --up-warning-main: var(--up-orange-5);
+  --up-warning-hover: var(--up-orange-6);
+  --up-warning-clicked: var(--up-orange-4);
+  --up-warning-disabled: var(--up-orange-8);
+  --up-warning-particular: var(--up-orange-9);
+  --up-warning-surface: var(--up-orange-10);
+  /* 中性色 */
+  /* 文字 */
+  --up-text-main: var(--up-coolgrey-1);
+  --up-text-secondary: var(--up-coolgrey-3);
+  --up-text-auxiliary: var(--up-coolgrey-5);
+  --up-text-disabled: var(--up-coolgrey-7);
+  --up-text-placeholder: var(--up-coolgrey-6);
+  --up-text-white: var(--up-base-white);
+  /* 图标 */
+  --up-icon-main: var(--up-coolgrey-1);
+  --up-icon-secondary: var(--up-coolgrey-3);
+  --up-icon-auxiliary: var(--up-coolgrey-5);
+  --up-icon-disabled: var(--up-coolgrey-7);
+  --up-icon-placeholder: var(--up-coolgrey-6);
+  --up-icon-white: var(--up-base-white);
+  /* 边框 */
+  --up-border-extra-strong: var(--up-coolgrey-3);
+  --up-border-strong: var(--up-coolgrey-5);
+  --up-border-main: var(--up-coolgrey-7);
+  --up-border-light: var(--up-coolgrey-9);
+  --up-border-white: var(--up-base-white);
+  --up-border-zero: var(--up-base-transparent);
+  /* 填充 */
+  --up-filled-extra-strong: var(--up-coolgrey-7);
+  --up-filled-strong: var(--up-coolgrey-8);
+  --up-filled-content: var(--up-coolgrey-9);
+  --up-filled-bottom: var(--up-coolgrey-10);
+  --up-filled-oppo: var(--up-base-black);
+  --up-filled-zero: var(--up-base-transparent);
+  /* 分割线 */
+  --up-divider-main: var(--up-opacwhite-3_08);
+  --up-divider-light: var(--up-opacwhite-2_04);
+  --up-divider-strong: var(--up-opacwhite-4_15);
+  --up-divider-white: var(--up-base-white);
+  /* 反馈 */
+  --up-feedback-hover: var(--up-opacwhite-2_04);
+  --up-feedback-active: var(--up-opacwhite-3_08);
+  --up-feedback-accent: var(--up-blue-opac);
+  /* 填充色-透明度 */
+  --up-opacfilled-tooltip-toast-cover: var(--up-opac-9_75);
+  --up-opacfilled-main-cover: var(--up-opac-7_55);
+  --up-opacfilled-light-cover: var(--up-opac-6_30);
+  /* Picker View Mask */
+  --up-picker-view-mask-start-color: var(--up-opac-10_85);
+  --up-picker-view-mask-end-color: var(--up-opac-5_20);
+  /* 分类色 */
+  /* 黄色 */
+  --up-classifyapplication-yellow-background: var(--up-yellow-10);
+  --up-classifyapplication-yellow-border: var(--up-yellow-8);
+  --up-classifyapplication-yellow-content: var(--up-yellow-5);
+  /* 蓝色 */
+  --up-classifyapplication-cyan-background: var(--up-cyan-10);
+  --up-classifyapplication-cyan-border: var(--up-cyan-8);
+  --up-classifyapplication-cyan-content: var(--up-cyan-5);
+  /* 紫色 */
+  --up-classifyapplication-purple-background: var(--up-purple-10);
+  --up-classifyapplication-purple-border: var(--up-purple-8);
+  --up-classifyapplication-purple-content: var(--up-purple-5);
+  /* 靛色 */
+  --up-classifyapplication-grape-background: var(--up-grape-10);
+  --up-classifyapplication-grape-border: var(--up-grape-8);
+  --up-classifyapplication-grape-content: var(--up-grape-5);
+  /* 粉色 */
+  --up-classifyapplication-pink-background: var(--up-pink-10);
+  --up-classifyapplication-pink-border: var(--up-pink-8);
+  --up-classifyapplication-pink-content: var(--up-pink-5);
+}

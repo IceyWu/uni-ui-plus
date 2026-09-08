@@ -1,0 +1,16 @@
+@use './base/index.scss'as *;
+@use './light.scss'as light;
+@use './dark.scss'as dark;
+
+page,
+.up-theme-dark,
+.up-theme-dark .up-root-portal {
+  @include dark.dark-theme-vars;
+}
+
+
+page,
+.up-theme-light,
+.up-theme-light .up-root-portal {
+  @include light.light-theme-vars;
+}

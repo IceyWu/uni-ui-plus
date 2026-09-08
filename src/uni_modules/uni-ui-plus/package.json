@@ -1,0 +1,82 @@
+{
+  "name": "uni-ui-plus",
+  "displayName": "uni-ui-plus",
+  "version": "0.0.72",
+  "description": "uni-ui-plus 一个现代化的 uni-app 组件库",
+  "keywords": [
+    "uni-ui-plus",
+    "组件库",
+    "vue3",
+    "uniapp",
+    "暗黑模式",
+    "国际化"
+  ],
+  "homepage": "https://github.com/iceywu/uni-ui-plus#readme",
+  "bugs": "https://github.com/iceywu/uni-ui-plus/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iceywu/uni-ui-plus.git"
+  },
+  "license": "MIT",
+  "author": "Icey Wu <3128006406@qq.com>",
+  "sideEffects": [
+    "*.scss",
+    "*/components/**/*.vue"
+  ],
+  "main": "index.ts",
+  "peerDependencies": {
+    "vue": ">=3.2.0"
+  },
+  "id": "uni-ui-plus",
+  "uni_modules": {
+    "dependencies": [],
+    "encrypt": [],
+    "platforms": {
+      "cloud": {
+        "tcb": "y",
+        "aliyun": "y",
+        "alipay": "n"
+      },
+      "client": {
+        "Vue": {
+          "vue2": "n",
+          "vue3": "y"
+        },
+        "App": {
+          "app-vue": "y",
+          "app-nvue": "n",
+          "app-uvue": "n"
+        },
+        "H5-mobile": {
+          "Safari": "y",
+          "Android Browser": "y",
+          "微信浏览器(Android)": "y",
+          "QQ浏览器(Android)": "y"
+        },
+        "H5-pc": {
+          "Chrome": "y",
+          "IE": "u",
+          "Edge": "y",
+          "Firefox": "y",
+          "Safari": "y"
+        },
+        "小程序": {
+          "微信": "y",
+          "阿里": "y",
+          "百度": "u",
+          "字节跳动": "u",
+          "QQ": "y",
+          "钉钉": "y",
+          "快手": "u",
+          "飞书": "u",
+          "京东": "u"
+        }
+      }
+    }
+  },
+  "vetur": {
+    "tags": "tags.json",
+    "attributes": "attributes.json"
+  },
+  "web-types": "web-types.json"
+}
