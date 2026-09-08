@@ -53,7 +53,7 @@
     "dev:quickapp-webview": "uni -p quickapp-webview",
     "docs:serve": "pnpm --filter ./docs serve",
     "preinstall": "npx only-allow pnpm",
-    "lint": "ultracite check",
+    "lint": "pnpm exec biome check .",
     "lint:fix": "ultracite fix",
     "lint:unsafe": "ultracite fix --unsafe",
     "prepare": "husky",
