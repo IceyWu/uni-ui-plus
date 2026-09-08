@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.71
+
+### Patch Changes
+
+- 4f477bf: 迁移到 Changesets 发布流程，并清理旧的 Changelogen 发布脚本与无效的 CI 发布步骤。
+
 ## v0.0.70
 
 [compare changes](https://github.com/iceywu/uni-ui-plus/compare/v0.0.68...v0.0.70)
