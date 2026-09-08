@@ -57,7 +57,7 @@
     "lint:fix": "ultracite fix",
     "lint:unsafe": "ultracite fix --unsafe",
     "prepare": "husky",
-    "release": "pnpm build:web-types && pnpm build:lib && npm publish ./lib --registry=https://registry.npmjs.org --access public",
+    "release": "pnpm build:web-types && pnpm build:lib && pnpm changeset publish",
     "sync:version": "esno ./scripts/sync-version.ts",
     "test": "vitest",
     "test:all": "pnpm run test:h5 && pnpm run test:mp-weixin",
