@@ -4,4 +4,4 @@
 
 [build.environment]
   NODE_VERSION = "22"
-  COREPACK_HOME = "/opt/buildhome/.cache/corepack"
+  COREPACK_HOME = "/tmp/uni-ui-plus-corepack"
