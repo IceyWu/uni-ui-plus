@@ -37,6 +37,9 @@
   let transitionTimer: ReturnType<typeof setTimeout> | null = null
   let pressTimer: ReturnType<typeof setTimeout> | null = null
   let interactionTimer: ReturnType<typeof setTimeout> | null = null
+  let touchStartX = 0
+  let touchStartY = 0
+  let touchMoved = false
 
   // 同步外部 muted prop
   watch(
@@ -327,19 +330,57 @@
     emit('video-pause')
   }
 
-  function onInteractionStart() {
+  function onInteractionStart(event: any) {
     if (props.displayOnly || pressTimer) {
       return
     }
 
+    const touch = event.touches?.[0]
+    touchStartX = touch?.clientX ?? touch?.pageX ?? 0
+    touchStartY = touch?.clientY ?? touch?.pageY ?? 0
+    touchMoved = false
     pressTimer = setTimeout(() => {
       pressTimer = null
       onLongPressStart()
     }, props.longPressDelay)
   }
 
+  function onInteractionMove(event: any) {
+    const touch = event.touches?.[0]
+    if (!touch) {
+      return
+    }
+
+    const x = touch.clientX ?? touch.pageX ?? 0
+    const y = touch.clientY ?? touch.pageY ?? 0
+    if (Math.abs(x - touchStartX) <= 8 && Math.abs(y - touchStartY) <= 8) {
+      return
+    }
+
+    touchMoved = true
+    if (pressTimer) {
+      clearTimeout(pressTimer)
+      pressTimer = null
+    }
+    if (isPressed.value) {
+      onLongPressEnd()
+    }
+  }
+
   function onInteractionEnd(e: Event) {
     if (props.displayOnly) {
+      return
+    }
+
+    if (touchMoved) {
+      if (pressTimer) {
+        clearTimeout(pressTimer)
+        pressTimer = null
+      }
+      if (isPressed.value) {
+        onLongPressEnd()
+      }
+      touchMoved = false
       return
     }
 
@@ -493,8 +534,9 @@
       :class="{ 'up-live-photo__interaction--pressing': isPressed }"
       @contextmenu.prevent
       @touchcancel="onInteractionEnd"
-      @touchend.prevent="onInteractionEnd"
-      @touchstart.prevent="onInteractionStart"
+      @touchend="onInteractionEnd"
+      @touchmove="onInteractionMove"
+      @touchstart="onInteractionStart"
     />
   </view>
 </template>

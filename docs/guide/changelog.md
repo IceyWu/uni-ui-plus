@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.74
+
+### Patch Changes
+
+- 修复 Live Photo 长按交互与小程序 swiper 手势冲突的问题。
+
 ## 0.0.73
 
 ### Patch Changes
