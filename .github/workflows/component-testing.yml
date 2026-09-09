@@ -184,6 +184,8 @@ jobs:
         run: |
           if [[ "${{ matrix.component }}" == "all" ]]; then
             pnpm test:h5 --coverage
+          elif [[ ! -f "tests/components/${{ matrix.component }}.test.ts" ]]; then
+            echo "No test file for ${{ matrix.component }}; skipping component test."
           else
             pnpm vitest run tests/components/${{ matrix.component }}.test.ts --coverage
           fi
