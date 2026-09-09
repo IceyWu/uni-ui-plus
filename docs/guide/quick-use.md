@@ -31,14 +31,6 @@ npm i uni-ui-plus
 - - - uni-ui-plus
 ```
 
-## Sass
-
-`uni-ui-plus` 依赖 `sass`：
-
-```bash
-pnpm add sass -D
-```
-
 ## 配置
 
 ### 导入组件
@@ -112,7 +104,7 @@ public-hoist-pattern[]=@vue*
 ```vue
 <!-- App.vue -->
 <style lang="scss">
-@use 'uni-ui-plus/styles/theme/index.scss';
+@use 'uni-ui-plus/styles/theme/index.scss' as *;
 </style>
 ```
 
@@ -121,7 +113,7 @@ public-hoist-pattern[]=@vue*
 ```vue
 <!-- App.vue -->
 <style lang="scss">
-@use '@/uni_modules/uni-ui-plus/styles/theme/index.scss';
+@use '@/uni_modules/uni-ui-plus/styles/theme/index.scss' as *;
 </style>
 ```
 

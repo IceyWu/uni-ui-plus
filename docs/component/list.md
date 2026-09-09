@@ -9,7 +9,7 @@
 ```vue
 <script setup>
 import { onMounted } from 'vue'
-import { getObjVal, list, sleep } from '@iceywu/utils'
+import { get, list, sleep } from '@iceywu/utils'
 import { useRequest } from 'vue-hooks-pure'
 // 模拟api
 async function getTestApi(params) {
@@ -44,7 +44,7 @@ const {
   target: 'list',
   loadingDelay: 300,
   getVal: (res) => {
-    const list = getObjVal(res, 'result.content', [])
+    const list = get(res, 'result.content', [])
     return list
   },
     listOptions: {
@@ -53,7 +53,7 @@ const {
       defaultDataKey: 'list',
       defaultPage: -1,
       getTotal: (data) => {
-        const total = getObjVal(data, 'result.total', 0)
+        const total = get(data, 'result.total', 0)
         return total
       }
     }

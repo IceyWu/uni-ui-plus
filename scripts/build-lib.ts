@@ -1,5 +1,5 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -12,45 +12,13 @@ if (fs.existsSync(libDir)) {
   fs.rmSync(libDir, { recursive: true })
 }
 
-const copyComponents = (srcPath: string, tarPath: string, filter: string[] = []) => {
-  fs.mkdir(tarPath, () => {
-    /* ignore */
-  })
-  fs.readdir(srcPath, (err, files) => {
-    if (err === null) {
-      files.forEach((filename) => {
-        const filedir = path.join(srcPath, filename)
-        const filterFlag = filter.some((item) => path.extname(filename).toLowerCase() === item && filename !== 'changelog.md')
-        if (!filterFlag) {
-          fs.stat(filedir, (_errs, stats) => {
-            const isFile = stats.isFile()
-            if (isFile) {
-              const destPath = path.join(tarPath, filename)
-              fs.copyFile(filedir, destPath, () => {
-                /* ignore */
-              })
-            } else {
-              const tarFiledir = path.join(tarPath, filename)
-              copyComponents(filedir, tarFiledir, filter)
-            }
-          })
-        }
-      })
-    } else if (err) {
-      console.error(err)
-    }
-  })
-}
-
-copyComponents(src, libDir, ['.md'])
+fs.cpSync(src, libDir, {
+  filter: (sourcePath) => path.extname(sourcePath).toLowerCase() !== '.md' || path.basename(sourcePath).toLowerCase() === 'changelog.md',
+  recursive: true
+})
 
 const copyFile = (srcPath: string, tarPath: string) => {
-  const isFile = fs.statSync(srcPath).isFile()
-  if (isFile) {
-    fs.copyFile(srcPath, tarPath, () => {
-      /* ignore */
-    })
-  }
+  fs.copyFileSync(srcPath, tarPath)
 }
 
 const readme = path.resolve(__dirname, '../README.md')

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.73
+
+### Patch Changes
+
+- 今天买了杯奶茶，喝完发现吸管比奶茶更有存在感。
+
 ## 0.0.72
 
 ### Patch Changes

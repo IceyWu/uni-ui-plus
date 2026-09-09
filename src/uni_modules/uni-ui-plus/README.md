@@ -40,7 +40,7 @@ pnpm add uni-ui-plus
 ```vue
 <!-- App.vue -->
 <style lang="scss">
-@use 'uni-ui-plus/styles/theme/index.scss';
+@use 'uni-ui-plus/styles/theme/index.scss' as *;
 </style>
 ```
 
@@ -49,7 +49,7 @@ pnpm add uni-ui-plus
 ```vue
 <!-- App.vue -->
 <style lang="scss">
-@use '@/uni_modules/uni-ui-plus/styles/theme/index.scss';
+@use '@/uni_modules/uni-ui-plus/styles/theme/index.scss' as *;
 </style>
 ```
 

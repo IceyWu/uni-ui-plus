@@ -24,6 +24,10 @@ export default defineConfig({
             text: '快速上手'
           },
           {
+            link: '/guide/dark-mode',
+            text: '深色模式'
+          },
+          {
             link: '/guide/changelog',
             text: '更新日志'
           }
@@ -64,6 +68,10 @@ export default defineConfig({
               text: 'Empty 空状态'
             },
             {
+              link: '/component/config-provider',
+              text: 'ConfigProvider 全局配置'
+            },
+            {
               link: '/component/waterfall',
               text: 'Waterfall 瀑布流'
             },
@@ -87,6 +95,10 @@ export default defineConfig({
         {
           link: '/guide/quick-use',
           text: '快速上手'
+        },
+        {
+          link: '/guide/dark-mode',
+          text: '深色模式'
         },
         {
           link: '/guide/changelog',

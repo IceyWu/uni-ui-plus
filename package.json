@@ -1,6 +1,6 @@
 {
   "name": "uni-ui-plus",
-  "version": "0.0.72",
+  "version": "0.0.73",
   "repository": {
     "type": "git",
     "url": "https://github.com/iceywu/uni-ui-plus.git"
@@ -146,6 +146,9 @@
     "vue-tsc": "^3.3.11"
   },
   "packageManager": "pnpm@12.3.4",
+  "publishConfig": {
+    "directory": "lib"
+  },
   "uni-app": {
     "scripts": {
       "mp-dingtalk": {
