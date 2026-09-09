@@ -56,3 +56,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Push release tags and create GitHub Releases
+        if: success()
+        shell: bash
+        run: |
+          git push origin --tags
+          for tag in $(git tag --points-at HEAD); do
+            [[ "$tag" == v* ]] || continue
+            gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "$tag" --generate-notes
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
